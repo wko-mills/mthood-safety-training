@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Heat Illness Prevention Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .phone { font-weight:bold; color:var(--dark); }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  .tier { border-radius:8px; padding:14px; margin:10px 0; border:1px solid #d9e2ec; }
+  .tier .tt { font-weight:bold; font-size:1.05em; margin-bottom:4px; }
+  .tier.t1 { border-left:6px solid var(--blue); }
+  .tier.t2 { border-left:6px solid var(--amber); }
+  .tier.t3 { border-left:6px solid var(--red); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Heat Illness Prevention Training &mdash; OAR 437-002-0156</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; OAR 437-002-0156 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "HT26-";
+var PASS_PCT = 80;
+
+/* ------------ Language packs ------------ */
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Heat Illness Prevention Program v1.0 (OAR 437-002-0156). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — Working Safely in Outdoor Heat",
+  introP1: "Heat-related illness can come on fast, and heat stroke can kill. Oregon's heat illness prevention rule protects employees who work where it gets hot — indoors or outdoors — and at Mt. Hood Forest Products that includes the log yard, lumber yard, kiln areas, mobile equipment operation, maintenance work, and any production support task where the heat index climbs.",
+  introP2: "The training takes about 15–20 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. When the Heat Rule Applies", body:
+      "<p>Oregon's heat illness prevention rule (OAR 437-002-0156) applies whenever you work — <b>indoors or outdoors</b> — where the <b>heat index</b> reaches <b>80&deg;F or higher</b>.</p>"+
+      "<div class='notice'><b>What is the heat index?</b> It is the \"apparent temperature\" — how hot it actually feels when you combine air temperature with humidity. On a humid day the heat index is higher than the number on the thermometer. That is the figure the rule uses, not the plain air temperature.</div>"+
+      "<table class='mini'><tr><th>Heat index in your work area</th><th>What applies</th></tr>"+
+      "<tr><td><b>At or above 80&deg;F</b></td><td>Shade, drinking water, training, and preventive cool-down rest whenever you need it</td></tr>"+
+      "<tr><td><b>At or above 90&deg;F</b></td><td>Everything above <b>plus</b> high-heat practices: a written rest-break schedule, closer observation, and emergency communication</td></tr></table>"+
+      "<p>Indoor buildings with a mechanical ventilation system that keeps the heat index below 80&deg;F are not covered. An equipment cab, shed or tent that is not temperature-controlled <b>is</b> covered when the heat index inside it reaches 80&deg;F.</p>"+
+      "<div class='notice'><b>Incidental exposure:</b> if you are exposed to the heat 15 minutes or less in any 60-minute period, the rule's requirements do not apply to that hour. Step into the heat briefly, come back to a cool area — that's incidental. Spend more than 15 minutes of an hour in the heat and you are covered.</div>",
+      kc:{ q:"Oregon's heat rule is based on the heat index. At what heat index do shade and water requirements begin?", opts:["52&deg;F","80&deg;F","90&deg;F","100&deg;F"], a:1 } },
+
+    { h:"2. What Raises Your Risk", body:
+      "<p><b>Environmental factors</b> — the conditions around you — raise the risk of heat-related illness:</p>"+
+      "<ul><li>Air temperature and relative humidity</li>"+
+      "<li>Radiant heat from the sun, kilns, engines and other hot equipment</li>"+
+      "<li>Conductive heat from the ground, decking and machinery</li>"+
+      "<li>How much air is moving</li>"+
+      "<li>How hard and how long you are working</li>"+
+      "<li>The clothing and PPE you are required to wear</li></ul>"+
+      "<p><b>Personal factors</b> also matter. These vary from person to person, and this information is for <b>your own personal use</b>:</p>"+
+      "<ul><li>Age and physical fitness</li>"+
+      "<li>How acclimatized you are to working in heat</li>"+
+      "<li>Medical conditions</li>"+
+      "<li>How much drinking water you consume</li>"+
+      "<li>Alcohol use</li>"+
+      "<li>Previous heat-related illness</li>"+
+      "<li>Pregnancy</li>"+
+      "<li>Medications that affect how your body responds to heat</li></ul>"+
+      "<p>If you take a medication and are unsure whether it affects your response to heat, ask your doctor or pharmacist. You are not required to tell your employer about a medical condition or medication.</p>" },
+
+    { h:"3. Drinking Water", body:
+      "<p>When the heat index is at or above 80&deg;F, Mt. Hood Forest Products provides enough drinking water for each employee to drink up to <b>one quart (32 oz) per hour</b> of work — cool (66&ndash;77&deg;F) or cold (35&ndash;65&deg;F), at no cost, and readily accessible wherever you are working.</p>"+
+      "<ul><li>Drink <b>small amounts often</b> — about a cup every 15–20 minutes — rather than a lot at once</li>"+
+      "<li>Don't wait until you feel thirsty. By the time you are thirsty you are already behind</li>"+
+      "<li>Portable water containers are positioned close to work areas away from fixed water sources</li></ul>"+
+      "<p><b>What counts:</b> potable water, and electrolyte-replenishing sports drinks that do <u>not</u> contain caffeine.</p>"+
+      "<div class='notice'><b>What does NOT count:</b> coffee, tea, energy drinks and any other caffeinated beverage do not satisfy the water requirement.</div>",
+      kc:{ q:"How much drinking water must be available to each employee per hour when the heat index is at or above 80&deg;F?", opts:["One pint (16 oz)","One quart (32 oz)","One gallon","No set amount"], a:1 } },
+
+    { h:"4. Shade and Cool-Down Rest Periods", body:
+      "<p>At a heat index of 80&deg;F or above, shade or other equally effective cooling must be provided — close to where you work, big enough for everyone on a break to sit fully in the shade in a normal posture, and open to the outside air (at least three open sides) or mechanically ventilated. Shade can be trees, canopies, tarps, tents, building overhangs, an air-conditioned cab or a cooled break room. A vehicle sitting in the sun does not count unless it is running with working air conditioning.</p>"+
+      "<p>The requirements build as the heat index climbs:</p>"+
+      "<div class='tier t1'><div class='tt'>Heat index at or above 80&deg;F</div>"+
+      "Water, shade, training — and <b>preventive cool-down rest whenever you feel the need</b>. This rest is paid, and you must never be discouraged or penalized for taking it.</div>"+
+      "<div class='tier t2'><div class='tt'>Heat index at or above 90&deg;F — high-heat practices</div>"+
+      "Everything above, <b>plus a written heat illness prevention rest-break schedule</b> that gives you paid cool-down rest in the shade, closer observation of all employees, and reliable two-way communication so anyone can reach a supervisor. Mt. Hood Forest Products follows the rest-break schedule set out in its written Heat Illness Prevention Program.</div>"+
+      "<p>A heat illness prevention rest break may be taken at the same time as a meal or rest break you already get. Supervisors may also adjust schedules — such as starting earlier in the day — to reduce work performed in the worst of the heat.</p>",
+      kc:{ q:"The heat index reaches 92&deg;F. What are you entitled to?", opts:["Nothing until it reaches 100&deg;F","A written, paid cool-down rest-break schedule plus closer observation","Only your normal lunch break","You must stop work entirely"], a:1 } },
+
+    { h:"5. Acclimatization and Close Observation", body:
+      "<p><b>Acclimatization</b> is your body's gradual adaptation to working in heat. It develops over <b>7 to 14 days</b> of exposure, with much of the adaptation happening in the first four to five days. It is <b>lost after 7 or more consecutive days</b> away from working in the heat — so after vacation or a stretch of cool weather, you start over.</p>"+
+      "<p>Mt. Hood Forest Products closely observes employees when they are:</p>"+
+      "<ul><li><b>Newly assigned</b> to work where the heat index reaches 80&deg;F or above</li>"+
+      "<li><b>Returning</b> to that work after an absence of 7 days or more</li></ul>"+
+      "<p><b>During a sudden heat wave, everyone is closely observed</b> — even fully acclimatized employees — because a sharp jump in the heat index is dangerous for everybody.</p>"+
+      "<div class='notice'><b>Important:</b> you <b>cannot build tolerance to the heat during a heat wave</b>. A sudden jump in temperature is dangerous for everybody, no matter how long you have worked outside.</div>"+
+      "<p><b>Close observation</b> means someone is checking on you: direct supervisor observation, a mandatory buddy system, or regular radio or phone check-ins if you work alone or in a remote part of the yard.</p>",
+      kc:{ q:"You return from a two-week vacation in July. What applies to you?", opts:["Nothing — you already work here","Re-acclimatization and close observation, because acclimatization fades after 7 or more days away","You must retake this training before working","You may not work outdoors for a week"], a:1 } },
+
+    { h:"6. PPE, Clothing and Cooling Yourself", body:
+      "<p>The gear that protects you from other hazards also holds heat in. During <b>all rest and meal periods</b>, remove heat-retaining PPE — non-breathable or chemical-resistant clothing, and any other gear that traps heat — so your body can actually cool down. Sitting in the shade in a vapor-barrier suit does very little.</p>"+
+      "<ul><li>Wear light-colored, loose, breathable clothing when the job allows it</li>"+
+      "<li>Use shade, fans, misting or cool wet cloths on your neck and face during rest</li>"+
+      "<li>Take advantage of air-conditioned cabs and cooled break areas</li></ul>"+
+      "<div class='notice'>Never remove PPE that is required for a hazard while you are still working — the answer to heat is rest, water, shade and schedule changes, not going unprotected.</div>" },
+
+    { h:"7. Recognizing Heat-Related Illness", body:
+      "<p>Learn these signs — in yourself and in the people working around you.</p>"+
+      "<table class='mini'><tr><th>Condition</th><th>Signs and symptoms</th><th>What to do</th></tr>"+
+      "<tr><td><b>Heat rash</b></td><td>Clusters of red bumps on the skin — neck, upper chest, skin folds</td><td>Keep the area dry; move to a cooler environment</td></tr>"+
+      "<tr><td><b>Heat cramps</b></td><td>Muscle cramps or spasms, usually legs or abdomen; heavy sweating</td><td>Move to shade, rest, drink water, stretch gently</td></tr>"+
+      "<tr><td><b>Heat exhaustion</b></td><td>Heavy sweating; weakness; cold, pale, clammy skin; fast weak pulse; nausea or vomiting; headache; dizziness; fainting</td><td>Move to shade or air conditioning; loosen clothing; cool wet cloths; sips of water. <b>If vomiting or getting worse — call 911</b></td></tr>"+
+      "<tr><td><b>Heat stroke</b><br><span style='color:#C00000'>LIFE THREATENING</span></td><td>Body temperature 104&deg;F or higher; hot red skin, dry or damp; rapid strong pulse; headache; dizziness; nausea; <b>confusion, irritability, slurred speech</b>; seizures; loss of consciousness</td><td><b>CALL 911 IMMEDIATELY</b>; move to shade; cool rapidly with water and ice packs to armpits and groin; do NOT give fluids if unconscious</td></tr></table>"+
+      "<div class='danger'><b>Confusion is the red flag.</b> A co-worker who stops making sense, gets combative, or stops sweating in the heat may be having a heat stroke. Do not wait to see if they improve — this is an emergency.</div>",
+      kc:{ q:"A co-worker in the yard is confused, combative and has hot, red skin. What is your FIRST action?", opts:["Give them cold water to drink","Call 911 immediately and start cooling them","Have them sit down and watch them for 30 minutes","Drive them home"], a:1 } },
+
+    { h:"8. Reporting and Emergency Response", body:
+      "<p><b>Report symptoms immediately</b> — your own or a co-worker's — to your supervisor. Reporting early is what keeps a bad afternoon from becoming an ambulance ride. You will never be disciplined for reporting heat symptoms or for taking a preventive cool-down rest.</p>"+
+      "<p>If someone shows signs or symptoms of heat-related illness:</p>"+
+      "<ul><li><b>Stop work</b> and move them to shade or a cool environment</li>"+
+      "<li>Loosen or remove heavy, heat-retaining clothing and PPE</li>"+
+      "<li>Provide cool drinking water if they are conscious and alert</li>"+
+      "<li>Cool them actively — fan, spray or sponge with cool water, wet cloths, ice packs to armpits and groin</li>"+
+      "<li><b>Stay with them.</b> Never leave an affected employee alone</li>"+
+      "<li>If they do not improve quickly, or show confusion, loss of consciousness or any sign of heat stroke — <b>CALL 911 IMMEDIATELY</b></li>"+
+      "<li>Make sure EMS can reach the location; if the person is in a remote area of the yard, arrange to move them where an ambulance can get to them</li></ul>"+
+      "<p>Mt. Hood Forest Products maintains effective communication — radio, cell phone or direct contact — between employees and supervisors so symptoms can be reported and help summoned quickly.</p>"+
+      "<h2>Emergency Numbers</h2>"+
+      "<p>Emergency (medical / fire): <span class='phone'>911</span><br>"+
+      "Providence Hood River Memorial Hospital Emergency Department: <span class='phone'>(541) 386-3911</span> — 810 12th St, Hood River (24-hour emergency department, nearest ER to the mill)</p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"Oregon's heat rule takes effect at what heat index?", opts:["52&deg;F","80&deg;F","90&deg;F","100&deg;F"], a:1 },
+    { q:"How much cool drinking water must be available per employee per hour at a heat index of 80&deg;F or above?", opts:["One pint","One quart","Two quarts","No set amount"], a:1 },
+    { q:"At a heat index of 90&deg;F or above, what does Oregon require?", opts:["Nothing extra","A written paid rest-break schedule plus closer observation","Only a lunch break","Sending everyone home"], a:1 },
+    { q:"The heat index the rule uses is best described as…", opts:["The thermometer reading only","The \"apparent temperature\" — heat plus humidity","The overnight low","The water temperature"], a:1 },
+    { q:"Which beverage does NOT count toward the drinking water requirement?", opts:["Cool potable water","A caffeine-free sports drink","An energy drink","Bottled water"], a:2 },
+    { q:"Acclimatization fades after how many consecutive days away from working in the heat?", opts:["2 days","4 days","7 or more days","30 days"], a:2 },
+    { q:"During a heat wave, close observation applies to…", opts:["Only new employees","Only employees returning from absence","All employees, including acclimatized ones","Only employees over 50"], a:2 },
+    { q:"Why must heat-retaining PPE be removed during rest and meal periods?", opts:["To keep it clean","So the body can actually cool down","Because it is required by the union","To check it for damage"], a:1 },
+    { q:"A co-worker is confused, has hot red skin and has stopped sweating. This is…", opts:["Heat rash — keep the area dry","Heat cramps — stretch the muscle","Heat stroke — call 911 immediately and cool them","Normal for hot days"], a:2 },
+    { q:"You start to feel dizzy and weak in the heat. What should you do?", opts:["Push through until the next scheduled break","Tell your supervisor immediately and get to shade","Wait to see if it passes on its own","Drink a large amount of water and keep working"], a:1 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Heat Illness Prevention — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Last step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Heat Illness Prevention / Prevención de Enfermedades por Calor\"</b> from the module list, and enter the completion code shown above. Your training is not on record until you submit the form.",
+  recordBtn:"Record My Completion",
+  failH:"Not Yet — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the heat-index triggers, water and rest requirements, and the signs of heat stroke — and try again. There is no limit on attempts.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Prevención de Enfermedades por Calor de Mt. Hood Forest Products v1.0 (OAR 437-002-0156). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — Prevención de Enfermedades por Calor",
+  introP1: "Las enfermedades por calor aparecen rápido, y el golpe de calor puede ser mortal. La regla de prevención de enfermedades por calor de Oregon protege a quienes trabajan donde hace calor — adentro o afuera — y en Mt. Hood Forest Products esto incluye el patio de trozas, el patio de madera, las áreas de los hornos, la operación de equipo móvil, el mantenimiento y cualquier tarea de apoyo a la producción donde suba el índice de calor.",
+  introP2: "La capacitación toma de 15 a 20 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — muy bien.",
+  kcBad: "No exactamente — la respuesta correcta está resaltada. Revísela y continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Cuándo Aplica la Regla del Calor", body:
+      "<p>La regla de prevención de enfermedades por calor de Oregon (OAR 437-002-0156) aplica siempre que usted trabaje — <b>adentro o afuera</b> — donde el <b>índice de calor</b> alcance <b>80&deg;F o más</b>.</p>"+
+      "<div class='notice'><b>¿Qué es el índice de calor?</b> Es la \"temperatura aparente\" — lo caluroso que se siente en realidad al combinar la temperatura del aire con la humedad. En un día húmedo el índice de calor es más alto que el número del termómetro. Esa es la cifra que usa la regla, no la temperatura simple del aire.</div>"+
+      "<table class='mini'><tr><th>Índice de calor en su área de trabajo</th><th>Qué aplica</th></tr>"+
+      "<tr><td><b>80&deg;F o más</b></td><td>Sombra, agua potable, capacitación y descanso preventivo cuando lo necesite</td></tr>"+
+      "<tr><td><b>90&deg;F o más</b></td><td>Todo lo anterior <b>más</b> prácticas de calor alto: un horario escrito de descansos, observación más cercana y comunicación de emergencia</td></tr></table>"+
+      "<p>Los edificios interiores con ventilación mecánica que mantiene el índice de calor por debajo de 80&deg;F no están cubiertos. Una cabina de equipo, cobertizo o carpa sin control de temperatura <b>sí</b> está cubierta cuando el índice de calor adentro llega a 80&deg;F.</p>"+
+      "<div class='notice'><b>Exposición incidental:</b> si está expuesto al calor 15 minutos o menos en cualquier período de 60 minutos, los requisitos no aplican a esa hora. Entrar al calor un momento y volver a un área fresca es incidental. Pasar más de 15 minutos de una hora en el calor sí está cubierto.</div>",
+      kc:{ q:"La regla de calor de Oregon se basa en el índice de calor. ¿A qué índice de calor comienzan los requisitos de sombra y agua?", opts:["52&deg;F","80&deg;F","90&deg;F","100&deg;F"], a:1 } },
+
+    { h:"2. Lo Que Aumenta Su Riesgo", body:
+      "<p>Los <b>factores ambientales</b> — las condiciones a su alrededor — aumentan el riesgo de enfermedad por calor:</p>"+
+      "<ul><li>Temperatura del aire y humedad relativa</li>"+
+      "<li>Calor radiante del sol, los hornos, motores y otros equipos calientes</li>"+
+      "<li>Calor conductivo del suelo, las plataformas y la maquinaria</li>"+
+      "<li>Cuánto aire se está moviendo</li>"+
+      "<li>Qué tan pesado y prolongado es su trabajo</li>"+
+      "<li>La ropa y el EPP que debe usar</li></ul>"+
+      "<p>Los <b>factores personales</b> también importan. Varían de persona a persona, y esta información es para <b>su propio uso personal</b>:</p>"+
+      "<ul><li>Edad y condición física</li>"+
+      "<li>Qué tan aclimatado está al trabajo en el calor</li>"+
+      "<li>Condiciones médicas</li>"+
+      "<li>Cuánta agua potable consume</li>"+
+      "<li>Consumo de alcohol</li>"+
+      "<li>Enfermedad por calor previa</li>"+
+      "<li>Embarazo</li>"+
+      "<li>Medicamentos que afectan cómo su cuerpo responde al calor</li></ul>"+
+      "<p>Si toma algún medicamento y no está seguro de si afecta su respuesta al calor, pregunte a su médico o farmacéutico. No está obligado a informar a su empleador sobre una condición médica o un medicamento.</p>" },
+
+    { h:"3. Agua Potable", body:
+      "<p>Cuando el índice de calor está en 80&deg;F o más, Mt. Hood Forest Products proporciona suficiente agua para que cada empleado beba hasta <b>un cuarto de galón (32 oz) por hora</b> de trabajo — fresca (66&ndash;77&deg;F) o fría (35&ndash;65&deg;F), sin costo, y fácilmente accesible donde usted esté trabajando.</p>"+
+      "<ul><li>Beba <b>cantidades pequeñas con frecuencia</b> — como una taza cada 15 a 20 minutos — en lugar de mucho de una vez</li>"+
+      "<li>No espere a tener sed. Cuando siente sed, ya va atrasado</li>"+
+      "<li>Se colocan recipientes portátiles de agua cerca de las áreas de trabajo alejadas de fuentes fijas de agua</li></ul>"+
+      "<p><b>Qué cuenta:</b> agua potable y bebidas deportivas con electrolitos que <u>no</u> contengan cafeína.</p>"+
+      "<div class='notice'><b>Qué NO cuenta:</b> el café, el té, las bebidas energéticas y cualquier otra bebida con cafeína no cumplen con el requisito de agua.</div>",
+      kc:{ q:"¿Cuánta agua potable debe estar disponible por empleado por hora cuando el índice de calor está en 80&deg;F o más?", opts:["Una pinta (16 oz)","Un cuarto de galón (32 oz)","Un galón","No hay cantidad establecida"], a:1 } },
+
+    { h:"4. Sombra y Períodos de Descanso para Refrescarse", body:
+      "<p>Con un índice de calor de 80&deg;F o más, se debe proporcionar sombra u otro medio de enfriamiento igualmente efectivo — cerca de donde trabaja, suficiente para que todos los que estén en descanso se sienten completamente en la sombra en postura normal, y abierta al aire exterior (al menos tres lados abiertos) o con ventilación mecánica. La sombra puede ser árboles, toldos, lonas, carpas, aleros de edificios, una cabina con aire acondicionado o una sala de descanso enfriada. Un vehículo bajo el sol no cuenta a menos que esté encendido con aire acondicionado funcionando.</p>"+
+      "<p>Los requisitos se acumulan a medida que sube el índice de calor:</p>"+
+      "<div class='tier t1'><div class='tt'>Índice de calor en 80&deg;F o más</div>"+
+      "Agua, sombra, capacitación — y <b>descanso preventivo para refrescarse cuando sienta la necesidad</b>. Este descanso es pagado, y nunca se le debe desalentar ni penalizar por tomarlo.</div>"+
+      "<div class='tier t2'><div class='tt'>Índice de calor en 90&deg;F o más — prácticas de calor alto</div>"+
+      "Todo lo anterior, <b>más un horario escrito de descansos de prevención de enfermedades por calor</b> que le da descanso pagado para refrescarse en la sombra, observación más cercana de todos los empleados, y comunicación confiable de dos vías para que cualquiera pueda contactar a un supervisor. Mt. Hood Forest Products sigue el horario de descansos establecido en su Programa escrito de Prevención de Enfermedades por Calor.</div>"+
+      "<p>Un descanso de prevención por calor puede tomarse al mismo tiempo que una comida o descanso que ya le corresponde. Los supervisores también pueden ajustar los horarios — por ejemplo, comenzar más temprano — para reducir el trabajo durante lo peor del calor.</p>",
+      kc:{ q:"El índice de calor llega a 92&deg;F. ¿A qué tiene derecho?", opts:["A nada hasta que llegue a 100&deg;F","A un horario escrito y pagado de descansos más observación cercana","Solo a su almuerzo normal","A dejar de trabajar por completo"], a:1 } },
+
+    { h:"5. Aclimatación y Observación Cercana", body:
+      "<p>La <b>aclimatación</b> es la adaptación gradual de su cuerpo al trabajo en el calor. Se desarrolla durante <b>7 a 14 días</b> de exposición, y gran parte de la adaptación ocurre en los primeros cuatro o cinco días. Se <b>pierde después de 7 o más días consecutivos</b> sin trabajar en el calor — así que después de vacaciones o de una racha de clima fresco, comienza de nuevo.</p>"+
+      "<p>Mt. Hood Forest Products observa de cerca a los empleados cuando están:</p>"+
+      "<ul><li><b>Recién asignados</b> a trabajo donde el índice de calor llega a 80&deg;F o más</li>"+
+      "<li><b>Regresando</b> a ese trabajo después de una ausencia de 7 días o más</li></ul>"+
+      "<p><b>Durante una ola de calor repentina, todos son observados de cerca</b> — incluso los empleados totalmente aclimatados — porque un aumento brusco del índice de calor es peligroso para todos.</p>"+
+      "<div class='notice'><b>Importante:</b> <b>no se puede desarrollar tolerancia al calor durante una ola de calor</b>. Un aumento repentino de temperatura es peligroso para todos, sin importar cuánto tiempo haya trabajado afuera.</div>"+
+      "<p><b>Observación cercana</b> significa que alguien está pendiente de usted: observación directa del supervisor, un sistema obligatorio de compañeros, o comunicación regular por radio o teléfono si trabaja solo o en una parte alejada del patio.</p>",
+      kc:{ q:"Usted regresa de dos semanas de vacaciones en julio. ¿Qué le aplica?", opts:["Nada — usted ya trabaja aquí","Observación cercana por 14 días, porque la aclimatación se pierde después de 7 días o más de ausencia","Debe repetir esta capacitación antes de trabajar","No puede trabajar afuera por una semana"], a:1 } },
+
+    { h:"6. EPP, Ropa y Cómo Refrescarse", body:
+      "<p>El equipo que lo protege de otros peligros también retiene el calor. Durante <b>todos los descansos y comidas</b>, quítese el EPP que retiene calor — ropa no transpirable o resistente a químicos, y cualquier otro equipo que atrape el calor — para que su cuerpo realmente pueda enfriarse. Sentarse en la sombra con un traje de barrera de vapor sirve de muy poco.</p>"+
+      "<ul><li>Use ropa clara, holgada y transpirable cuando el trabajo lo permita</li>"+
+      "<li>Use sombra, ventiladores, rociado o paños húmedos y frescos en el cuello y la cara durante el descanso</li>"+
+      "<li>Aproveche las cabinas con aire acondicionado y las áreas de descanso enfriadas</li></ul>"+
+      "<div class='notice'>Nunca se quite el EPP requerido para un peligro mientras sigue trabajando — la respuesta al calor es descanso, agua, sombra y cambios de horario, no quedarse sin protección.</div>" },
+
+    { h:"7. Reconocer las Enfermedades por Calor", body:
+      "<p>Aprenda estas señales — en usted mismo y en quienes trabajan a su alrededor.</p>"+
+      "<table class='mini'><tr><th>Condición</th><th>Señales y síntomas</th><th>Qué hacer</th></tr>"+
+      "<tr><td><b>Sarpullido por calor</b></td><td>Grupos de granitos rojos en la piel — cuello, pecho, pliegues de la piel</td><td>Mantener el área seca; ir a un ambiente más fresco</td></tr>"+
+      "<tr><td><b>Calambres por calor</b></td><td>Calambres o espasmos musculares, normalmente en piernas o abdomen; sudoración abundante</td><td>Ir a la sombra, descansar, beber agua, estirar suavemente</td></tr>"+
+      "<tr><td><b>Agotamiento por calor</b></td><td>Sudoración abundante; debilidad; piel fría, pálida y pegajosa; pulso rápido y débil; náusea o vómito; dolor de cabeza; mareo; desmayo</td><td>Ir a la sombra o aire acondicionado; aflojar la ropa; paños húmedos frescos; sorbos de agua. <b>Si vomita o empeora — llame al 911</b></td></tr>"+
+      "<tr><td><b>Golpe de calor</b><br><span style='color:#C00000'>PELIGRO DE MUERTE</span></td><td>Temperatura corporal de 104&deg;F o más; piel caliente y roja, seca o húmeda; pulso rápido y fuerte; dolor de cabeza; mareo; náusea; <b>confusión, irritabilidad, habla arrastrada</b>; convulsiones; pérdida del conocimiento</td><td><b>LLAME AL 911 INMEDIATAMENTE</b>; llevar a la sombra; enfriar rápido con agua y bolsas de hielo en axilas e ingle; NO dar líquidos si está inconsciente</td></tr></table>"+
+      "<div class='danger'><b>La confusión es la señal de alarma.</b> Un compañero que deja de hablar con sentido, se pone agresivo o deja de sudar en el calor puede estar sufriendo un golpe de calor. No espere a ver si mejora — es una emergencia.</div>",
+      kc:{ q:"Un compañero en el patio está confundido, agresivo y tiene la piel caliente y roja. ¿Cuál es su PRIMERA acción?", opts:["Darle agua fría para beber","Llamar al 911 inmediatamente y comenzar a enfriarlo","Sentarlo y observarlo por 30 minutos","Llevarlo a su casa"], a:1 } },
+
+    { h:"8. Reportar y Responder a Emergencias", body:
+      "<p><b>Reporte los síntomas de inmediato</b> — los suyos o los de un compañero — a su supervisor. Reportar temprano es lo que evita que una mala tarde se convierta en un viaje en ambulancia. Nunca será disciplinado por reportar síntomas de calor ni por tomar un descanso preventivo para refrescarse.</p>"+
+      "<p>Si alguien muestra señales o síntomas de enfermedad por calor:</p>"+
+      "<ul><li><b>Detenga el trabajo</b> y llévelo a la sombra o a un ambiente fresco</li>"+
+      "<li>Afloje o quite la ropa y el EPP pesados que retienen calor</li>"+
+      "<li>Dele agua fresca si está consciente y alerta</li>"+
+      "<li>Enfríelo activamente — abanicar, rociar o pasar agua fresca, paños húmedos, bolsas de hielo en axilas e ingle</li>"+
+      "<li><b>Quédese con esa persona.</b> Nunca deje solo a un empleado afectado</li>"+
+      "<li>Si no mejora rápidamente, o muestra confusión, pérdida del conocimiento o cualquier señal de golpe de calor — <b>LLAME AL 911 INMEDIATAMENTE</b></li>"+
+      "<li>Asegúrese de que los servicios de emergencia puedan llegar; si la persona está en un área alejada del patio, coordine trasladarla a donde pueda llegar una ambulancia</li></ul>"+
+      "<p>Mt. Hood Forest Products mantiene comunicación efectiva — radio, teléfono celular o contacto directo — entre empleados y supervisores para que los síntomas se reporten y se pida ayuda rápidamente.</p>"+
+      "<h2>Números de Emergencia</h2>"+
+      "<p>Emergencia (médica / incendio): <span class='phone'>911</span><br>"+
+      "Sala de Emergencias del Hospital Providence Hood River Memorial: <span class='phone'>(541) 386-3911</span> — 810 12th St, Hood River (sala de emergencias 24 horas, la más cercana al aserradero)</p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿A qué índice de calor entra en vigor la regla del calor de Oregon?", opts:["52&deg;F","80&deg;F","90&deg;F","100&deg;F"], a:1 },
+    { q:"¿Cuánta agua potable debe haber por empleado por hora con un índice de calor de 80&deg;F o más?", opts:["Una pinta","Un cuarto de galón","Dos cuartos de galón","No hay cantidad establecida"], a:1 },
+    { q:"Con un índice de calor de 90&deg;F o más, ¿qué exige Oregon?", opts:["Nada adicional","Un horario escrito y pagado de descansos más observación cercana","Solo un almuerzo","Enviar a todos a casa"], a:1 },
+    { q:"El índice de calor que usa la regla se describe mejor como…", opts:["Solo la lectura del termómetro","La \"temperatura aparente\" — calor más humedad","La mínima nocturna","La temperatura del agua"], a:1 },
+    { q:"¿Cuál bebida NO cuenta para el requisito de agua potable?", opts:["Agua potable fresca","Una bebida deportiva sin cafeína","Una bebida energética","Agua embotellada"], a:2 },
+    { q:"¿Después de cuántos días consecutivos sin trabajar en el calor se pierde la aclimatación?", opts:["2 días","4 días","7 días o más","30 días"], a:2 },
+    { q:"Durante una ola de calor, la observación cercana aplica a…", opts:["Solo empleados nuevos","Solo empleados que regresan de una ausencia","Todos los empleados, incluidos los aclimatados","Solo empleados mayores de 50 años"], a:2 },
+    { q:"¿Por qué debe quitarse el EPP que retiene calor durante los descansos y las comidas?", opts:["Para mantenerlo limpio","Para que el cuerpo realmente pueda enfriarse","Porque lo exige el sindicato","Para revisar si está dañado"], a:1 },
+    { q:"Un compañero está confundido, tiene la piel caliente y roja y dejó de sudar. Esto es…", opts:["Sarpullido por calor — mantener el área seca","Calambres por calor — estirar el músculo","Golpe de calor — llamar al 911 inmediatamente y enfriarlo","Normal en días calurosos"], a:2 },
+    { q:"Usted empieza a sentirse mareado y débil por el calor. ¿Qué debe hacer?", opts:["Aguantar hasta el siguiente descanso programado","Avisar a su supervisor de inmediato e ir a la sombra","Esperar a ver si se le pasa solo","Beber mucha agua de una vez y seguir trabajando"], a:1 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Exposición al Calor al Aire Libre — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Heat Illness Prevention / Prevención de Enfermedades por Calor\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente los niveles de temperatura, los requisitos de agua y descanso, y las señales del golpe de calor — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+
+/* ------------ State ------------ */
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+
+/* ------------ Helpers ------------ */
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+function generateCode(){
+  var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out="";
+  for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); }
+  return CODE_PREFIX+out;
+}
+function gradeQuiz(answers){
+  var correct=0;
+  for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; }
+  var pct=Math.round(correct/ANSWER_KEY.length*100);
+  return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT };
+}
+
+/* ------------ Rendering ------------ */
+function setLang(l){
+  state.lang=l;
+  if(state.screen==="lang") state.screen="intro";
+  $("langBar").className="langbar";
+  $("btnEN").className = l==="en"?"active":"";
+  $("btnES").className = l==="es"?"active":"";
+  render();
+}
+function progress(){
+  if(state.screen==="lang"){ $("progBar").style.width="0%"; return; }
+  var total = T().sections.length + 2;
+  var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1;
+  $("progBar").style.width = Math.round(pos/total*100)+"%";
+}
+function renderLang(){
+  $("app").innerHTML =
+    '<div class="card splash">'+
+    '<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+
+    '<div class="ti-en">Heat Illness Prevention Training</div>'+
+    '<div class="ti-es">Capacitación sobre Prevención de Enfermedades por Calor</div>'+
+    '<div class="choose">Choose your language / Elija su idioma:</div>'+
+    '<div class="langbtns">'+
+    '<button id="langBtnEN">English</button>'+
+    '<button id="langBtnES">Español</button>'+
+    '</div></div>';
+  $("langBtnEN").addEventListener("click", function(){ setLang("en"); });
+  $("langBtnES").addEventListener("click", function(){ setLang("es"); });
+}
+function render(){
+  progress();
+  if(state.screen==="lang") renderLang();
+  else if(state.screen==="intro") renderIntro();
+  else if(state.screen==="section") renderSection();
+  else if(state.screen==="quiz") renderQuiz();
+  else if(state.screen==="pass") renderPass();
+  else if(state.screen==="fail") renderFail();
+}
+function renderIntro(){
+  var t=T();
+  $("app").innerHTML =
+    '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+
+    '<h2>'+t.nameLabel+'</h2>'+
+    '<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+
+    '<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+
+    '<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>';
+  var inp=$("nameInput"), btn=$("startBtn");
+  function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; }
+  inp.addEventListener("input", gate); gate();
+  btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} });
+}
+function renderSection(){
+  var t=T(), s=t.sections[state.section];
+  var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body;
+  var kcPassed = !!state.kcDone[state.section];
+  if(s.kc){
+    html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>';
+    for(var i=0;i<s.kc.opts.length;i++){
+      html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>';
+    }
+    html += '<div class="fb" id="kcFb"></div>';
+    if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>';
+    html += '</div>';
+  }
+  html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>';
+  $("app").innerHTML = html;
+  if(s.kc && !kcPassed){
+    $("kcCheck").addEventListener("click", function(){
+      var sel=document.querySelector('input[name="kc"]:checked');
+      if(!sel) return;
+      var v=parseInt(sel.value,10), fb=$("kcFb");
+      if(v===s.kc.a){
+        state.kcDone[state.section]=true;
+        $("kcOpt"+v).className="opt correct";
+        fb.className="fb ok"; fb.textContent=t.kcOk;
+        $("contBtn").disabled=false; $("kcCheck").disabled=true;
+      } else {
+        $("kcOpt"+v).className="opt wrong";
+        $("kcOpt"+s.kc.a).className="opt correct";
+        fb.className="fb bad"; fb.textContent=t.kcBad;
+        state.kcDone[state.section]=true;
+        $("contBtn").disabled=false; $("kcCheck").disabled=true;
+      }
+    });
+  }
+  $("contBtn").addEventListener("click", function(){
+    if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; }
+    render(); window.scrollTo(0,0);
+  });
+}
+function renderQuiz(){
+  var t=T();
+  var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>';
+  for(var i=0;i<t.quiz.length;i++){
+    var q=t.quiz[i];
+    html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>';
+    for(var j=0;j<q.opts.length;j++){
+      var checked = state.quizAnswers[i]===j ? ' checked' : '';
+      html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>';
+    }
+    html+='</div>';
+  }
+  html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>';
+  html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>';
+  $("app").innerHTML=html;
+  var radios=document.querySelectorAll('#app input[type=radio]');
+  for(var r=0;r<radios.length;r++){
+    radios[r].addEventListener("change", function(e){
+      var name=e.target.name, idx=parseInt(name.substring(1),10);
+      state.quizAnswers[idx]=parseInt(e.target.value,10);
+    });
+  }
+  $("quizSubmit").addEventListener("click", function(){
+    var answers=[];
+    for(var i=0;i<t.quiz.length;i++){
+      if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; }
+      answers.push(state.quizAnswers[i]);
+    }
+    var res=gradeQuiz(answers);
+    state.lastScore=res;
+    if(res.pass){ state.code=generateCode(); state.screen="pass"; }
+    else { state.screen="fail"; }
+    render(); window.scrollTo(0,0);
+  });
+}
+function fmtDate(){
+  var d=new Date();
+  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+}
+function renderPass(){
+  var t=T(), r=state.lastScore;
+  $("app").innerHTML =
+    '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+
+    '<div class="cert" id="certBox">'+
+      '<div>'+t.passSub+'</div>'+
+      '<div class="big" id="certName">'+esc(state.name)+'</div>'+
+      '<div>'+t.passModule+'</div>'+
+      '<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+
+      '<div>'+t.codeLabel+':</div>'+
+      '<div class="code" id="certCode">'+state.code+'</div>'+
+    '</div>'+
+    '<div class="card"><p>'+t.passInstr+'</p>'+
+    '<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>';
+}
+function renderFail(){
+  var t=T(), r=state.lastScore;
+  $("app").innerHTML =
+    '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+
+    '<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+
+    '<p>'+t.failMsg+'</p>'+
+    '<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+
+    '<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>';
+  $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); });
+  $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); });
+}
+
+/* ------------ Test hooks ------------ */
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+
+render();
+</script>
+</body>
+</html>
