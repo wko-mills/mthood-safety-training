@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Heat Illness Prevention SUPERVISOR Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --gray:#666; --light:#F2F2F2;
+          --green:#2E8B57; --amber:#E8A317; --orange:#D2691E; --red:#B22222; --maroon:#701C1C; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--light); color:#222; line-height:1.5; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; background:#fff; box-shadow:0 0 24px rgba(0,0,0,.08); }
+  header { background:var(--dark); color:#fff; padding:14px 20px; }
+  header .co { font-weight:bold; font-size:15px; letter-spacing:.5px; }
+  header .prog { font-size:12px; color:#cfe0f0; }
+  .badge { display:inline-block; background:var(--amber); color:#2b1c00; font-weight:bold; font-size:11px; letter-spacing:1px; padding:2px 8px; border-radius:999px; margin-top:5px; }
+  .bar { height:6px; background:#dce7f2; } .bar span { display:block; height:100%; background:var(--blue); width:0%; transition:width .3s; }
+  main { flex:1; padding:24px 20px 32px; }
+  h1 { color:var(--dark); font-size:24px; margin-bottom:12px; }
+  p { margin-bottom:12px; font-size:16px; }
+  ul, ol { margin:0 0 12px 22px; } li { margin-bottom:7px; font-size:16px; }
+  .eyebrow { text-transform:uppercase; letter-spacing:1.5px; font-size:11px; color:var(--gray); font-weight:bold; margin-bottom:6px; }
+  .card { background:var(--light); border-left:4px solid var(--blue); padding:12px 14px; margin:14px 0; border-radius:0 6px 6px 0; font-size:15px; }
+  .card.warn { border-left-color:var(--red); }
+  .card.do { border-left-color:var(--green); }
+  .btn { display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:15px; font-size:17px; font-weight:bold; font-family:inherit; cursor:pointer; margin-top:18px; }
+  .btn:active { background:var(--dark); } .btn:disabled { background:#b9c8d6; cursor:default; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  a.btn { text-decoration:none; text-align:center; box-sizing:border-box; }
+  input[type=text] { width:100%; padding:13px; font-size:17px; font-family:inherit; border:2px solid #c6d4e2; border-radius:8px; margin-top:6px; }
+  input[type=text]:focus { outline:none; border-color:var(--blue); }
+  label { font-weight:bold; font-size:14px; color:var(--dark); }
+  .opt { display:block; width:100%; text-align:left; background:#fff; border:2px solid #c6d4e2; border-radius:8px; padding:13px 14px; font-size:16px; font-family:inherit; margin-top:10px; cursor:pointer; }
+  .opt.sel { border-color:var(--blue); background:#eaf2fa; }
+  .opt.right { border-color:var(--green); background:#e8f5ee; }
+  .opt.wrong { border-color:var(--red); background:#fbeaea; }
+  .feedback { margin-top:12px; padding:12px 14px; border-radius:8px; font-size:15px; display:none; }
+  .feedback.good { background:#e8f5ee; border-left:4px solid var(--green); display:block; }
+  .feedback.bad { background:#fbeaea; border-left:4px solid var(--red); display:block; }
+  .qnum { font-size:12px; color:var(--gray); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:22px; text-align:center; margin-top:16px; }
+  .cert .big { font-size:22px; font-weight:bold; color:var(--dark); margin:8px 0; }
+  .cert .code { font-size:26px; letter-spacing:3px; font-weight:bold; color:var(--blue); background:var(--light); border-radius:8px; padding:10px; margin:12px 0; }
+  .score-pill { display:inline-block; background:var(--green); color:#fff; border-radius:999px; padding:6px 18px; font-weight:bold; font-size:18px; }
+  .score-pill.fail { background:var(--red); }
+  .steps { counter-reset:s; list-style:none; margin-left:0; }
+  .steps li { counter-increment:s; position:relative; padding-left:34px; margin-bottom:10px; }
+  .steps li:before { content:counter(s); position:absolute; left:0; top:1px; background:var(--blue); color:#fff; width:24px; height:24px; border-radius:50%; text-align:center; font-weight:bold; font-size:14px; line-height:24px; }
+  table.mini { border-collapse:collapse; width:100%; margin:12px 0; font-size:14px; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { padding:12px 20px; font-size:11px; color:var(--gray); text-align:center; border-top:1px solid #e4e9ef; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+    <div class="prog">Heat Illness Prevention Training &mdash; OAR 437-002-0156</div>
+    <div class="badge">SUPERVISOR MODULE</div>
+  </header>
+  <div class="bar"><span id="prog"></span></div>
+  <main id="main"></main>
+  <footer>Mt. Hood Forest Products LLC · Hood River, OR · OAR 437-002-0156 · Supervisor Module v1.0 (2026)</footer>
+</div>
+<script>
+const FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+let empName = "", slideIdx = 0, quizIdx = 0, quizScore = 0;
+const slides = [{"t": "content", "eyebrow": "Section 1 of 8", "title": "Why Supervisors Get Extra Training", "html": "<p>Oregon's heat illness prevention rule requires <b>supervisors to be trained on topics beyond the employee training</b> (OAR 437-002-0156). You are the one who checks the heat index, calls the cool-down rests, and spots the employee in trouble before they know it themselves.</p><p>Your training must cover everything in the employee training, plus:</p><ul><li>The procedures you must follow to implement the heat rule</li><li>The importance of engineering and administrative controls to reduce heat exposure</li><li>What to do when an employee shows signs or symptoms of heat illness, including first aid and emergency response</li><li>How to move or transport an employee to a place where EMS can reach them</li></ul><div class='card warn'><b>This module does not replace the employee training.</b> You must complete the employee Heat Illness Prevention module as well. Both are required of you, annually.</div>"}, {"t": "content", "eyebrow": "Section 2 of 8", "title": "Duty 1 — Know the Heat Index", "html": "<p>Oregon's rule keys off the <b>heat index</b> — the \"apparent temperature\" that combines air temperature and humidity — <b>not</b> the plain thermometer reading. On a humid day the heat index is higher than the air temperature.</p><table class='mini'><tr><th>Heat index in the work area</th><th>What applies</th></tr><tr><td><b>At or above 80&deg;F</b></td><td>Shade, drinking water (1 qt/hr), training, and preventive cool-down rest whenever an employee needs it</td></tr><tr><td><b>At or above 90&deg;F</b> — high heat</td><td>Everything above PLUS a <b>written rest-break schedule</b>, close observation of all employees, and reliable two-way communication</td></tr></table><p><b>How you monitor:</b> a heat-index source for the work area (a heat-index chart from measured temperature and humidity, or a reputable weather source for Hood River), checked at the start of the shift and at least every two hours when the index approaches or exceeds 80&deg;F. Indoor spaces kept below an 80&deg;F heat index by mechanical ventilation are not covered; an equipment cab or shed that reaches 80&deg;F inside is.</p><div class='card do'><b>Write it down.</b> Time, reading, and what you did. It is the cheapest proof that protections were applied when they were needed.</div>"}, {"t": "check", "q": "Oregon's heat rule triggers on which measurement?", "opts": ["The heat index (apparent temperature — heat plus humidity)", "The plain measured air temperature", "Humidity alone", "Whatever the app says it 'feels like'"], "a": 0, "why": "Oregon uses the heat index — the apparent temperature combining heat and humidity. Requirements begin at an 80°F heat index, with high-heat practices at 90°F."}, {"t": "content", "eyebrow": "Section 3 of 8", "title": "Duty 2 — Implement the Right Tier", "html": "<p>Match the protections to the heat index. Here is what <b>you</b> do at each level:</p><div class='card'><b>Heat index at or above 80&deg;F.</b> Water (1 qt/hr/employee, cool, readily accessible). Shade close to the work, big enough to sit fully in the shade. Allow and encourage preventive cool-down rest — never discourage it. Verify training. Watch unacclimatized employees.</div><div class='card warn'><b>Heat index at or above 90&deg;F — high heat.</b> All the above PLUS a <b>written heat-illness rest-break schedule</b> providing paid cool-down rest in the shade, <b>close observation of every employee</b>, and reliable two-way communication.</div><p>A cool-down rest can run concurrently with a meal or rest break the employee already gets. Supervisors can also adjust schedules — starting earlier in the day — to move work out of the worst heat.</p><div class='card'><b>Note the Oregon difference:</b> Oregon uses a written rest-break schedule at the single 90&deg;F high-heat level — not fixed 10-minute-per-two-hour or 15-minute-per-hour minute counts. Follow the schedule in the written Heat Illness Prevention Program.</div>"}, {"t": "check", "q": "At a heat index of 92°F, what does Oregon require of you?", "opts": ["Nothing until it reaches 100°F", "A written, paid cool-down rest-break schedule plus close observation of all employees", "Only the employees' normal lunch break", "A fixed 15-minute rest every hour by rule"], "a": 1, "why": "At a 90°F heat index (high heat), Oregon requires a written rest-break schedule with paid cool-down rest, close observation of all employees, and two-way communication. Oregon uses the schedule rather than fixed minute-counts."}, {"t": "content", "eyebrow": "Section 4 of 8", "title": "Duty 3 — Water and Shade Are On You", "html": "<p><b>Water.</b> At or above an 80&deg;F heat index, each employee must have at least <b>one quart per hour</b> of cool drinking water, readily accessible where they work.</p><ul><li>Position portable containers close to crews working away from fixed water sources</li><li>Keep them clean and replenished through the shift — do not let the supply run out</li><li>Encourage frequent small amounts. Water and caffeine-free sports drinks count; coffee, tea, and energy drinks do not</li></ul><p><b>Shade.</b> At or above an 80&deg;F heat index, shade or equally effective cooling must be big enough for everyone on a break to sit fully in the shade, as close as feasible to the work, and open to the air or mechanically ventilated.</p><div class='card do'>Air-conditioned cabs and cooled break rooms count. A closed truck cab in the sun with the engine off does not.</div>"}, {"t": "content", "eyebrow": "Section 5 of 8", "title": "Duty 4 — Acclimatization and Close Observation", "html": "<p>New and returning employees are the ones who die of heat stroke. Acclimatization builds over <b>7 to 14 days</b> and is <b>lost after 7 or more consecutive days</b> away from working in the heat.</p><p>You closely observe any employee who is <b>newly assigned</b> to work at or above an 80&deg;F heat index, and any employee <b>returning</b> after an absence of 7 days or more.</p><p><b>During a heat wave, you closely observe everyone</b> — including veterans. Nobody builds tolerance during a heat wave; a sudden jump in the heat index is dangerous for every employee regardless of experience.</p><p><b>Close-observation methods:</b> direct observation, a mandatory buddy system, or regular radio/phone check-ins with employees working alone or in remote parts of the yard. Ease new employees in — gradually increase workload and exposure over the first days, keep the hardest tasks off them at first, and give extra water and rest.</p>"}, {"t": "check", "q": "A veteran yard employee returns Monday from 10 days off. The heat index is forecast at 94°F. What applies?", "opts": ["Nothing — he is experienced", "Close observation, because acclimatization is lost after 7 or more days away", "A new-hire orientation", "He cannot work outdoors that week"], "a": 1, "why": "Acclimatization is lost after 7 or more consecutive days away, so the returning employee gets close observation. Experience does not exempt him, and no one builds tolerance during a heat wave."}, {"t": "content", "eyebrow": "Section 6 of 8", "title": "Duty 5 — Controls Before Endurance", "html": "<p>The rule expects you to consider <b>engineering and administrative controls</b> to reduce exposure — not just hand out water and hope.</p><p><b>Engineering:</b> air-conditioned cabs kept in working order; cooled break rooms; fans and misting where practical; shade placed where the work is.</p><p><b>Administrative:</b> start shifts earlier to move work out of the afternoon peak; reschedule the heaviest tasks to cooler hours; rotate crews through hot tasks; add people so the physical load per person drops.</p><div class='card'>Controls are protective and also the practical answer to losing production time to cool-down rest.</div>"}, {"t": "content", "eyebrow": "Section 7 of 8", "title": "Duty 6 — When an Employee Shows Symptoms", "html": "<p><b>Confusion is the red flag</b> — an employee who stops making sense, becomes combative, or stops sweating in the heat may be having a heat stroke.</p><table class='mini'><tr><th>Condition</th><th>What you do</th></tr><tr><td><b>Heat cramps</b></td><td>Move to shade, rest, water, gentle stretching</td></tr><tr><td><b>Heat exhaustion</b> (heavy sweating, weakness, cold pale clammy skin, nausea, headache, dizziness)</td><td>Move to shade or A/C, loosen clothing, cool wet cloths, sips of water, stay with them. Vomiting or worsening — call 911</td></tr><tr><td><b>Heat stroke</b> (104&deg;F+, hot red skin, confusion, slurred speech, seizures, unconsciousness)</td><td><b>CALL 911 IMMEDIATELY.</b> Move to shade, cool rapidly — water, ice packs to armpits and groin. Do NOT give fluids if unconscious</td></tr></table><p>Your sequence: stop work and move to shade; loosen heat-retaining PPE; cool actively; give cool water only if conscious and alert; <b>stay with them — never leave an affected employee alone</b>; call 911 for confusion, unconsciousness, or any sign of heat stroke.</p><div class='card warn'>Do not \"wait and see\" on confusion. Calling 911 on an employee who turns out to have heat exhaustion is a good outcome. The reverse is not.</div>"}, {"t": "check", "q": "An employee is confused and combative with hot, red skin. Your FIRST action is to:", "opts": ["Have them sit and watch them for 30 minutes", "Call 911 immediately and begin cooling them", "Send them home to rest", "Give them water and finish the task"], "a": 1, "why": "Confusion plus hot red skin points to heat stroke — a life-threatening emergency. Call 911 immediately and cool aggressively while you wait."}, {"t": "content", "eyebrow": "Section 8 of 8", "title": "Duty 7 — Communication, EMS, and Records", "html": "<p>Mt. Hood Forest Products maintains effective communication — radios and cell phones that work where your crew is — so symptoms get reported and help gets summoned fast, with a check-in routine for anyone working alone or at the far end of the yard.</p><p><b>Getting an employee to care:</b> know the access route into the yard and who meets the ambulance at the gate. If the employee is where an ambulance cannot reach, arrange to move them to where EMS can — and keep cooling them. Never send an affected employee to drive themselves or send them home alone. Nearest ER: Providence Hood River Memorial Hospital, (541) 386-3911.</p><div class='card do'><b>Never retaliate.</b> An employee who reports symptoms, takes a preventive cool-down rest, or asks for water is exercising a protected right. Discipline for any of those is a violation — and it teaches the crew to hide symptoms.</div><p><b>Training and records:</b> nobody works at or above an 80&deg;F heat index without training first — before outdoor work and at least annually. Verify each employee's current-year training before assigning them. For paper-path employees, grade the written test and, if they pass, submit the completion form on their behalf and file the graded test. Records are kept at least three years.</p>"}, {"t": "check", "q": "An employee reports symptoms of heat illness or takes a preventive cool-down rest. You may:", "opts": ["Dock their pay", "Discipline them for slowing production", "Never retaliate — it is a protected right", "Require a doctor's note before they report anything"], "a": 2, "why": "Reporting symptoms, taking a preventive cool-down rest, and asking for water are protected rights. Retaliation is a violation and teaches the whole crew to hide symptoms — which is how someone ends up in an ambulance."}];
+const quiz = [{"q": "Supervisor heat training is required in addition to employee training because the rule requires supervisors to know:", "opts": ["Only how to read a thermometer", "The procedures to implement the rule, the value of controls, how to respond to symptoms, and how to get an employee to EMS", "Nothing extra — it is the same training", "How to file workers' comp claims"], "a": 1}, {"q": "Oregon's outdoor heat rule triggers on:", "opts": ["The heat index (heat plus humidity)", "The plain measured air temperature", "Relative humidity alone", "A weather-advisory color"], "a": 0}, {"q": "Shade and water requirements begin at what heat index?", "opts": ["52°F", "90°F", "80°F", "100°F"], "a": 2}, {"q": "At a heat index of 90°F or above (high heat), you must provide:", "opts": ["A fixed 10-minute rest every two hours by rule", "Nothing until 100°F", "Rest only for unacclimatized employees", "A written paid rest-break schedule plus close observation of all employees"], "a": 3}, {"q": "How does Oregon structure high-heat cool-down rest?", "opts": ["A written rest-break schedule at the single 90°F high-heat level", "Fixed 10-min/2-hr at 90 and 15-min/1-hr at 100", "No rest is required", "Only at 100°F"], "a": 0}, {"q": "Acclimatization is lost after how many consecutive days away from working in the heat?", "opts": ["2 days", "4 days", "7 or more days", "30 days"], "a": 2}, {"q": "During a heat wave, close observation applies to:", "opts": ["New employees only", "All employees, including fully acclimatized ones", "Employees returning from absence only", "Only employees who report symptoms"], "a": 1}, {"q": "An employee is confused, combative, and has hot red skin. You should:", "opts": ["Have them rest in the truck for 30 minutes", "Drive them home", "Give them water and let them finish", "Call 911 immediately and start cooling them"], "a": 3}, {"q": "Which beverage counts toward the drinking-water requirement?", "opts": ["Coffee", "An energy drink", "Cool water or a caffeine-free sports drink", "Tea"], "a": 2}, {"q": "An employee reports heat symptoms or takes a preventive cool-down rest. You may:", "opts": ["Dock their pay", "Never retaliate — it is a protected right", "Discipline them for slowing production", "Require a doctor's note first"], "a": 1}];
+const main = document.getElementById('main');
+const progEl = document.getElementById('prog');
+const totalSteps = slides.length + quiz.length + 2;
+function setProg(n){ progEl.style.width = Math.min(100, Math.round(n/totalSteps*100)) + '%'; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function showStart(){
+  setProg(0);
+  main.innerHTML = `
+    <div class="eyebrow">Mt. Hood Forest Products LLC · Safety Department</div>
+    <h1>Heat Illness Prevention — Supervisor Training</h1>
+    <p>Required annual supervisor training under OAR 437-002-0156 and the Mt. Hood Forest Products Heat Illness Prevention Program. About 15 minutes.</p>
+    <div class="card warn"><b>Complete the employee Heat Illness Prevention module first.</b> This module covers your additional duties as a supervisor — it does not replace the employee training, and both are required of you.</div>
+    <div class="card">Pass the 10-question quiz with <b>80% or better</b> to finish. You'll get a completion code and a button to record it.</div>
+    <label for="nm">Enter your full name to begin</label>
+    <input type="text" id="nm" autocomplete="name" placeholder="First and last name">
+    <button class="btn" id="startBtn" disabled>Start Supervisor Training</button>`;
+  const nm=document.getElementById('nm'), b=document.getElementById('startBtn');
+  nm.addEventListener('input', ()=>{ b.disabled = nm.value.trim().split(/\s+/).length < 2; });
+  b.addEventListener('click', ()=>{ empName=nm.value.trim(); slideIdx=0; showSlide(); });
+}
+function showSlide(){
+  if (slideIdx >= slides.length){ quizIdx=0; quizScore=0; showQuizIntro(); return; }
+  setProg(1+slideIdx);
+  const s = slides[slideIdx];
+  if (s.t === 'content'){
+    main.innerHTML = `<div class="eyebrow">${esc(s.eyebrow)}</div><h1>${esc(s.title)}</h1>${s.html}
+      <button class="btn" id="nextBtn">Continue</button>`;
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  } else {
+    main.innerHTML = `<div class="eyebrow">Knowledge Check</div><h1>Quick Question</h1><p><b>${esc(s.q)}</b></p>
+      <div id="opts"></div><div class="feedback" id="fb"></div>
+      <button class="btn" id="nextBtn" style="display:none">Continue</button>`;
+    const optsEl=document.getElementById('opts');
+    s.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=o;
+      b.addEventListener('click', ()=>{
+        const fb=document.getElementById('fb');
+        [...optsEl.children].forEach(c=>c.disabled=true);
+        if (i===s.a){ b.classList.add('right'); fb.className='feedback good'; fb.textContent=s.why;
+          document.getElementById('nextBtn').style.display='block'; }
+        else { b.classList.add('wrong'); fb.className='feedback bad'; fb.textContent='Not quite — take another look and try again.';
+          setTimeout(()=>{ [...optsEl.children].forEach(c=>{c.disabled=false;c.classList.remove('wrong');}); fb.className='feedback'; },1600); }
+      });
+      optsEl.appendChild(b);
+    });
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  }
+}
+function showQuizIntro(){
+  setProg(1+slides.length);
+  main.innerHTML = `<div class="eyebrow">Final Quiz</div>
+    <h1>Ready, ${esc(empName.split(' ')[0])}?</h1>
+    <p>10 questions. You need <b>8 correct (80%)</b> to pass. If you don't pass, review the material and retake it.</p>
+    <button class="btn" id="goBtn">Begin Quiz</button>
+    <button class="btn secondary" id="revBtn">Review Material First</button>`;
+  document.getElementById('goBtn').addEventListener('click', ()=>{ showQuizQ(); window.scrollTo(0,0); });
+  document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+}
+function showQuizQ(){
+  if (quizIdx >= quiz.length){ showResult(); return; }
+  setProg(1+slides.length+quizIdx);
+  const qq = quiz[quizIdx];
+  main.innerHTML = `<div class="qnum">Question ${quizIdx+1} of ${quiz.length}</div>
+    <h1 style="font-size:20px">${esc(qq.q)}</h1><div id="opts"></div>
+    <button class="btn" id="subBtn" disabled>Submit Answer</button>`;
+  const optsEl=document.getElementById('opts');
+  let sel=-1;
+  qq.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=o;
+    b.addEventListener('click', ()=>{ sel=i; [...optsEl.children].forEach(c=>c.classList.remove('sel')); b.classList.add('sel');
+      document.getElementById('subBtn').disabled=false; });
+    optsEl.appendChild(b);
+  });
+  document.getElementById('subBtn').addEventListener('click', ()=>{
+    if (sel===qq.a) quizScore++;
+    quizIdx++; showQuizQ(); window.scrollTo(0,0);
+  });
+}
+function completionCode(){
+  const d=new Date();
+  const ds=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  let h=0; const src=empName.toUpperCase()+ds+quizScore+'SUP';
+  for (let i=0;i<src.length;i++){ h=((h<<5)-h+src.charCodeAt(i))|0; }
+  const alpha="BCDFGHJKMNPQRSTVWXYZ23456789";
+  let n=Math.abs(h), out="";
+  for (let i=0;i<5;i++){ out+=alpha.charAt(n%alpha.length); n=Math.floor(n/alpha.length); }
+  return 'HT26S-' + out;
+}
+function showResult(){
+  setProg(totalSteps);
+  const pct = Math.round(quizScore/quiz.length*100);
+  const passed = pct >= 80;
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  if (passed){
+    main.innerHTML = `<div class="eyebrow">Training Complete</div><h1>Congratulations!</h1>
+      <p style="text-align:center"><span class="score-pill">Score: ${pct}%</span></p>
+      <div class="cert">
+        <div class="eyebrow">Certificate of Completion</div>
+        <div class="big">${esc(empName)}</div>
+        <p>has completed <b>Heat Illness Prevention SUPERVISOR Training</b><br>per OAR 437-002-0156</p>
+        <p><b>${dateStr}</b> · Score: <b>${quizScore}/${quiz.length} (${pct}%)</b></p>
+        <div class="code">${completionCode()}</div>
+        <p style="font-size:13px;color:var(--gray)">Mt. Hood Forest Products LLC · Hood River, OR</p>
+      </div>
+      <div class="card"><b>Final step — record your completion:</b> Tap the button below to open the completion form. Select the module <b>Heat Illness Prevention — Supervisor / Prevención de Enfermedades por Calor — Supervisor</b>, enter today's date, your score, and the completion code above, then submit. Screenshot this screen for your own records. Your training is not documented until the form is submitted.</div>
+      <a class="btn" href="${FORM_URL}" target="_blank" rel="noopener">Record My Completion</a>`;
+  } else {
+    main.innerHTML = `<div class="eyebrow">Quiz Result</div><h1>Not Quite — Let's Try Again</h1>
+      <p style="text-align:center"><span class="score-pill fail">Score: ${pct}%</span></p>
+      <p>You need 80% to pass. Review the material and take the quiz again — your crew is counting on you knowing this cold.</p>
+      <button class="btn" id="revBtn">Review Material</button>
+      <button class="btn secondary" id="retryBtn">Retake Quiz Now</button>`;
+    document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+    document.getElementById('retryBtn').addEventListener('click', ()=>{ quizIdx=0; quizScore=0; showQuizQ(); window.scrollTo(0,0); });
+  }
+}
+window.APP = { slides, quiz, FORM_URL, completionCode, showStart,
+  get state(){ return { empName, slideIdx, quizIdx, quizScore }; },
+  setName(n){ empName = n; }, setScore(s){ quizScore = s; },
+  showResult, showSlide, showQuizQ, showQuizIntro };
+showStart();
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Wildfire Smoke Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Wildfire Smoke Training &mdash; OAR 437-002-1081</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Wildfire Smoke Program v2.2 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "WS26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Wildfire Smoke Program v2.2 (OAR 437-002-1081, Oregon OSHA's Protection from Wildfire Smoke rule). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — Working Safely in Wildfire Smoke",
+  introP1: "Oregon summers bring wildfire smoke, and a sawmill puts people outdoors — in the log yard, the lumber yard, on mobile equipment — right where the smoke is. Wildfire smoke is not just a nuisance: the fine particles in it (PM2.5) get deep into your lungs and bloodstream and can make you sick, fast. This training explains how Mt. Hood Forest Products tracks the air, what happens as the smoke gets worse, and how to protect yourself.",
+  introP2: "This training takes about 15 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. What Wildfire Smoke Is — and the Number That Matters", body:
+      "<p>Wildfire smoke is a mix of gases and fine particles. The dangerous part is <b>PM2.5</b> — particles so small (2.5 microns or less) they slip past your body's defenses, lodge deep in your lungs, and pass into your bloodstream.</p>"+
+      "<p>Air quality is reported two ways, and you'll hear both:</p>"+
+      "<ul><li><b>AQI (Air Quality Index)</b> — the public 0–500+ scale you see on weather apps and signs</li>"+
+      "<li><b>PM2.5 (µg/m³)</b> — the actual particle concentration the rule is written around</li></ul>"+
+      "<p>Oregon has its own wildfire smoke rule — <b>OAR 437-002-1081</b> (there is no federal wildfire smoke standard). It kicks in when the air reaches <b>AQI 101, which is PM2.5 of 35.5 µg/m³</b>.</p>"+
+      "<div class='notice'><b>AQI 101 is the number to remember.</b> That's \"Unhealthy for Sensitive Groups\" on the public scale — and the point where Mt. Hood Forest Products' wildfire smoke protections switch on.</div>",
+      kc:{ q:"At what AQI does Oregon's wildfire smoke rule first apply?", opts:["AQI 50","AQI 101 (PM2.5 35.5 µg/m³)","AQI 300","AQI 500"], a:1 } },
+    { h:"2. The Three Action Levels", body:
+      "<p>Oregon's rule builds protections in <b>three steps</b> as the smoke gets worse. Each level adds to the one before.</p>"+
+      "<table class='mini'><tr><th>Air quality</th><th>What Mt. Hood Forest Products does</th></tr>"+
+      "<tr><td><b>AQI 101–276</b><br>(PM2.5 35.5+)</td><td>The rule applies: assess the air, train you, keep two-way communication open, use exposure controls, and <b>provide N95 respirators for voluntary use</b> at no cost.</td></tr>"+
+      "<tr><td><b>AQI 277–848</b><br>(PM2.5 200.9+)</td><td>Everything above <b>plus respirator use becomes REQUIRED</b> — under the Wildfire Smoke Respiratory Protection Program.</td></tr>"+
+      "<tr><td><b>AQI 849+</b><br>(PM2.5 500.4+)</td><td>Everything above <b>plus a full Respiratory Protection Program</b> under the federal respirator standard (29 CFR 1910.134): medical evaluation, fit testing, and formal training.</td></tr></table>"+
+      "<div class='notice'>Between AQI 101 and 277, wearing an N95 is <b>voluntary but strongly encouraged</b> — the company provides them free, and the smarter the smoke, the more reason to wear one. At AQI 277 and above, it stops being optional.</div>",
+      kc:{ q:"At what air quality does wearing a respirator become REQUIRED (not just voluntary)?", opts:["AQI 101","AQI 277 (PM2.5 200.9)","AQI 50","It is never required"], a:1 } },
+    { h:"3. How the Air Is Checked", body:
+      "<p>You can't manage smoke you aren't measuring. Mt. Hood Forest Products <b>assesses the air quality at the start of each shift, and again as needed</b> when conditions change. The methods Oregon allows:</p>"+
+      "<ul><li>The <b>Oregon DEQ</b> air quality website and monitors</li>"+
+      "<li><b>Local air quality / health advisories</b></li>"+
+      "<li><b>Direct measurement</b> with a particulate monitor on site</li>"+
+      "<li>The <b>5-3-1 Visibility Index</b> — a simple field method: look for known landmarks at 5, 3, and 1 miles; the fewer you can see, the worse the air</li></ul>"+
+      "<p>When the air reaches an action level, <b>you'll be told</b> — that's the two-way communication the rule requires. And if <i>you</i> notice the smoke getting worse, or start feeling symptoms, <b>tell your supervisor</b>. Your report can trigger a re-check.</p>",
+      kc:{ q:"How often does Mt. Hood Forest Products assess the air quality?", opts:["Once a year","At the start of each shift, and again as needed","Only when someone complains","Never"], a:1 } },
+    { h:"4. How Smoke Affects Your Body", body:
+      "<p>Wildfire smoke can affect you within minutes to hours. Learn the symptoms — in yourself and your coworkers:</p>"+
+      "<ul><li><b>Eyes:</b> burning, redness, watering</li>"+
+      "<li><b>Airway:</b> coughing, phlegm, wheezing, scratchy throat</li>"+
+      "<li><b>Breathing:</b> shortness of breath, chest tightness or pain</li>"+
+      "<li><b>Whole body:</b> headache, dizziness, fatigue</li>"+
+      "<li><b>Existing conditions:</b> worsening asthma or other heart/lung conditions</li></ul>"+
+      "<div class='danger'><b>Chest pain, trouble breathing, or a fast/irregular heartbeat are emergencies.</b> Wildfire smoke can trigger heart and breathing problems, not just eye and throat irritation. Get to clean air and get help — don't push through it.</div>",
+      kc:{ q:"Which wildfire smoke symptom should be treated as an emergency?", opts:["Slightly watery eyes","Chest pain or trouble breathing","A mild headache that passes","A faint smoke smell"], a:1 } },
+    { h:"5. Who's at Higher Risk", body:
+      "<p>Smoke hits some people harder. You may be at <b>higher risk</b> if you have:</p>"+
+      "<ul><li><b>Asthma, COPD, or other lung conditions</b></li>"+
+      "<li><b>Heart disease</b></li>"+
+      "<li><b>Diabetes</b></li>"+
+      "<li>A <b>pregnancy</b></li>"+
+      "<li>Are an <b>older adult, or under 18</b></li></ul>"+
+      "<p>This information is for <b>your own personal use</b>. You are not required to tell your employer about a medical condition. But if you are in a higher-risk group, take the smoke seriously, wear a provided respirator when you can, and speak up early if you feel symptoms.</p>"+
+      "<div class='notice'>You will <b>never be retaliated against</b> for reporting symptoms, asking for a respirator, or seeking medical treatment for wildfire smoke exposure. Those are your rights under the rule.</div>",
+      kc:{ q:"If you are in a higher-risk group for wildfire smoke, are you required to tell your employer?", opts:["Yes, always","No — it's for your own use; but take the smoke seriously and speak up early","Only if you're a supervisor","Only above AQI 500"], a:1 } },
+    { h:"6. Respirators — the N95 and How to Wear It", body:
+      "<p>The protection that matters for smoke is a <b>NIOSH-approved filtering facepiece respirator — an N95</b> (or KN95). A cloth mask or surgical mask does <b>not</b> protect you from PM2.5. Mt. Hood Forest Products provides N95s <b>free</b>.</p>"+
+      "<p>An N95 only works if it <b>seals to your face</b>:</p>"+
+      "<ul><li><b>Do a seal check every time</b> you put one on — cover it with your hands and breathe in and out; the mask should pull in slightly and you should feel no leaks around the edges</li>"+
+      "<li><b>Both straps on</b>, one high on the back of the head, one at the base of the neck; pinch the nose clip to the shape of your nose</li>"+
+      "<li><b>Facial hair breaks the seal</b> — stubble or a beard where the mask meets skin lets smoke leak straight in</li>"+
+      "<li><b>Replace it</b> when breathing gets hard, it's damaged, or the inside gets dirty or damp. Don't wash or share single-use N95s</li></ul>"+
+      "<div class='notice'>At the voluntary levels (AQI 101–276) the company gives you the N95 and the proper-use information, and you choose to wear it. At AQI 277+ it's required and the respirator program (with medical evaluation and fit testing at the highest levels) applies.</div>",
+      kc:{ q:"What must you do every time you put on an N95 respirator?", opts:["Wash it first","Perform a user seal check","Wet it down","Trim it to fit"], a:1 } },
+    { h:"7. Controls — Reducing Your Exposure", body:
+      "<p>Respirators are one layer, not the only one. Mt. Hood Forest Products reduces smoke exposure with <b>controls</b>, roughly in this order:</p>"+
+      "<ul><li><b>Cleaner-air spaces</b> — enclosed buildings or equipment cabs with filtered air, kept closed, where you can work or take breaks. (These filtered, closed spaces are actually <b>exempt</b> from the rule, because the air inside is clean.)</li>"+
+      "<li><b>Schedule and workload changes</b> — shifting heavy work to cleaner-air times of day, rotating people out of the worst of it, adding breaks in clean air</li>"+
+      "<li><b>Relocating work</b> indoors or to a less-smoky area when practical</li>"+
+      "<li><b>Respirators</b> — voluntary, then required, as the AQI climbs</li></ul>"+
+      "<p>An enclosed cab or building only counts as clean air if it has <b>working air filtration and the windows and doors are kept closed</b>. A cab with the window down in heavy smoke is not protection.</p>",
+      kc:{ q:"An equipment cab counts as a clean-air space only if…", opts:["It has a radio","It has working air filtration and windows/doors are kept closed","It is painted a light color","The engine is running"], a:1 } },
+    { h:"8. Your Part and Emergencies", body:
+      "<p>Your part is simple:</p>"+
+      "<ul><li><b>Know the AQI</b> for your shift — ask if you weren't told</li>"+
+      "<li><b>Wear the N95</b> you're provided, especially as the smoke worsens — and correctly, with a seal check</li>"+
+      "<li><b>Use the clean-air spaces</b> for breaks</li>"+
+      "<li><b>Report</b> worsening smoke and any symptoms to your supervisor — early</li>"+
+      "<li><b>Get to clean air and get help</b> if you or a coworker has trouble breathing or chest pain</li></ul>"+
+      "<h2>If Someone Has Serious Symptoms</h2>"+
+      "<p>Move them to clean, filtered air; let them rest; monitor them. If symptoms persist or worsen — especially trouble breathing, chest pain, or dizziness — arrange medical care. For an emergency, call 911.</p>"+
+      "<p>Emergency (medical): <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"The dangerous part of wildfire smoke that gets deep into your lungs is…", opts:["Ash you can see", "PM2.5 — fine particles 2.5 microns or smaller", "Carbon dioxide", "Water vapor"], a:1 },
+    { q:"At what AQI does Oregon's wildfire smoke rule (OAR 437-002-1081) first apply?", opts:["AQI 50", "AQI 250", "AQI 500", "AQI 101 (PM2.5 35.5 µg/m³)"], a:3 },
+    { q:"At what air quality does respirator use become REQUIRED, not just voluntary?", opts:["AQI 101", "AQI 277 (PM2.5 200.9)", "It is never required", "AQI 50"], a:1 },
+    { q:"How often does the employer assess air quality?", opts:["At the start of each shift, and as needed", "Once per season", "Only after a fire is reported", "Weekly"], a:0 },
+    { q:"Which is an approved way to check air quality in Oregon?", opts:["Guessing by the sunset color", "Asking a coworker how they feel", "The Oregon DEQ website, advisories, direct measurement, or the 5-3-1 Visibility Index", "Only a weather forecast"], a:2 },
+    { q:"Which wildfire smoke symptom is an emergency?", opts:["Slightly watery eyes", "Chest pain or trouble breathing", "A faint smoke smell", "A mild passing headache"], a:1 },
+    { q:"What kind of mask actually protects you from wildfire smoke PM2.5?", opts:["A cloth mask", "A surgical mask", "A NIOSH-approved N95 (or KN95) filtering facepiece respirator", "A bandana"], a:2 },
+    { q:"What must you do every time you put on an N95?", opts:["Wash it", "Perform a user seal check", "Soak it in water", "Cut the straps"], a:1 },
+    { q:"An equipment cab counts as a clean-air space only if…", opts:["It has working air filtration and windows/doors are kept closed", "It has a good radio", "It is parked uphill", "It is a new model"], a:0 },
+    { q:"You can be retaliated against for reporting smoke symptoms or asking for a respirator.", opts:["True", "Only if you're new", "False — you are protected from retaliation under the rule", "Only above AQI 500"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Wildfire Smoke — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Wildfire Smoke / Humo de Incendios Forestales\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the AQI action levels, when a respirator is required, and how to seal-check an N95 — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Humo de Incendios Forestales de Mt. Hood Forest Products v2.2 (OAR 437-002-1081, la regla de Protección contra el Humo de Incendios Forestales de Oregon OSHA). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — Trabajar con Seguridad en Humo de Incendios Forestales",
+  introP1: "Los veranos de Oregon traen humo de incendios forestales, y un aserradero pone a la gente al aire libre — en el patio de trozas, el patio de madera, en equipo móvil — justo donde está el humo. El humo de incendios forestales no es solo una molestia: las partículas finas que contiene (PM2.5) llegan profundo a sus pulmones y torrente sanguíneo y pueden enfermarlo, rápido. Esta capacitación explica cómo Mt. Hood Forest Products vigila el aire, qué pasa a medida que el humo empeora, y cómo protegerse.",
+  introP2: "Esta capacitación toma unos 15 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Qué Es el Humo de Incendios Forestales — y el Número Que Importa", body:
+      "<p>El humo de incendios forestales es una mezcla de gases y partículas finas. La parte peligrosa es el <b>PM2.5</b> — partículas tan pequeñas (2.5 micras o menos) que pasan las defensas de su cuerpo, se alojan profundo en sus pulmones, y pasan a su torrente sanguíneo.</p>"+
+      "<p>La calidad del aire se reporta de dos maneras, y escuchará ambas:</p>"+
+      "<ul><li><b>AQI (Índice de Calidad del Aire)</b> — la escala pública de 0 a 500+ que ve en apps del clima y letreros</li>"+
+      "<li><b>PM2.5 (µg/m³)</b> — la concentración real de partículas alrededor de la cual está escrita la regla</li></ul>"+
+      "<p>Oregon tiene su propia regla de humo de incendios forestales — <b>OAR 437-002-1081</b> (no hay norma federal de humo de incendios forestales). Entra en vigor cuando el aire llega a <b>AQI 101, que es PM2.5 de 35.5 µg/m³</b>.</p>"+
+      "<div class='notice'><b>AQI 101 es el número que debe recordar.</b> Eso es \"Insalubre para Grupos Sensibles\" en la escala pública — y el punto donde se activan las protecciones de humo de Mt. Hood Forest Products.</div>",
+      kc:{ q:"¿A qué AQI aplica por primera vez la regla de humo de incendios forestales de Oregon?", opts:["AQI 50","AQI 101 (PM2.5 35.5 µg/m³)","AQI 300","AQI 500"], a:1 } },
+    { h:"2. Los Tres Niveles de Acción", body:
+      "<p>La regla de Oregon construye las protecciones en <b>tres pasos</b> a medida que el humo empeora. Cada nivel se suma al anterior.</p>"+
+      "<table class='mini'><tr><th>Calidad del aire</th><th>Qué hace Mt. Hood Forest Products</th></tr>"+
+      "<tr><td><b>AQI 101–276</b><br>(PM2.5 35.5+)</td><td>La regla aplica: evaluar el aire, capacitarlo, mantener la comunicación de dos vías, usar controles de exposición, y <b>proporcionar respiradores N95 para uso voluntario</b> sin costo.</td></tr>"+
+      "<tr><td><b>AQI 277–848</b><br>(PM2.5 200.9+)</td><td>Todo lo anterior <b>más el uso de respirador se vuelve OBLIGATORIO</b> — bajo el Programa de Protección Respiratoria contra el Humo de Incendios Forestales.</td></tr>"+
+      "<tr><td><b>AQI 849+</b><br>(PM2.5 500.4+)</td><td>Todo lo anterior <b>más un Programa completo de Protección Respiratoria</b> bajo la norma federal de respiradores (29 CFR 1910.134): evaluación médica, prueba de ajuste, y capacitación formal.</td></tr></table>"+
+      "<div class='notice'>Entre AQI 101 y 277, usar un N95 es <b>voluntario pero muy recomendado</b> — la empresa los da gratis, y mientras más denso el humo, más razón para usar uno. En AQI 277 y más, deja de ser opcional.</div>",
+      kc:{ q:"¿A qué calidad del aire el uso de respirador se vuelve OBLIGATORIO (no solo voluntario)?", opts:["AQI 101","AQI 277 (PM2.5 200.9)","AQI 50","Nunca se requiere"], a:1 } },
+    { h:"3. Cómo Se Revisa el Aire", body:
+      "<p>No puede manejar el humo que no está midiendo. Mt. Hood Forest Products <b>evalúa la calidad del aire al inicio de cada turno, y de nuevo según sea necesario</b> cuando las condiciones cambian. Los métodos que Oregon permite:</p>"+
+      "<ul><li>El sitio web y los monitores de calidad del aire de la <b>DEQ de Oregon</b></li>"+
+      "<li><b>Avisos locales de calidad del aire / salud</b></li>"+
+      "<li><b>Medición directa</b> con un monitor de partículas en el sitio</li>"+
+      "<li>El <b>Índice de Visibilidad 5-3-1</b> — un método de campo simple: busque puntos de referencia conocidos a 5, 3 y 1 milla; mientras menos pueda ver, peor el aire</li></ul>"+
+      "<p>Cuando el aire llega a un nivel de acción, <b>se le informará</b> — esa es la comunicación de dos vías que exige la regla. Y si <i>usted</i> nota que el humo empeora, o empieza a sentir síntomas, <b>avise a su supervisor</b>. Su reporte puede activar una nueva revisión.</p>",
+      kc:{ q:"¿Con qué frecuencia evalúa Mt. Hood Forest Products la calidad del aire?", opts:["Una vez al año","Al inicio de cada turno, y de nuevo según sea necesario","Solo cuando alguien se queja","Nunca"], a:1 } },
+    { h:"4. Cómo el Humo Afecta Su Cuerpo", body:
+      "<p>El humo de incendios forestales puede afectarlo en minutos a horas. Aprenda los síntomas — en usted y sus compañeros:</p>"+
+      "<ul><li><b>Ojos:</b> ardor, enrojecimiento, lagrimeo</li>"+
+      "<li><b>Vías respiratorias:</b> tos, flema, sibilancias, garganta irritada</li>"+
+      "<li><b>Respiración:</b> falta de aire, opresión o dolor en el pecho</li>"+
+      "<li><b>Todo el cuerpo:</b> dolor de cabeza, mareo, fatiga</li>"+
+      "<li><b>Condiciones existentes:</b> empeoramiento del asma u otras condiciones del corazón/pulmones</li></ul>"+
+      "<div class='danger'><b>El dolor de pecho, la dificultad para respirar, o un latido rápido/irregular son emergencias.</b> El humo de incendios forestales puede desencadenar problemas del corazón y la respiración, no solo irritación de ojos y garganta. Vaya a aire limpio y busque ayuda — no lo aguante.</div>",
+      kc:{ q:"¿Cuál síntoma del humo de incendios forestales debe tratarse como emergencia?", opts:["Ojos un poco llorosos","Dolor de pecho o dificultad para respirar","Un dolor de cabeza leve que se pasa","Un leve olor a humo"], a:1 } },
+    { h:"5. Quién Está en Mayor Riesgo", body:
+      "<p>El humo golpea más fuerte a algunas personas. Puede estar en <b>mayor riesgo</b> si tiene:</p>"+
+      "<ul><li><b>Asma, EPOC, u otras condiciones pulmonares</b></li>"+
+      "<li><b>Enfermedad del corazón</b></li>"+
+      "<li><b>Diabetes</b></li>"+
+      "<li>Un <b>embarazo</b></li>"+
+      "<li>Es un <b>adulto mayor, o menor de 18 años</b></li></ul>"+
+      "<p>Esta información es para <b>su propio uso personal</b>. No está obligado a informar a su empleador sobre una condición médica. Pero si está en un grupo de mayor riesgo, tome el humo en serio, use un respirador proporcionado cuando pueda, y hable temprano si siente síntomas.</p>"+
+      "<div class='notice'><b>Nunca habrá represalias</b> por reportar síntomas, pedir un respirador, o buscar tratamiento médico por exposición al humo de incendios forestales. Esos son sus derechos bajo la regla.</div>",
+      kc:{ q:"Si está en un grupo de mayor riesgo por humo de incendios forestales, ¿está obligado a informar a su empleador?", opts:["Sí, siempre","No — es para su propio uso; pero tome el humo en serio y hable temprano","Solo si es supervisor","Solo por encima de AQI 500"], a:1 } },
+    { h:"6. Respiradores — el N95 y Cómo Usarlo", body:
+      "<p>La protección que importa para el humo es un <b>respirador de pieza facial filtrante aprobado por NIOSH — un N95</b> (o KN95). Una mascarilla de tela o quirúrgica <b>no</b> lo protege del PM2.5. Mt. Hood Forest Products proporciona N95 <b>gratis</b>.</p>"+
+      "<p>Un N95 solo funciona si <b>sella a su cara</b>:</p>"+
+      "<ul><li><b>Haga una verificación de sello cada vez</b> que se lo ponga — cúbralo con las manos y respire hacia adentro y afuera; la mascarilla debe jalarse ligeramente hacia adentro y no debe sentir fugas por los bordes</li>"+
+      "<li><b>Ambas correas puestas</b>, una alta en la parte de atrás de la cabeza, una en la base del cuello; apriete el clip de la nariz a la forma de su nariz</li>"+
+      "<li><b>El vello facial rompe el sello</b> — la barba incipiente o una barba donde la mascarilla toca la piel deja entrar el humo directamente</li>"+
+      "<li><b>Reemplácelo</b> cuando respirar se hace difícil, está dañado, o el interior se ensucia o humedece. No lave ni comparta N95 de un solo uso</li></ul>"+
+      "<div class='notice'>En los niveles voluntarios (AQI 101–276) la empresa le da el N95 y la información de uso adecuado, y usted elige usarlo. En AQI 277+ es obligatorio y aplica el programa de respiradores (con evaluación médica y prueba de ajuste en los niveles más altos).</div>",
+      kc:{ q:"¿Qué debe hacer cada vez que se pone un N95?", opts:["Lavarlo primero","Hacer una verificación de sello","Mojarlo","Recortarlo para que ajuste"], a:1 } },
+    { h:"7. Controles — Reducir Su Exposición", body:
+      "<p>Los respiradores son una capa, no la única. Mt. Hood Forest Products reduce la exposición al humo con <b>controles</b>, aproximadamente en este orden:</p>"+
+      "<ul><li><b>Espacios de aire más limpio</b> — edificios cerrados o cabinas de equipo con aire filtrado, mantenidos cerrados, donde puede trabajar o descansar. (Estos espacios filtrados y cerrados están de hecho <b>exentos</b> de la regla, porque el aire adentro está limpio.)</li>"+
+      "<li><b>Cambios de horario y carga de trabajo</b> — mover el trabajo pesado a horas de aire más limpio, rotar a la gente fuera de lo peor, agregar descansos en aire limpio</li>"+
+      "<li><b>Reubicar el trabajo</b> adentro o a un área menos ahumada cuando sea práctico</li>"+
+      "<li><b>Respiradores</b> — voluntarios, luego obligatorios, a medida que sube el AQI</li></ul>"+
+      "<p>Una cabina o edificio cerrado solo cuenta como aire limpio si tiene <b>filtración de aire funcionando y las ventanas y puertas se mantienen cerradas</b>. Una cabina con la ventana abajo en humo denso no es protección.</p>",
+      kc:{ q:"Una cabina de equipo cuenta como espacio de aire limpio solo si…", opts:["Tiene un radio","Tiene filtración de aire funcionando y las ventanas/puertas se mantienen cerradas","Está pintada de un color claro","El motor está encendido"], a:1 } },
+    { h:"8. Su Parte y Emergencias", body:
+      "<p>Su parte es simple:</p>"+
+      "<ul><li><b>Conozca el AQI</b> de su turno — pregunte si no le avisaron</li>"+
+      "<li><b>Use el N95</b> que le dan, especialmente a medida que el humo empeora — y correctamente, con una verificación de sello</li>"+
+      "<li><b>Use los espacios de aire limpio</b> para los descansos</li>"+
+      "<li><b>Reporte</b> el humo que empeora y cualquier síntoma a su supervisor — temprano</li>"+
+      "<li><b>Vaya a aire limpio y busque ayuda</b> si usted o un compañero tiene dificultad para respirar o dolor de pecho</li></ul>"+
+      "<h2>Si Alguien Tiene Síntomas Graves</h2>"+
+      "<p>Llévelo a aire limpio y filtrado; déjelo descansar; vigílelo. Si los síntomas persisten o empeoran — especialmente dificultad para respirar, dolor de pecho, o mareo — coordine atención médica. Para una emergencia, llame al 911.</p>"+
+      "<p>Emergencia (médica): <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"La parte peligrosa del humo de incendios forestales que llega profundo a sus pulmones es…", opts:["La ceniza que puede ver", "El PM2.5 — partículas finas de 2.5 micras o menos", "El dióxido de carbono", "El vapor de agua"], a:1 },
+    { q:"¿A qué AQI aplica por primera vez la regla de humo de Oregon (OAR 437-002-1081)?", opts:["AQI 50", "AQI 250", "AQI 500", "AQI 101 (PM2.5 35.5 µg/m³)"], a:3 },
+    { q:"¿A qué calidad del aire el uso de respirador se vuelve OBLIGATORIO, no solo voluntario?", opts:["AQI 101", "AQI 277 (PM2.5 200.9)", "Nunca se requiere", "AQI 50"], a:1 },
+    { q:"¿Con qué frecuencia evalúa el empleador la calidad del aire?", opts:["Al inicio de cada turno, y según sea necesario", "Una vez por temporada", "Solo después de reportarse un incendio", "Semanalmente"], a:0 },
+    { q:"¿Cuál es una forma aprobada de revisar la calidad del aire en Oregon?", opts:["Adivinar por el color del atardecer", "Preguntar a un compañero cómo se siente", "El sitio web de la DEQ de Oregon, avisos, medición directa, o el Índice de Visibilidad 5-3-1", "Solo un pronóstico del clima"], a:2 },
+    { q:"¿Cuál síntoma del humo de incendios forestales es una emergencia?", opts:["Ojos un poco llorosos", "Dolor de pecho o dificultad para respirar", "Un leve olor a humo", "Un dolor de cabeza leve que se pasa"], a:1 },
+    { q:"¿Qué tipo de mascarilla realmente lo protege del PM2.5 del humo?", opts:["Una mascarilla de tela", "Una mascarilla quirúrgica", "Un respirador de pieza facial filtrante N95 (o KN95) aprobado por NIOSH", "Un paliacate"], a:2 },
+    { q:"¿Qué debe hacer cada vez que se pone un N95?", opts:["Lavarlo", "Hacer una verificación de sello", "Remojarlo en agua", "Cortar las correas"], a:1 },
+    { q:"Una cabina de equipo cuenta como espacio de aire limpio solo si…", opts:["Tiene filtración de aire funcionando y las ventanas/puertas se mantienen cerradas", "Tiene un buen radio", "Está estacionada cuesta arriba", "Es un modelo nuevo"], a:0 },
+    { q:"Puede haber represalias contra usted por reportar síntomas del humo o pedir un respirador.", opts:["Verdadero", "Solo si es nuevo", "Falso — está protegido contra represalias bajo la regla", "Solo por encima de AQI 500"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Humo de Incendios Forestales — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Wildfire Smoke / Humo de Incendios Forestales\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente los niveles de acción del AQI, cuándo se requiere un respirador, y cómo verificar el sello de un N95 — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="BCDFGHJKMNPQRSTVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Wildfire Smoke Training</div>'+'<div class="ti-es">Capacitación sobre Humo de Incendios Forestales</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

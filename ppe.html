@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Personal Protective Equipment (PPE) Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Personal Protective Equipment (PPE) Training &mdash; OAR 437-002-0134</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; PPE Program v2.1 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "PP26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Personal Protective Equipment Program v2.1 (OAR 437-002-0134, Oregon OSHA's PPE rule). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — The Gear That Protects You",
+  introP1: "A sawmill has hazards that reach for your eyes, head, hands, feet, and ears every shift — flying chips, falling objects, sharp edges, rolling logs, loud machinery. Personal Protective Equipment (PPE) is the last line of defense: the barrier you wear when a hazard can't be fully engineered away. This training covers what PPE Mt. Hood Forest Products requires, why, and how to wear and care for it so it actually protects you.",
+  introP2: "This training takes about 15 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. PPE Is the Last Line of Defense", body:
+      "<p>PPE matters — but it's the <b>last</b> thing we reach for, not the first. Safety follows a <b>hierarchy of controls</b>, strongest to weakest:</p>"+
+      "<table class='mini'><tr><th>Level</th><th>What it does</th></tr>"+
+      "<tr><td><b>1. Elimination</b></td><td>Remove the hazard entirely</td></tr>"+
+      "<tr><td><b>2. Substitution</b></td><td>Replace it with something less hazardous</td></tr>"+
+      "<tr><td><b>3. Engineering controls</b></td><td>Isolate people from the hazard (guards, ventilation, enclosures)</td></tr>"+
+      "<tr><td><b>4. Administrative controls</b></td><td>Change how people work (procedures, rotation, signs, training)</td></tr>"+
+      "<tr><td><b>5. PPE</b></td><td>Protect the worker with a barrier worn on the body</td></tr></table>"+
+      "<div class='notice'><b>PPE does not remove the hazard</b> — it reduces your exposure to it. That's why it's last: a guard that keeps the hazard away from everyone beats a glove that only helps if it's worn right. But when a hazard remains, <b>PPE is required, without exception</b>, wherever the hazard assessment, the rules, or your supervisor call for it.</div>"+
+      "<p>Oregon has its own PPE rule — <b>OAR 437-002-0134</b>.</p>",
+      kc:{ q:"Where does PPE fall in the hierarchy of controls?", opts:["First — always the top priority","Last — after elimination, substitution, engineering, and administrative controls","It's not part of the hierarchy","Second, after elimination"], a:1 } },
+    { h:"2. The Hazard Assessment — Why You Wear What You Wear", body:
+      "<p>Your PPE isn't guesswork. Mt. Hood Forest Products does a <b>written hazard assessment</b> of each work area and job — walking the operation, identifying the hazards that can reach the body, and selecting the PPE that addresses each one.</p>"+
+      "<p>That assessment is <b>certified in writing</b>: it names the area or job, the date, the person who certified it, the hazards found, and the PPE chosen for each. That's the paper trail behind why your job requires the gear it does.</p>"+
+      "<p>The assessment is <b>reviewed and updated</b> at least annually, and whenever new equipment or processes come in, when an incident suggests the PPE isn't enough, or when employees raise concerns about it.</p>"+
+      "<div class='notice'>If your task has a hazard you don't have PPE for — or the PPE you were given doesn't fit the hazard — that's exactly the kind of thing to raise with your supervisor. The assessment is supposed to catch it; your feedback keeps it honest.</div>",
+      kc:{ q:"What makes the PPE hazard assessment official?", opts:["A verbal okay","A written certification naming the area/job, date, certifier, hazards, and PPE selected","A poster on the wall","Nothing — it's informal"], a:1 } },
+    { h:"3. Eyes and Face", body:
+      "<p>Eye injuries are among the most common — and most preventable — at a mill. Flying chips, dust, sparks, and chemical splash all reach for the eyes.</p>"+
+      "<ul><li><b>Safety glasses with side shields</b> (meeting <b>ANSI/ISEA Z87.1</b>) are the baseline for impact and flying-particle hazards</li>"+
+      "<li><b>Face shields</b> are required over safety glasses for grinding, cutting, and similar high-energy tasks — a face shield alone is <b>not</b> enough, it's worn <i>with</i> safety glasses</li>"+
+      "<li><b>Chemical splash goggles</b> when handling chemicals that could splash</li></ul>"+
+      "<div class='danger'><b>A face shield is a secondary protector.</b> It protects the face, but safety glasses protect the eyes. For grinding or cutting, you wear both — the shield does not replace the glasses.</div>",
+      kc:{ q:"For grinding, what eye/face protection is required?", opts:["A face shield only","Safety glasses AND a face shield together","Regular glasses","Nothing if you're careful"], a:1 } },
+    { h:"4. Head, Feet, Hands, and Hi-Vis", body:
+      "<p>Different hazards, different gear — each to a national performance standard:</p>"+
+      "<table class='mini'><tr><th>Protection</th><th>What and when</th></tr>"+
+      "<tr><td><b>Head</b> (ANSI/ISEA Z89.1)</td><td>Hard hats where there's an overhead hazard — falling or swinging objects, low fixed hazards</td></tr>"+
+      "<tr><td><b>Feet</b> (ASTM F2413)</td><td>Sturdy leather work boots, ankle-height or higher; safety-toe where the assessment requires it</td></tr>"+
+      "<tr><td><b>Hands</b> (ANSI/ISEA 105)</td><td>Leather work gloves when handling rough, sharp, or abrasive material; the right glove for the hazard (cut, chemical, heat)</td></tr>"+
+      "<tr><td><b>High-visibility</b> (ANSI/ISEA 107)</td><td>Hi-vis garment where mobile equipment and pedestrians share space — the yard, traffic areas</td></tr></table>"+
+      "<p>The right glove matters: a leather glove is great for splinters and rough lumber but wrong for chemicals; a cut-resistant glove for sharp edges. Wear what the task and the assessment call for.</p>",
+      kc:{ q:"When is high-visibility apparel required?", opts:["Only at night","Where mobile equipment and people share space, like the yard and traffic areas","Never at a mill","Only for supervisors"], a:1 } },
+    { h:"5. Hearing and Respiratory — Cross-References", body:
+      "<p>Two kinds of PPE are important enough to have their own programs, and this module points you to them:</p>"+
+      "<ul><li><b>Hearing protection</b> — earplugs or earmuffs, worn wherever noise reaches the levels that require it. The details are in the <b>Hearing Conservation Program</b> and its training.</li>"+
+      "<li><b>Respiratory protection</b> — respirators, required when airborne contaminants (dust, wildfire smoke, chemical vapor) exceed safe levels. Respirators come with medical evaluation and fit testing under the <b>Respiratory Protection Program</b> — you don't just grab one.</li></ul>"+
+      "<p>If your job involves either, you get that program's specific training on top of this one. This module makes sure you know the protection exists and when it's needed.</p>",
+      kc:{ q:"Respiratory protection (respirators) requires…", opts:["Nothing special — just grab one","Medical evaluation and fit testing under the Respiratory Protection Program","Only a signature","Only supervisor approval"], a:1 } },
+    { h:"6. Who Pays — and What You Provide", body:
+      "<p>The rule is clear: <b>required PPE is provided at no cost to you</b>, and Mt. Hood Forest Products pays to <b>replace</b> it when it's worn, damaged, or no longer protects.</p>"+
+      "<p>There are a few things the employer is <b>not</b> required to pay for:</p>"+
+      "<ul><li><b>Everyday work boots</b> — the sturdy, ankle-height leather boots you wear all shift are employee-provided (a specialized safety-toe boot the assessment specifically requires is different — that's covered)</li>"+
+      "<li><b>Non-specialty prescription safety eyewear</b> that can be worn off the job</li>"+
+      "<li><b>Ordinary clothing, skin creams, sunscreen</b> — things not designed as PPE</li>"+
+      "<li><b>Voluntary PPE</b> — gear you choose to wear that the hazard assessment doesn't require</li></ul>"+
+      "<div class='notice'>If your required PPE wears out or breaks, you don't buy a new one out of pocket — report it and it's replaced. Working with worn-out or damaged PPE is the same as working without it.</div>",
+      kc:{ q:"Your required safety gloves wear out. Who pays for the replacement?", opts:["You do","Mt. Hood Forest Products — required PPE and its replacement are provided at no cost","No one — you go without","You split the cost"], a:1 } },
+    { h:"7. Inspect, Fit, and Maintain", body:
+      "<p>PPE only protects if it's in good shape and worn right. Before every use:</p>"+
+      "<ul><li><b>Inspect it</b> — cracked lenses, a cracked hard-hat shell, gloves with holes, worn-through boots. Damaged PPE is not protective PPE</li>"+
+      "<li><b>Check the fit</b> — safety glasses that sit right and don't gap, a hard hat with its suspension adjusted, gloves that fit. Poor fit lets the hazard in</li>"+
+      "<li><b>Wear it correctly and completely</b> — a hard hat backward with no suspension, glasses pushed up on your forehead, one glove off — none of that protects you</li>"+
+      "<li><b>Maintain and store it</b> — keep it clean, store it out of damaging conditions, and know when it's reached the end of its useful life</li></ul>"+
+      "<div class='danger'><b>Damaged, ill-fitting, or improperly worn PPE gives a false sense of safety.</b> Cracked safety glasses can shatter into your eye; a hard hat with a cracked shell won't take the hit. If your PPE is compromised, take it out of service and get a replacement.</div>",
+      kc:{ q:"You notice your safety glasses have a cracked lens. What do you do?", opts:["Keep wearing them — a crack is minor","Take them out of service and get a replacement","Tape over the crack","Only use them for light work"], a:1 } },
+    { h:"8. Your Part", body:
+      "<p>PPE is a shared responsibility. Mt. Hood Forest Products assesses the hazards, selects and pays for the right PPE, and trains you. Your part:</p>"+
+      "<ul><li><b>Wear the PPE required</b> for your task — every time, correctly and completely, without exception</li>"+
+      "<li><b>Inspect it</b> before use and <b>report</b> damaged, worn, or ill-fitting PPE so it's replaced</li>"+
+      "<li><b>Use the right PPE for the hazard</b> — the correct glove, the shield with the glasses</li>"+
+      "<li><b>Raise concerns</b> if a hazard isn't covered or the PPE isn't working — that feeds back into the assessment</li>"+
+      "<li><b>Get the specific training</b> for hearing and respiratory protection if your job needs them</li></ul>"+
+      "<h2>Questions</h2>"+
+      "<p>Ask your supervisor or the Environmental Compliance and Safety Lead about the PPE required for your job, replacements, or a hazard you think isn't covered. For an injury, get first aid and call for help. Emergency: <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"Where does PPE fall in the hierarchy of controls?", opts:["First", "Last — after elimination, substitution, engineering, and administrative controls", "It's not in the hierarchy", "Second"], a:1 },
+    { q:"PPE works by…", opts:["Removing the hazard entirely", "Making the hazard invisible", "Replacing engineering controls permanently", "Reducing the employee's exposure to a hazard that remains"], a:3 },
+    { q:"What makes a PPE hazard assessment official?", opts:["A verbal okay", "A written certification (area/job, date, certifier, hazards, PPE selected)", "A safety poster", "Nothing — it's informal"], a:1 },
+    { q:"For grinding, the required eye/face protection is…", opts:["Safety glasses AND a face shield together", "A face shield only", "Regular glasses", "Sunglasses"], a:0 },
+    { q:"High-visibility apparel is required…", opts:["Only at night", "Never", "Where mobile equipment and people share space (the yard, traffic areas)", "Only for the office"], a:2 },
+    { q:"Respiratory protection (respirators) requires…", opts:["Just grabbing one", "Medical evaluation and fit testing under the Respiratory Protection Program", "Only a signature", "Nothing"], a:1 },
+    { q:"Who pays for your required PPE and its replacement?", opts:["The employee", "No one", "Mt. Hood Forest Products — at no cost to the employee", "It's split 50/50"], a:2 },
+    { q:"Which is the employer generally NOT required to pay for?", opts:["Required safety glasses", "Everyday ankle-height work boots (employee-provided)", "A required face shield", "Required cut-resistant gloves"], a:1 },
+    { q:"You notice your safety glasses have a cracked lens. You should…", opts:["Take them out of service and get a replacement", "Keep using them", "Tape the crack", "Use them for light work only"], a:0 },
+    { q:"A face shield for grinding…", opts:["Replaces safety glasses", "Is optional", "Is worn WITH safety glasses — it protects the face, the glasses protect the eyes", "Is only for chemicals"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Personal Protective Equipment (PPE) — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Personal Protective Equipment (PPE) / Equipo de Protección Personal\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the hierarchy of controls, the hazard assessment, PPE by category, and who pays — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Equipo de Protección Personal de Mt. Hood Forest Products v2.1 (OAR 437-002-0134, la regla de EPP de Oregon OSHA). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — El Equipo Que Lo Protege",
+  introP1: "Un aserradero tiene peligros que buscan sus ojos, cabeza, manos, pies y oídos en cada turno — astillas volando, objetos que caen, bordes afilados, trozas rodando, maquinaria ruidosa. El Equipo de Protección Personal (EPP) es la última línea de defensa: la barrera que usa cuando un peligro no se puede eliminar por completo con ingeniería. Esta capacitación cubre qué EPP requiere Mt. Hood Forest Products, por qué, y cómo usarlo y cuidarlo para que realmente lo proteja.",
+  introP2: "Esta capacitación toma unos 15 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. El EPP Es la Última Línea de Defensa", body:
+      "<p>El EPP importa — pero es lo <b>último</b> a lo que recurrimos, no lo primero. La seguridad sigue una <b>jerarquía de controles</b>, del más fuerte al más débil:</p>"+
+      "<table class='mini'><tr><th>Nivel</th><th>Qué hace</th></tr>"+
+      "<tr><td><b>1. Eliminación</b></td><td>Quitar el peligro por completo</td></tr>"+
+      "<tr><td><b>2. Sustitución</b></td><td>Reemplazarlo con algo menos peligroso</td></tr>"+
+      "<tr><td><b>3. Controles de ingeniería</b></td><td>Aislar a las personas del peligro (guardas, ventilación, recintos)</td></tr>"+
+      "<tr><td><b>4. Controles administrativos</b></td><td>Cambiar cómo trabaja la gente (procedimientos, rotación, letreros, capacitación)</td></tr>"+
+      "<tr><td><b>5. EPP</b></td><td>Proteger al trabajador con una barrera usada en el cuerpo</td></tr></table>"+
+      "<div class='notice'><b>El EPP no quita el peligro</b> — reduce su exposición a él. Por eso es lo último: una guarda que mantiene el peligro lejos de todos es mejor que un guante que solo ayuda si se usa bien. Pero cuando un peligro permanece, el <b>EPP es obligatorio, sin excepción</b>, donde la evaluación de peligros, las reglas, o su supervisor lo indiquen.</div>"+
+      "<p>Oregon tiene su propia regla de EPP — <b>OAR 437-002-0134</b>.</p>",
+      kc:{ q:"¿Dónde cae el EPP en la jerarquía de controles?", opts:["Primero — siempre la máxima prioridad","Último — después de eliminación, sustitución, ingeniería y controles administrativos","No es parte de la jerarquía","Segundo, después de la eliminación"], a:1 } },
+    { h:"2. La Evaluación de Peligros — Por Qué Usa Lo Que Usa", body:
+      "<p>Su EPP no es adivinanza. Mt. Hood Forest Products hace una <b>evaluación escrita de peligros</b> de cada área de trabajo y puesto — recorriendo la operación, identificando los peligros que pueden alcanzar el cuerpo, y seleccionando el EPP que atiende cada uno.</p>"+
+      "<p>Esa evaluación se <b>certifica por escrito</b>: nombra el área o puesto, la fecha, la persona que la certificó, los peligros encontrados, y el EPP elegido para cada uno. Ese es el registro detrás de por qué su puesto requiere el equipo que requiere.</p>"+
+      "<p>La evaluación se <b>revisa y actualiza</b> al menos anualmente, y cuando entra equipo o procesos nuevos, cuando un incidente sugiere que el EPP no es suficiente, o cuando los empleados expresan inquietudes sobre él.</p>"+
+      "<div class='notice'>Si su tarea tiene un peligro para el que no tiene EPP — o el EPP que le dieron no atiende el peligro — eso es exactamente lo que debe plantear a su supervisor. La evaluación debe detectarlo; sus comentarios la mantienen honesta.</div>",
+      kc:{ q:"¿Qué hace oficial la evaluación de peligros del EPP?", opts:["Un visto bueno verbal","Una certificación escrita (área/puesto, fecha, certificador, peligros, EPP seleccionado)","Un letrero en la pared","Nada — es informal"], a:1 } },
+    { h:"3. Ojos y Cara", body:
+      "<p>Las lesiones oculares están entre las más comunes — y más prevenibles — en un aserradero. Astillas volando, polvo, chispas, y salpicaduras químicas buscan los ojos.</p>"+
+      "<ul><li><b>Gafas de seguridad con protección lateral</b> (que cumplan <b>ANSI/ISEA Z87.1</b>) son la base para peligros de impacto y partículas volando</li>"+
+      "<li><b>Caretas</b> se requieren sobre las gafas de seguridad para esmerilar, cortar y tareas similares de alta energía — una careta sola <b>no</b> es suficiente, se usa <i>con</i> gafas de seguridad</li>"+
+      "<li><b>Goggles contra salpicaduras químicas</b> al manejar químicos que podrían salpicar</li></ul>"+
+      "<div class='danger'><b>Una careta es un protector secundario.</b> Protege la cara, pero las gafas de seguridad protegen los ojos. Para esmerilar o cortar, usa ambos — la careta no reemplaza las gafas.</div>",
+      kc:{ q:"Para esmerilar, ¿qué protección de ojos/cara se requiere?", opts:["Solo una careta","Gafas de seguridad Y una careta juntas","Lentes normales","Nada si tiene cuidado"], a:1 } },
+    { h:"4. Cabeza, Pies, Manos y Alta Visibilidad", body:
+      "<p>Diferentes peligros, diferente equipo — cada uno a una norma nacional de desempeño:</p>"+
+      "<table class='mini'><tr><th>Protección</th><th>Qué y cuándo</th></tr>"+
+      "<tr><td><b>Cabeza</b> (ANSI/ISEA Z89.1)</td><td>Cascos donde hay peligro por arriba — objetos que caen o se balancean, peligros fijos bajos</td></tr>"+
+      "<tr><td><b>Pies</b> (ASTM F2413)</td><td>Botas de trabajo de cuero resistentes, a la altura del tobillo o más; punta de seguridad donde la evaluación lo requiera</td></tr>"+
+      "<tr><td><b>Manos</b> (ANSI/ISEA 105)</td><td>Guantes de cuero al manejar material áspero, afilado o abrasivo; el guante correcto para el peligro (corte, químico, calor)</td></tr>"+
+      "<tr><td><b>Alta visibilidad</b> (ANSI/ISEA 107)</td><td>Prenda de alta visibilidad donde el equipo móvil y los peatones comparten espacio — el patio, áreas de tránsito</td></tr></table>"+
+      "<p>El guante correcto importa: un guante de cuero es excelente para astillas y madera áspera pero equivocado para químicos; un guante resistente a cortes para bordes afilados. Use lo que la tarea y la evaluación indiquen.</p>",
+      kc:{ q:"¿Cuándo se requiere ropa de alta visibilidad?", opts:["Solo de noche","Donde el equipo móvil y las personas comparten espacio, como el patio y áreas de tránsito","Nunca en un aserradero","Solo para supervisores"], a:1 } },
+    { h:"5. Auditiva y Respiratoria — Referencias Cruzadas", body:
+      "<p>Dos tipos de EPP son lo suficientemente importantes para tener sus propios programas, y este módulo lo dirige a ellos:</p>"+
+      "<ul><li><b>Protección auditiva</b> — tapones u orejeras, usados donde el ruido llega a los niveles que lo requieren. Los detalles están en el <b>Programa de Conservación de la Audición</b> y su capacitación.</li>"+
+      "<li><b>Protección respiratoria</b> — respiradores, requeridos cuando los contaminantes en el aire (polvo, humo de incendios, vapor químico) exceden los niveles seguros. Los respiradores vienen con evaluación médica y prueba de ajuste bajo el <b>Programa de Protección Respiratoria</b> — no solo agarra uno.</li></ul>"+
+      "<p>Si su puesto involucra cualquiera, recibe la capacitación específica de ese programa además de esta. Este módulo asegura que sepa que la protección existe y cuándo se necesita.</p>",
+      kc:{ q:"La protección respiratoria (respiradores) requiere…", opts:["Nada especial — solo agarrar uno","Evaluación médica y prueba de ajuste bajo el Programa de Protección Respiratoria","Solo una firma","Solo aprobación del supervisor"], a:1 } },
+    { h:"6. Quién Paga — y Qué Aporta Usted", body:
+      "<p>La regla es clara: el <b>EPP requerido se proporciona sin costo para usted</b>, y Mt. Hood Forest Products paga para <b>reemplazarlo</b> cuando está gastado, dañado, o ya no protege.</p>"+
+      "<p>Hay algunas cosas que el empleador <b>no</b> está obligado a pagar:</p>"+
+      "<ul><li><b>Botas de trabajo diarias</b> — las botas de cuero resistentes a la altura del tobillo que usa todo el turno las aporta el empleado (una bota especializada con punta de seguridad que la evaluación requiera específicamente es diferente — esa sí se cubre)</li>"+
+      "<li><b>Lentes de seguridad con receta no especializados</b> que se puedan usar fuera del trabajo</li>"+
+      "<li><b>Ropa ordinaria, cremas para la piel, protector solar</b> — cosas no diseñadas como EPP</li>"+
+      "<li><b>EPP voluntario</b> — equipo que usted elige usar que la evaluación de peligros no requiere</li></ul>"+
+      "<div class='notice'>Si su EPP requerido se gasta o se rompe, no compra uno nuevo de su bolsillo — repórtelo y se reemplaza. Trabajar con EPP gastado o dañado es lo mismo que trabajar sin él.</div>",
+      kc:{ q:"Sus guantes de seguridad requeridos se gastan. ¿Quién paga el reemplazo?", opts:["Usted","Mt. Hood Forest Products — el EPP requerido y su reemplazo se proporcionan sin costo","Nadie — trabaja sin ellos","Dividen el costo"], a:1 } },
+    { h:"7. Inspeccionar, Ajustar y Mantener", body:
+      "<p>El EPP solo protege si está en buen estado y se usa bien. Antes de cada uso:</p>"+
+      "<ul><li><b>Inspecciónelo</b> — lentes rotos, un casco con la carcasa rota, guantes con agujeros, botas desgastadas. El EPP dañado no es EPP protector</li>"+
+      "<li><b>Verifique el ajuste</b> — gafas que asientan bien y no dejan huecos, un casco con la suspensión ajustada, guantes que ajustan. El mal ajuste deja entrar el peligro</li>"+
+      "<li><b>Úselo correcta y completamente</b> — un casco al revés sin suspensión, gafas subidas en la frente, un guante quitado — nada de eso lo protege</li>"+
+      "<li><b>Manténgalo y guárdelo</b> — límpielo, guárdelo lejos de condiciones dañinas, y sepa cuándo llegó al final de su vida útil</li></ul>"+
+      "<div class='danger'><b>El EPP dañado, mal ajustado o mal usado da una falsa sensación de seguridad.</b> Unas gafas de seguridad rotas pueden hacerse añicos en su ojo; un casco con la carcasa rota no aguantará el golpe. Si su EPP está comprometido, sáquelo de servicio y consiga un reemplazo.</div>",
+      kc:{ q:"Nota que sus gafas de seguridad tienen un lente rajado. ¿Qué hace?", opts:["Seguir usándolas — una rajadura es menor","Sacarlas de servicio y conseguir un reemplazo","Poner cinta sobre la rajadura","Usarlas solo para trabajo ligero"], a:1 } },
+    { h:"8. Su Parte", body:
+      "<p>El EPP es una responsabilidad compartida. Mt. Hood Forest Products evalúa los peligros, selecciona y paga el EPP correcto, y lo capacita. Su parte:</p>"+
+      "<ul><li><b>Use el EPP requerido</b> para su tarea — cada vez, correcta y completamente, sin excepción</li>"+
+      "<li><b>Inspecciónelo</b> antes de usar y <b>reporte</b> el EPP dañado, gastado o mal ajustado para que se reemplace</li>"+
+      "<li><b>Use el EPP correcto para el peligro</b> — el guante correcto, la careta con las gafas</li>"+
+      "<li><b>Plantee inquietudes</b> si un peligro no está cubierto o el EPP no funciona — eso retroalimenta la evaluación</li>"+
+      "<li><b>Reciba la capacitación específica</b> de protección auditiva y respiratoria si su puesto las necesita</li></ul>"+
+      "<h2>Preguntas</h2>"+
+      "<p>Pregunte a su supervisor o al Líder de Cumplimiento Ambiental y Seguridad sobre el EPP requerido para su puesto, los reemplazos, o un peligro que crea que no está cubierto. Para una lesión, reciba primeros auxilios y pida ayuda. Emergencia: <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Dónde cae el EPP en la jerarquía de controles?", opts:["Primero", "Último — después de eliminación, sustitución, ingeniería y controles administrativos", "No está en la jerarquía", "Segundo"], a:1 },
+    { q:"El EPP funciona…", opts:["Quitando el peligro por completo", "Haciendo el peligro invisible", "Reemplazando los controles de ingeniería permanentemente", "Reduciendo la exposición del empleado a un peligro que permanece"], a:3 },
+    { q:"¿Qué hace oficial una evaluación de peligros del EPP?", opts:["Un visto bueno verbal", "Una certificación escrita (área/puesto, fecha, certificador, peligros, EPP seleccionado)", "Un letrero de seguridad", "Nada — es informal"], a:1 },
+    { q:"Para esmerilar, la protección de ojos/cara requerida es…", opts:["Gafas de seguridad Y una careta juntas", "Solo una careta", "Lentes normales", "Lentes de sol"], a:0 },
+    { q:"La ropa de alta visibilidad se requiere…", opts:["Solo de noche", "Nunca", "Donde el equipo móvil y las personas comparten espacio (el patio, áreas de tránsito)", "Solo para la oficina"], a:2 },
+    { q:"La protección respiratoria (respiradores) requiere…", opts:["Solo agarrar uno", "Evaluación médica y prueba de ajuste bajo el Programa de Protección Respiratoria", "Solo una firma", "Nada"], a:1 },
+    { q:"¿Quién paga su EPP requerido y su reemplazo?", opts:["El empleado", "Nadie", "Mt. Hood Forest Products — sin costo para el empleado", "Se divide 50/50"], a:2 },
+    { q:"¿Qué es lo que el empleador generalmente NO está obligado a pagar?", opts:["Las gafas de seguridad requeridas", "Las botas de trabajo diarias a la altura del tobillo (las aporta el empleado)", "Una careta requerida", "Guantes resistentes a cortes requeridos"], a:1 },
+    { q:"Nota que sus gafas de seguridad tienen un lente rajado. Debe…", opts:["Sacarlas de servicio y conseguir un reemplazo", "Seguir usándolas", "Poner cinta en la rajadura", "Usarlas solo para trabajo ligero"], a:0 },
+    { q:"Una careta para esmerilar…", opts:["Reemplaza las gafas de seguridad", "Es opcional", "Se usa CON gafas de seguridad — protege la cara, las gafas protegen los ojos", "Es solo para químicos"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Equipo de Protección Personal (EPP) — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Personal Protective Equipment (PPE) / Equipo de Protección Personal\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente la jerarquía de controles, la evaluación de peligros, el EPP por categoría, y quién paga — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="BCDFGHJKMNPQRSTVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Personal Protective Equipment (PPE) Training</div>'+'<div class="ti-es">Capacitación sobre Equipo de Protección Personal</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

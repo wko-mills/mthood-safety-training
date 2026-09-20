@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Fall Protection SUPERVISOR Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --gray:#666; --light:#F2F2F2;
+          --green:#2E8B57; --amber:#E8A317; --orange:#D2691E; --red:#B22222; --maroon:#701C1C; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--light); color:#222; line-height:1.5; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; background:#fff; box-shadow:0 0 24px rgba(0,0,0,.08); }
+  header { background:var(--dark); color:#fff; padding:14px 20px; }
+  header .co { font-weight:bold; font-size:15px; letter-spacing:.5px; }
+  header .prog { font-size:12px; color:#cfe0f0; }
+  .badge { display:inline-block; background:var(--amber); color:#2b1c00; font-weight:bold; font-size:11px; letter-spacing:1px; padding:2px 8px; border-radius:999px; margin-top:5px; }
+  .bar { height:6px; background:#dce7f2; } .bar span { display:block; height:100%; background:var(--blue); width:0%; transition:width .3s; }
+  main { flex:1; padding:24px 20px 32px; }
+  h1 { color:var(--dark); font-size:24px; margin-bottom:12px; }
+  p { margin-bottom:12px; font-size:16px; }
+  ul, ol { margin:0 0 12px 22px; } li { margin-bottom:7px; font-size:16px; }
+  .eyebrow { text-transform:uppercase; letter-spacing:1.5px; font-size:11px; color:var(--gray); font-weight:bold; margin-bottom:6px; }
+  .card { background:var(--light); border-left:4px solid var(--blue); padding:12px 14px; margin:14px 0; border-radius:0 6px 6px 0; font-size:15px; }
+  .card.warn { border-left-color:var(--red); }
+  .card.do { border-left-color:var(--green); }
+  .btn { display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:15px; font-size:17px; font-weight:bold; font-family:inherit; cursor:pointer; margin-top:18px; }
+  .btn:active { background:var(--dark); } .btn:disabled { background:#b9c8d6; cursor:default; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  a.btn { text-decoration:none; text-align:center; box-sizing:border-box; }
+  input[type=text] { width:100%; padding:13px; font-size:17px; font-family:inherit; border:2px solid #c6d4e2; border-radius:8px; margin-top:6px; }
+  input[type=text]:focus { outline:none; border-color:var(--blue); }
+  label { font-weight:bold; font-size:14px; color:var(--dark); }
+  .opt { display:block; width:100%; text-align:left; background:#fff; border:2px solid #c6d4e2; border-radius:8px; padding:13px 14px; font-size:16px; font-family:inherit; margin-top:10px; cursor:pointer; }
+  .opt.sel { border-color:var(--blue); background:#eaf2fa; }
+  .opt.right { border-color:var(--green); background:#e8f5ee; }
+  .opt.wrong { border-color:var(--red); background:#fbeaea; }
+  .feedback { margin-top:12px; padding:12px 14px; border-radius:8px; font-size:15px; display:none; }
+  .feedback.good { background:#e8f5ee; border-left:4px solid var(--green); display:block; }
+  .feedback.bad { background:#fbeaea; border-left:4px solid var(--red); display:block; }
+  .qnum { font-size:12px; color:var(--gray); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:22px; text-align:center; margin-top:16px; }
+  .cert .big { font-size:22px; font-weight:bold; color:var(--dark); margin:8px 0; }
+  .cert .code { font-size:26px; letter-spacing:3px; font-weight:bold; color:var(--blue); background:var(--light); border-radius:8px; padding:10px; margin:12px 0; }
+  .score-pill { display:inline-block; background:var(--green); color:#fff; border-radius:999px; padding:6px 18px; font-weight:bold; font-size:18px; }
+  .score-pill.fail { background:var(--red); }
+  .steps { counter-reset:s; list-style:none; margin-left:0; }
+  .steps li { counter-increment:s; position:relative; padding-left:34px; margin-bottom:10px; }
+  .steps li:before { content:counter(s); position:absolute; left:0; top:1px; background:var(--blue); color:#fff; width:24px; height:24px; border-radius:50%; text-align:center; font-weight:bold; font-size:14px; line-height:24px; }
+  table.mini { border-collapse:collapse; width:100%; margin:12px 0; font-size:14px; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { padding:12px 20px; font-size:11px; color:var(--gray); text-align:center; border-top:1px solid #e4e9ef; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+    <div class="prog">Fall Protection Training &mdash; 29 CFR 1910.28 / OAR 437-002-0020 (Div 2-D)</div>
+    <div class="badge">SUPERVISOR MODULE</div>
+  </header>
+  <div class="bar"><span id="prog"></span></div>
+  <main id="main"></main>
+  <footer>Mt. Hood Forest Products LLC · Hood River, OR · Fall Protection Program v2.1 · Supervisor Module v1.0 (2026)</footer>
+</div>
+<script>
+const FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+let empName = "", slideIdx = 0, quizIdx = 0, quizScore = 0;
+const slides = [{"t": "content", "eyebrow": "Section 1 of 6", "title": "What This Module Covers", "html": "<p>This module carries the <b>supervisor-specific</b> knowledge for fall protection. It does not replace the employee fall protection module (which you must also complete) or the annual hands-on training.</p><div class='card warn'>Oregon adopts the federal fall protection rule <b>29 CFR 1910.28</b> under <b>OAR 437-002-0020</b> (Division 2-D). Training must be delivered by a <b>competent person</b>; this module covers knowledge, and the competent-person demonstration is satisfied through hands-on training and on-the-job verification.</div><p><b>What you owe as a supervisor:</b></p><ul><li>Conduct pre-work fall-hazard assessments for the area</li><li>Ensure a rescue plan is in place before any fall-arrest work</li><li>Verify equipment is inspected before each use</li><li>Stop work for unsafe conditions or non-compliance</li><li>Retrain when the workplace changes, equipment changes, or an employee's knowledge is inadequate</li><li>Report fall incidents, near-misses, and equipment issues immediately</li></ul>"}, {"t": "content", "eyebrow": "Section 2 of 6", "title": "Competent Person Responsibilities", "html": "<p>A <b>competent person</b> can identify existing and predictable fall hazards and has authority to take prompt corrective action. Competent persons for fall protection include the safety manager and designated supervisors who have completed competent-person training.</p><p><b>As a competent person, you are responsible for:</b></p><ul><li>Inspecting fall protection systems and equipment</li><li>Identifying fall hazards and determining appropriate protection methods</li><li>Authorizing warning-line and safety-monitoring systems</li><li>Supervising installation and use of horizontal lifeline systems</li><li>Conducting post-fall equipment inspections and incident assessments</li></ul><div class='card warn'><b>You have stop-work authority.</b> If you see an employee exposed to a fall hazard without protection, or using equipment incorrectly, stop the work and correct it before work resumes. This is a regulatory duty, not optional.</div>"}, {"t": "content", "eyebrow": "Section 3 of 6", "title": "Pre-Work Rescue Plan — Your #1 Duty", "html": "<div class='card warn'><b>Before any employee works in a personal fall arrest system, you must identify and document the rescue plan for that specific work area.</b> No rescue plan = no work at height.</div><p>The rescue plan must answer five questions:</p><ol><li><b>How</b> would the worker be rescued if a fall occurred? (specific method and equipment)</li><li><b>Where</b> is the rescue equipment? (boom lift, ladder, retrieval device)</li><li><b>Who</b> is rescue-capable and on-site during the work?</li><li><b>How</b> will rescue be summoned? (radio, phone, voice)</li><li><b>How long</b> will rescue take? (within the suspension-trauma window — minutes, not an hour)</li></ol><p><b>The three-tier rescue approach:</b> Tier 1 self-rescue (suspension-relief straps, reach a surface); Tier 2 assisted rescue by trained co-workers with pre-planned equipment; Tier 3 EMS (911 / Odell Fire Dept) as backup, not primary.</p><div class='card warn'>EMS is Tier 3, not Tier 1 — response times may exceed the suspension-trauma window, which is why we train our own people for Tier 2. \"We'll just call 911\" is not a rescue plan.</div>"}, {"t": "check", "q": "Before any employee works in a personal fall arrest system, you must have in place:", "opts": ["A signed work order from maintenance", "A documented rescue plan specific to the work area", "Verbal approval from the safety manager", "Two other employees in the area"], "a": 1, "why": "A documented, area-specific rescue plan is required before fall-arrest work begins, because suspension trauma can incapacitate a fallen worker within minutes. No plan, no work at height."}, {"t": "content", "eyebrow": "Section 4 of 6", "title": "Total Fall Distance & Aerial Lifts", "html": "<p><b>Total fall distance.</b> Before any employee works in a fall arrest system, verify the total fall distance so the worker will not contact a lower level or obstruction. It includes lanyard length (~6 ft), shock-absorber deployment (~3.5 ft), harness stretch/shift (~1 ft), a safety clearance (min ~3 ft below the feet after arrest), and the anchorage position — always anchor overhead when possible.</p><div class='card'><b>Example:</b> 6 + 3.5 + 1 + 3 = 13.5 feet minimum below the anchorage. If the area does not provide that clearance, use a shorter lanyard or an SRD.</div><p><b>Aerial lifts:</b></p><table class='mini'><tr><th>Lift type</th><th>Fall protection?</th></tr><tr><td><b>Boom lifts</b> (articulating/telescopic)</td><td>Yes — always. Personal fall arrest or restraint attached to the manufacturer-designated anchorage on the lift.</td></tr><tr><td><b>Scissor lifts</b> with guardrails all around</td><td>No — unless the worker leans beyond or stands on the rails, or a rail is removed (then fall arrest is required).</td></tr></table><p>Only trained, authorized employees operate aerial lifts; set brakes and outriggers; don't belt off to adjacent structures unless the lift is designed for it; keep a person at ground level able to lower a boom lift in an emergency.</p>"}, {"t": "check", "q": "In a boom lift, what fall protection is required?", "opts": ["None — the guardrails are sufficient", "A hard hat and safety glasses only", "A personal fall arrest or restraint system attached to the manufacturer-designated anchorage", "Optional if the lift is under 10 feet"], "a": 2, "why": "Boom lifts always require personal fall arrest or restraint attached to the lift's manufacturer-designated anchorage — the whipping motion can eject an occupant. Scissor lifts with intact guardrails are the exception."}, {"t": "content", "eyebrow": "Section 5 of 6", "title": "Post-Fall Response & Investigation", "html": "<p>When a fall event occurs, your immediate role includes:</p><ol><li><b>Direct the rescue</b> — execute the pre-established rescue plan; if somehow none exists, default to Tier 2 rescue and call 911 simultaneously</li><li><b>Call 911</b> for any injury, loss of consciousness, or extended suspension</li><li><b>Suspension-trauma position</b> — keep the rescued person seated or semi-upright, never laid flat; brief your crew on this before a fall happens</li><li><b>Secure the area</b> — barricade the fall zone; do not disturb the equipment or the scene until the investigation is complete</li><li><b>Retire all involved equipment</b> — tag everything \"OUT OF SERVICE — INVOLVED IN FALL EVENT.\" It is permanently retired, no inspecting-and-returning</li></ol><div class='card warn'>The safety manager investigates every fall event and significant near-miss. Your role is to preserve the scene, secure the equipment, and give a detailed account of the work plan, the rescue plan, and what happened.</div><p><b>Retraining triggers:</b> workplace changes affecting fall hazards, equipment-type changes, an employee not inspecting gear, using equipment incorrectly, ignoring or bypassing protection, or after any fall or near-miss involving the employee.</p>"}, {"t": "check", "q": "After a fall event, what happens to the fall protection equipment involved?", "opts": ["It is inspected and returned to service if undamaged", "It is permanently retired — tag it OUT OF SERVICE and do not reuse", "It is sent to the manufacturer for recertification", "It is set aside 30 days then reinspected"], "a": 1, "why": "Any equipment that has arrested a fall is permanently removed from service — the forces can damage webbing and hardware invisibly. Tag it OUT OF SERVICE; it does its job once."}, {"t": "content", "eyebrow": "Section 6 of 6", "title": "Equipment Management", "html": "<p>You share responsibility with the safety manager for the condition and readiness of fall protection equipment.</p><p><b>Pre-use inspection oversight:</b> every employee inspects their own equipment before each use; your job is to <b>verify this is happening</b>, not to do it for them. If you see someone skip a pre-use inspection, stop the work and retrain.</p><p><b>Equipment retirement</b> — permanently removed from service when it has arrested a fall, shows damage/defects/excessive wear, has exceeded the manufacturer's service life, is recalled, or a competent person determines it unsafe.</p><div class='card do'><b>Hole and opening covers</b> are part of your area's fall protection: secured against displacement, marked \"HOLE\" or \"COVER,\" and able to support the loads that could cross them. If a cover must come off for work, provide alternate fall protection or station an employee at the opening until it is replaced.</div><p>Report a fixed ladder that needs attention; the safety manager maintains the fixed-ladder inventory and the phase-in to ladder safety systems.</p>"}, {"t": "check", "q": "Which of these is NOT a valid trigger for retraining an employee on fall protection?", "opts": ["Changes in workplace conditions that affect fall hazards", "An employee not inspecting equipment before use", "The employee has been with the company more than one year", "After a fall incident or near-miss involving the employee"], "a": 2, "why": "Retraining is triggered by workplace or equipment changes, observed unsafe use or inadequate knowledge, and after an incident — not simply by tenure. Length of service is not a retraining trigger."}];
+const quiz = [{"q": "Before any employee works in a personal fall arrest system, you must have in place:", "opts": ["A signed maintenance work order", "A documented rescue plan specific to the work area", "Verbal approval from the safety manager", "Two other employees present"], "a": 1}, {"q": "In a boom lift, the required fall protection is:", "opts": ["None — guardrails suffice", "A hard hat only", "A personal fall arrest or restraint system attached to the manufacturer-designated anchorage", "Optional under 10 feet"], "a": 2}, {"q": "The rescue plan must ensure a fallen worker is retrieved:", "opts": ["Within the suspension-trauma window (minutes) — EMS alone may be too slow", "Within 60 minutes", "Within a full shift", "There is no time factor"], "a": 0}, {"q": "After a fall event, the involved fall protection equipment is:", "opts": ["Inspected and returned to service if undamaged", "Sent for recertification", "Permanently retired — tagged OUT OF SERVICE", "Set aside 30 days then reinspected"], "a": 2}, {"q": "Which Oregon rule adopts the federal fall protection standard for general industry?", "opts": ["OAR 437-002-0020 (adopting 29 CFR 1910.28, Division 2-D)", "OAR 437-002-0134", "There is no Oregon rule", "A company policy only"], "a": 0}, {"q": "Total fall distance is verified BEFORE fall-arrest work so that:", "opts": ["The paperwork is complete", "The worker will not contact a lower level or obstruction before the system stops the fall", "The insurer is satisfied", "The harness fits"], "a": 1}, {"q": "Which is NOT a valid retraining trigger?", "opts": ["A workplace change affecting fall hazards", "An employee not inspecting equipment before use", "The employee has more than one year of tenure", "A fall or near-miss involving the employee"], "a": 2}, {"q": "EMS (911) is which tier of the rescue approach?", "opts": ["Tier 1 — first resort", "Tier 2 — primary assisted rescue", "Not part of the plan", "Tier 3 — backup, because response may exceed the suspension-trauma window"], "a": 3}, {"q": "A hole/opening cover in your area must be:", "opts": ["Painted any color", "Secured against displacement, marked HOLE or COVER, and able to support the loads that cross it", "Left loose for easy access", "Removed during the shift"], "a": 1}, {"q": "Who inspects an employee's personal fall arrest equipment before each use?", "opts": ["The safety manager", "Only an outside vendor", "No one — it is inspected annually", "The employee inspects their own; the supervisor verifies it happens"], "a": 3}];
+const main = document.getElementById('main');
+const progEl = document.getElementById('prog');
+const totalSteps = slides.length + quiz.length + 2;
+function setProg(n){ progEl.style.width = Math.min(100, Math.round(n/totalSteps*100)) + '%'; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function showStart(){
+  setProg(0);
+  main.innerHTML = `
+    <div class="eyebrow">Mt. Hood Forest Products LLC · Safety Department</div>
+    <h1>Fall Protection — Supervisor Training</h1>
+    <p>Required supervisor training under 29 CFR 1910.28 (adopted by Oregon OSHA; OAR 437-002-0020, Division 2-D) and the Mt. Hood Forest Products Fall Protection Program v2.1. About 15 minutes.</p>
+    <div class="card warn"><b>Complete the employee Fall Protection module first.</b> This module covers your additional duties as a supervisor — it does not replace the employee training, and both are required of you.</div>
+    <div class="card">Pass the 10-question quiz with <b>80% or better</b> to finish. You'll get a completion code and a button to record it.</div>
+    <label for="nm">Enter your full name to begin</label>
+    <input type="text" id="nm" autocomplete="name" placeholder="First and last name">
+    <button class="btn" id="startBtn" disabled>Start Supervisor Training</button>`;
+  const nm=document.getElementById('nm'), b=document.getElementById('startBtn');
+  nm.addEventListener('input', ()=>{ b.disabled = nm.value.trim().split(/\s+/).length < 2; });
+  b.addEventListener('click', ()=>{ empName=nm.value.trim(); slideIdx=0; showSlide(); });
+}
+function showSlide(){
+  if (slideIdx >= slides.length){ quizIdx=0; quizScore=0; showQuizIntro(); return; }
+  setProg(1+slideIdx);
+  const s = slides[slideIdx];
+  if (s.t === 'content'){
+    main.innerHTML = `<div class="eyebrow">${esc(s.eyebrow)}</div><h1>${esc(s.title)}</h1>${s.html}
+      <button class="btn" id="nextBtn">Continue</button>`;
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  } else {
+    main.innerHTML = `<div class="eyebrow">Knowledge Check</div><h1>Quick Question</h1><p><b>${esc(s.q)}</b></p>
+      <div id="opts"></div><div class="feedback" id="fb"></div>
+      <button class="btn" id="nextBtn" style="display:none">Continue</button>`;
+    const optsEl=document.getElementById('opts');
+    s.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=o;
+      b.addEventListener('click', ()=>{
+        const fb=document.getElementById('fb');
+        [...optsEl.children].forEach(c=>c.disabled=true);
+        if (i===s.a){ b.classList.add('right'); fb.className='feedback good'; fb.textContent=s.why;
+          document.getElementById('nextBtn').style.display='block'; }
+        else { b.classList.add('wrong'); fb.className='feedback bad'; fb.textContent='Not quite — take another look and try again.';
+          setTimeout(()=>{ [...optsEl.children].forEach(c=>{c.disabled=false;c.classList.remove('wrong');}); fb.className='feedback'; },1600); }
+      });
+      optsEl.appendChild(b);
+    });
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  }
+}
+function showQuizIntro(){
+  setProg(1+slides.length);
+  main.innerHTML = `<div class="eyebrow">Final Quiz</div>
+    <h1>Ready, ${esc(empName.split(' ')[0])}?</h1>
+    <p>10 questions. You need <b>8 correct (80%)</b> to pass. If you don't pass, review the material and retake it.</p>
+    <button class="btn" id="goBtn">Begin Quiz</button>
+    <button class="btn secondary" id="revBtn">Review Material First</button>`;
+  document.getElementById('goBtn').addEventListener('click', ()=>{ showQuizQ(); window.scrollTo(0,0); });
+  document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+}
+function showQuizQ(){
+  if (quizIdx >= quiz.length){ showResult(); return; }
+  setProg(1+slides.length+quizIdx);
+  const qq = quiz[quizIdx];
+  main.innerHTML = `<div class="qnum">Question ${quizIdx+1} of ${quiz.length}</div>
+    <h1 style="font-size:20px">${esc(qq.q)}</h1><div id="opts"></div>
+    <button class="btn" id="subBtn" disabled>Submit Answer</button>`;
+  const optsEl=document.getElementById('opts');
+  let sel=-1;
+  qq.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=o;
+    b.addEventListener('click', ()=>{ sel=i; [...optsEl.children].forEach(c=>c.classList.remove('sel')); b.classList.add('sel');
+      document.getElementById('subBtn').disabled=false; });
+    optsEl.appendChild(b);
+  });
+  document.getElementById('subBtn').addEventListener('click', ()=>{
+    if (sel===qq.a) quizScore++;
+    quizIdx++; showQuizQ(); window.scrollTo(0,0);
+  });
+}
+function completionCode(){
+  const d=new Date();
+  const ds=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  let h=0; const src=empName.toUpperCase()+ds+quizScore+'SUP';
+  for (let i=0;i<src.length;i++){ h=((h<<5)-h+src.charCodeAt(i))|0; }
+  const alpha="BCDFGHJKMNPQRSTVWXYZ23456789";
+  let n=Math.abs(h), out="";
+  for (let i=0;i<5;i++){ out+=alpha.charAt(n%alpha.length); n=Math.floor(n/alpha.length); }
+  return 'FL26S-' + out;
+}
+function showResult(){
+  setProg(totalSteps);
+  const pct = Math.round(quizScore/quiz.length*100);
+  const passed = pct >= 80;
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  if (passed){
+    main.innerHTML = `<div class="eyebrow">Training Complete</div><h1>Congratulations!</h1>
+      <p style="text-align:center"><span class="score-pill">Score: ${pct}%</span></p>
+      <div class="cert">
+        <div class="eyebrow">Certificate of Completion</div>
+        <div class="big">${esc(empName)}</div>
+        <p>has completed <b>Fall Protection SUPERVISOR Training</b><br>per 29 CFR 1910.28 / OAR 437-002-0020</p>
+        <p><b>${dateStr}</b> · Score: <b>${quizScore}/${quiz.length} (${pct}%)</b></p>
+        <div class="code">${completionCode()}</div>
+        <p style="font-size:13px;color:var(--gray)">Mt. Hood Forest Products LLC · Hood River, OR</p>
+      </div>
+      <div class="card"><b>Final step — record your completion:</b> Tap the button below to open the completion form. Select the module <b>Fall Protection — Supervisor / Protección Contra Caídas — Supervisor</b>, enter today's date, your score, and the completion code above, then submit. Screenshot this screen for your own records. Your training is not documented until the form is submitted.</div>
+      <a class="btn" href="${FORM_URL}" target="_blank" rel="noopener">Record My Completion</a>`;
+  } else {
+    main.innerHTML = `<div class="eyebrow">Quiz Result</div><h1>Not Quite — Let's Try Again</h1>
+      <p style="text-align:center"><span class="score-pill fail">Score: ${pct}%</span></p>
+      <p>You need 80% to pass. Review the material and take the quiz again — your crew is counting on you knowing this cold.</p>
+      <button class="btn" id="revBtn">Review Material</button>
+      <button class="btn secondary" id="retryBtn">Retake Quiz Now</button>`;
+    document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+    document.getElementById('retryBtn').addEventListener('click', ()=>{ quizIdx=0; quizScore=0; showQuizQ(); window.scrollTo(0,0); });
+  }
+}
+window.APP = { slides, quiz, FORM_URL, completionCode, showStart,
+  get state(){ return { empName, slideIdx, quizIdx, quizScore }; },
+  setName(n){ empName = n; }, setScore(s){ quizScore = s; },
+  showResult, showSlide, showQuizQ, showQuizIntro };
+showStart();
+</script>
+</body>
+</html>

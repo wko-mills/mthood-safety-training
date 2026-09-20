@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Fire Protection Impairment Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Fire Protection Impairment Training &mdash; NFPA 25 / OAR 437-002-0042</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Fire Protection Impairment Program v1.0 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "FP26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Fire Protection Impairment Program v1.0 (NFPA 25 impairment provisions; OAR 437-002-0042). Questions? Contact the Environmental Compliance and Safety Lead or the Impairment Coordinator.",
+  introH: "Welcome — Protecting the Mill When Fire Protection Is Down",
+  introP1: "Sprinklers, fire pumps, hydrants, alarms and standpipes are the mill's built-in defense against fire. When any of them is taken out of service — for repair, testing, a freeze, or a failure — the building is more vulnerable, and everyone working there needs to know what that means and what to do. That out-of-service condition is called an impairment.",
+  introP2: "This training takes about 15 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. What an Impairment Is", body:
+      "<p>An <b>impairment</b> is any condition in which a fire protection system — a sprinkler system, fire pump, water supply, hydrant, standpipe, or fire alarm — is <b>out of service or not fully functional</b>. While a system is impaired, the protection it normally provides is reduced or gone.</p>"+
+      "<p>Mt. Hood Forest Products controls impairments under its <b>Fire Protection Impairment Program</b>, written to the standard of <b>NFPA 25</b> (the national standard for inspection, testing, and maintenance of water-based fire protection). There are two kinds:</p>"+
+      "<table class='mini'><tr><th>Type</th><th>What it is</th></tr>"+
+      "<tr><td><b>Planned impairment</b></td><td>Known in advance and scheduled — for repair, testing, or modification. Controlled <b>before</b> the system goes down.</td></tr>"+
+      "<tr><td><b>Emergency impairment</b></td><td>Unplanned — a main break, a frozen or failed component, a fire pump failure, or damage. The same controls apply, put in place <b>at once</b>.</td></tr></table>",
+      kc:{ q:"A sprinkler system is shut off for a scheduled repair that was arranged last week. This is…", opts:["An emergency impairment","A planned impairment","Not an impairment at all","A fire watch"], a:1 } },
+    { h:"2. The Impairment Coordinator and the Red Tag", body:
+      "<p>Every impairment is controlled by the <b>Impairment Coordinator</b> — the person accountable for authorizing an impairment, directing the precautions, and authorizing the system's return to service. Nothing is impaired, and no impaired system is put back in service, without the Coordinator's authorization.</p>"+
+      "<p>When a system is taken out of service, a red <span class='tag'>FIRE PROTECTION IMPAIRED</span> tag is placed at the <b>system control valve</b> and at the <b>fire alarm panel</b>, so anyone can see at a glance that protection is down.</p>"+
+      "<div class='notice'><b>Never remove or bypass a red impairment tag.</b> The tag comes off only when the Impairment Coordinator has verified the system is fully restored and authorizes its removal.</div>",
+      kc:{ q:"Who authorizes an impaired fire protection system to be put back in service?", opts:["Any supervisor on shift","The Impairment Coordinator, after verifying it is fully restored","Whoever did the repair","The first person to notice the tag"], a:1 } },
+    { h:"3. Precautions While a System Is Impaired", body:
+      "<p>While any fire protection system is impaired, these precautions stay in effect in the affected area until the system is restored:</p>"+
+      "<ul><li>A <b>fire watch</b> is posted in and around the affected area, sized to the area and the hazard</li>"+
+      "<li><b>No hot work</b> is performed in any area whose fire protection is impaired — no Hot Work Permit is issued or stays in effect there</li>"+
+      "<li>Additional <b>portable fire extinguishers</b> are staged in the affected area</li>"+
+      "<li><b>Housekeeping is tightened</b> — combustible accumulations (wood dust, chips, bark) are removed and ignition sources controlled</li>"+
+      "<li>The impaired area and the length of the impairment are kept <b>as small and as short as practicable</b></li></ul>"+
+      "<div class='danger'><b>The hot work link is critical.</b> A welding or cutting job in an area with no working sprinklers is exactly how a small spark becomes a mill fire. If protection is impaired where hot work is planned, the hot work stops.</div>",
+      kc:{ q:"Fire protection is impaired in the area where a welding job was scheduled. What happens to the hot work?", opts:["It proceeds with extra care","It stops — no hot work where fire protection is impaired","It moves up one hour earlier","Only the fire watcher decides"], a:1 } },
+    { h:"4. Reporting an Impairment", body:
+      "<p>Many impairments start as something an employee notices: a closed or leaking sprinkler valve, a damaged hydrant, a fire pump that won't run, a frozen line, a fire alarm trouble signal.</p>"+
+      "<p><b>If you discover that fire protection equipment is damaged, out of service, or not working, report it immediately</b> — to your supervisor and the Impairment Coordinator. Reporting fast is what lets the precautions go up before the vulnerability is exploited. You will never be disciplined for reporting a fire protection problem.</p>"+
+      "<p>For an emergency impairment, the Impairment Coordinator takes charge at once: confirms the extent, places (or directs placement of) the red tag, puts the precautions in effect, and makes emergency notifications without delay — including the fire department and the insurer.</p>" },
+    { h:"5. Notifications and the Insurer", body:
+      "<p>When fire protection goes down, people beyond the mill floor have to know. Required notifications include the <b>Impairment Coordinator</b>, affected <b>supervisors and employees</b>, the <b>fire department</b> (for significant or emergency impairments), and the property <b>insurer (PRMA)</b>.</p>"+
+      "<p>Mt. Hood Forest Products has adopted the <b>PRMA Sprinkler Impairment Notice</b> — the insurer's required procedure whenever a sprinkler system is impaired. When protection is restored, those same notifications are <b>cleared</b>: the insurer, fire department, and Emergency Coordinator are told the system is back in service.</p>",
+      kc:{ q:"Besides mill personnel, who must be notified when a sprinkler system is impaired?", opts:["No one outside the mill","The fire department and the property insurer (PRMA)","Only the state","The equipment manufacturer"], a:1 } },
+    { h:"6. Restoration and Return to Service", body:
+      "<p>An impairment is <b>not closed</b> until the system is confirmed back in service. Before the red tag comes off:</p>"+
+      "<ul><li>The repair is completed and the system reopened — valves confirmed in their <b>normal open position</b> and locked or sealed as required</li>"+
+      "<li>The system is <b>tested</b> to confirm it works — for example a main drain or flow test on a sprinkler system, or a pump run test</li>"+
+      "<li>The <b>Impairment Coordinator verifies</b> the system is fully restored and authorizes tag removal</li>"+
+      "<li>Notifications are <b>cleared</b> — insurer, fire department, Emergency Coordinator told it's back in service</li>"+
+      "<li>The return to service is <b>logged</b> in the Impairment Log, including who tested and confirmed the system</li></ul>"+
+      "<p>Protection is restored the <b>same day whenever possible</b>. The shorter the impairment, the smaller the risk.</p>",
+      kc:{ q:"Before an impairment tag is removed, the system must be…", opts:["Left alone for 24 hours","Tested and confirmed operational, then verified by the Impairment Coordinator","Painted","Signed off by any two employees"], a:1 } },
+    { h:"7. Your Part", body:
+      "<p>Most employees are not the ones isolating valves or running tests — but everyone has a part:</p>"+
+      "<ul><li><b>Report</b> damaged or out-of-service fire protection equipment immediately</li>"+
+      "<li><b>Respect the red tag</b> — never remove, bypass, or work around it</li>"+
+      "<li><b>Know that hot work stops</b> where protection is impaired</li>"+
+      "<li><b>Tighten housekeeping</b> and watch for ignition sources when you're told an area is impaired</li>"+
+      "<li><b>Ask</b> your supervisor or the Impairment Coordinator if you're unsure whether an area's protection is in service</li></ul>"+
+      "<h2>If You See Fire While Protection Is Impaired</h2>"+
+      "<p>Activate the alarm, get out, and call 911 — an area with impaired sprinklers can grow a fire fast. Report emergencies to your supervisor; the supervisor coordinates the fire department.</p>"+
+      "<p>Emergency (fire / medical): <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"What is an \"impairment\" of fire protection?", opts:["A false alarm", "A condition where a fire protection system is out of service or not fully functional", "A monthly inspection", "A type of sprinkler head"], a:1 },
+    { q:"A sprinkler system is shut off for a repair scheduled last week. This is a…", opts:["Emergency impairment", "Planned impairment", "Fire watch", "Non-impairment"], a:1 },
+    { q:"Who authorizes an impaired system to return to service?", opts:["Any supervisor", "The Impairment Coordinator, after verifying full restoration", "The repair crew alone", "The fire department"], a:1 },
+    { q:"Where is the red \"Fire Protection Impaired\" tag placed?", opts:["At the system control valve and the fire alarm panel", "Only on the front door", "On every extinguisher", "Nowhere — it is electronic"], a:0 },
+    { q:"While fire protection is impaired in an area, hot work in that area…", opts:["Continues with a permit", "Is allowed after noon", "Is not performed — no permit issued or in effect there", "Needs only a fire watcher"], a:2 },
+    { q:"Which precaution is NOT required during an impairment?", opts:["A posted fire watch", "Extra portable fire extinguishers staged", "Tightened housekeeping", "Shutting down the whole mill"], a:3 },
+    { q:"You discover a damaged hydrant and a fire pump that won't start. You should…", opts:["Fix it yourself quietly", "Wait for the next inspection", "Report it immediately to your supervisor and the Impairment Coordinator", "Ignore it if your area is fine"], a:2 },
+    { q:"When a sprinkler system is impaired, who outside the mill must be notified?", opts:["No one", "The fire department and the property insurer (PRMA)", "Only OSHA", "The lumber buyer"], a:1 },
+    { q:"Before the impairment tag is removed, the system must be…", opts:["Tested and confirmed operational, then verified by the Impairment Coordinator", "Left for 24 hours", "Repainted", "Photographed only"], a:0 },
+    { q:"You find a red impairment tag on a valve. You should…", opts:["Remove it if the area looks fine", "Move it to a better spot", "Never remove or bypass it — it comes off only on the Coordinator's authorization", "Cover it up"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Fire Protection Impairment — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Fire Protection Impairment / Deterioro de Protección Contra Incendios\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the red tag, the hot-work rule, reporting, and return to service — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Deterioro de Protección Contra Incendios de Mt. Hood Forest Products v1.0 (disposiciones de deterioro de NFPA 25; OAR 437-002-0042). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad o el Coordinador de Deterioros.",
+  introH: "Bienvenido — Proteger el Aserradero Cuando la Protección Contra Incendios Está Fuera de Servicio",
+  introP1: "Los rociadores, las bombas de incendio, los hidrantes, las alarmas y las tuberías verticales son la defensa incorporada del aserradero contra el fuego. Cuando cualquiera de ellos se pone fuera de servicio — por reparación, prueba, congelamiento o falla — el edificio queda más vulnerable, y todos los que trabajan ahí necesitan saber qué significa eso y qué hacer. Esa condición fuera de servicio se llama deterioro.",
+  introP2: "Esta capacitación toma unos 15 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Qué Es un Deterioro", body:
+      "<p>Un <b>deterioro</b> es cualquier condición en la que un sistema de protección contra incendios — un sistema de rociadores, bomba de incendio, suministro de agua, hidrante, tubería vertical o alarma de incendio — está <b>fuera de servicio o no funciona completamente</b>. Mientras un sistema está deteriorado, la protección que normalmente da se reduce o desaparece.</p>"+
+      "<p>Mt. Hood Forest Products controla los deterioros bajo su <b>Programa de Deterioro de Protección Contra Incendios</b>, escrito según la norma <b>NFPA 25</b> (la norma nacional de inspección, prueba y mantenimiento de protección contra incendios a base de agua). Hay dos tipos:</p>"+
+      "<table class='mini'><tr><th>Tipo</th><th>Qué es</th></tr>"+
+      "<tr><td><b>Deterioro planificado</b></td><td>Conocido de antemano y programado — para reparación, prueba o modificación. Se controla <b>antes</b> de que el sistema salga de servicio.</td></tr>"+
+      "<tr><td><b>Deterioro de emergencia</b></td><td>No planificado — una ruptura de tubería, un componente congelado o fallado, una falla de la bomba, o daño. Se aplican los mismos controles, puestos en efecto <b>de inmediato</b>.</td></tr></table>",
+      kc:{ q:"Un sistema de rociadores se apaga para una reparación programada la semana pasada. Esto es…", opts:["Un deterioro de emergencia","Un deterioro planificado","No es un deterioro","Una vigilancia de incendios"], a:1 } },
+    { h:"2. El Coordinador de Deterioros y la Etiqueta Roja", body:
+      "<p>Cada deterioro lo controla el <b>Coordinador de Deterioros</b> — la persona responsable de autorizar un deterioro, dirigir las precauciones y autorizar el regreso del sistema al servicio. Nada se deteriora, y ningún sistema deteriorado vuelve al servicio, sin la autorización del Coordinador.</p>"+
+      "<p>Cuando un sistema sale de servicio, se coloca una etiqueta roja <span class='tag'>PROTECCIÓN CONTRA INCENDIOS DETERIORADA</span> en la <b>válvula de control del sistema</b> y en el <b>panel de alarma de incendios</b>, para que cualquiera vea de un vistazo que la protección está fuera de servicio.</p>"+
+      "<div class='notice'><b>Nunca quite ni evada una etiqueta roja de deterioro.</b> La etiqueta se quita solo cuando el Coordinador de Deterioros ha verificado que el sistema está totalmente restaurado y autoriza su retiro.</div>",
+      kc:{ q:"¿Quién autoriza que un sistema de protección contra incendios deteriorado vuelva al servicio?", opts:["Cualquier supervisor del turno","El Coordinador de Deterioros, tras verificar que está totalmente restaurado","Quien hizo la reparación","La primera persona que ve la etiqueta"], a:1 } },
+    { h:"3. Precauciones Mientras un Sistema Está Deteriorado", body:
+      "<p>Mientras cualquier sistema de protección contra incendios está deteriorado, estas precauciones siguen en efecto en el área afectada hasta que el sistema se restaure:</p>"+
+      "<ul><li>Se coloca una <b>vigilancia de incendios</b> en y alrededor del área afectada, según el tamaño del área y el peligro</li>"+
+      "<li><b>No se hace trabajo en caliente</b> en ninguna área cuya protección contra incendios esté deteriorada — no se emite ni sigue vigente ningún Permiso de Trabajo en Caliente ahí</li>"+
+      "<li>Se colocan <b>extintores portátiles adicionales</b> en el área afectada</li>"+
+      "<li>Se <b>refuerza la limpieza</b> — se retiran las acumulaciones combustibles (aserrín, astillas, corteza) y se controlan las fuentes de ignición</li>"+
+      "<li>El área deteriorada y la duración del deterioro se mantienen <b>tan pequeñas y cortas como sea posible</b></li></ul>"+
+      "<div class='danger'><b>El vínculo con el trabajo en caliente es crítico.</b> Un trabajo de soldadura o corte en un área sin rociadores funcionando es exactamente cómo una pequeña chispa se convierte en un incendio del aserradero. Si la protección está deteriorada donde se planea trabajo en caliente, el trabajo en caliente se detiene.</div>",
+      kc:{ q:"La protección contra incendios está deteriorada donde se programó un trabajo de soldadura. ¿Qué pasa con el trabajo en caliente?", opts:["Continúa con más cuidado","Se detiene — no hay trabajo en caliente donde la protección está deteriorada","Se adelanta una hora","Solo el vigilante de incendios decide"], a:1 } },
+    { h:"4. Reportar un Deterioro", body:
+      "<p>Muchos deterioros empiezan como algo que un empleado nota: una válvula de rociadores cerrada o con fuga, un hidrante dañado, una bomba de incendio que no arranca, una línea congelada, una señal de problema en la alarma.</p>"+
+      "<p><b>Si descubre que un equipo de protección contra incendios está dañado, fuera de servicio o no funciona, repórtelo de inmediato</b> — a su supervisor y al Coordinador de Deterioros. Reportar rápido es lo que permite subir las precauciones antes de que se aproveche la vulnerabilidad. Nunca será disciplinado por reportar un problema de protección contra incendios.</p>"+
+      "<p>Para un deterioro de emergencia, el Coordinador de Deterioros toma el mando de inmediato: confirma el alcance, coloca (o dirige la colocación de) la etiqueta roja, pone las precauciones en efecto y hace notificaciones de emergencia sin demora — incluyendo al departamento de bomberos y al asegurador.</p>" },
+    { h:"5. Notificaciones y el Asegurador", body:
+      "<p>Cuando la protección contra incendios sale de servicio, personas más allá del piso del aserradero deben saberlo. Las notificaciones requeridas incluyen al <b>Coordinador de Deterioros</b>, a los <b>supervisores y empleados</b> afectados, al <b>departamento de bomberos</b> (para deterioros significativos o de emergencia) y al <b>asegurador de la propiedad (PRMA)</b>.</p>"+
+      "<p>Mt. Hood Forest Products ha adoptado el <b>Aviso de Deterioro de Rociadores de PRMA</b> — el procedimiento requerido por el asegurador siempre que un sistema de rociadores esté deteriorado. Cuando la protección se restaura, esas mismas notificaciones se <b>cancelan</b>: se avisa al asegurador, al departamento de bomberos y al Coordinador de Emergencias que el sistema está de vuelta en servicio.</p>",
+      kc:{ q:"Además del personal del aserradero, ¿a quién se debe notificar cuando un sistema de rociadores está deteriorado?", opts:["A nadie fuera del aserradero","Al departamento de bomberos y al asegurador de la propiedad (PRMA)","Solo al estado","Al fabricante del equipo"], a:1 } },
+    { h:"6. Restauración y Regreso al Servicio", body:
+      "<p>Un deterioro <b>no se cierra</b> hasta que el sistema se confirma de vuelta en servicio. Antes de que se quite la etiqueta roja:</p>"+
+      "<ul><li>Se completa la reparación y se reabre el sistema — las válvulas confirmadas en su <b>posición normal abierta</b> y aseguradas o selladas según se requiera</li>"+
+      "<li>El sistema se <b>prueba</b> para confirmar que funciona — por ejemplo, una prueba de drenaje principal o de flujo en un sistema de rociadores, o una prueba de arranque de la bomba</li>"+
+      "<li>El <b>Coordinador de Deterioros verifica</b> que el sistema está totalmente restaurado y autoriza el retiro de la etiqueta</li>"+
+      "<li>Las notificaciones se <b>cancelan</b> — se avisa al asegurador, bomberos y Coordinador de Emergencias que está de vuelta en servicio</li>"+
+      "<li>El regreso al servicio se <b>registra</b> en el Registro de Deterioros, incluyendo quién probó y confirmó el sistema</li></ul>"+
+      "<p>La protección se restaura el <b>mismo día siempre que sea posible</b>. Mientras más corto el deterioro, menor el riesgo.</p>",
+      kc:{ q:"Antes de que se quite la etiqueta de deterioro, el sistema debe estar…", opts:["Sin tocar por 24 horas","Probado y confirmado operativo, luego verificado por el Coordinador de Deterioros","Pintado","Firmado por dos empleados cualquiera"], a:1 } },
+    { h:"7. Su Parte", body:
+      "<p>La mayoría de los empleados no son quienes aíslan válvulas o corren pruebas — pero todos tienen una parte:</p>"+
+      "<ul><li><b>Reporte</b> el equipo de protección contra incendios dañado o fuera de servicio de inmediato</li>"+
+      "<li><b>Respete la etiqueta roja</b> — nunca la quite, evada ni trabaje a su alrededor</li>"+
+      "<li><b>Sepa que el trabajo en caliente se detiene</b> donde la protección está deteriorada</li>"+
+      "<li><b>Refuerce la limpieza</b> y vigile las fuentes de ignición cuando le avisen que un área está deteriorada</li>"+
+      "<li><b>Pregunte</b> a su supervisor o al Coordinador de Deterioros si no está seguro de si la protección de un área está en servicio</li></ul>"+
+      "<h2>Si Ve Fuego Mientras la Protección Está Deteriorada</h2>"+
+      "<p>Active la alarma, salga y llame al 911 — un área con rociadores deteriorados puede hacer crecer un fuego rápido. Reporte las emergencias a su supervisor; el supervisor coordina al departamento de bomberos.</p>"+
+      "<p>Emergencia (incendio / médica): <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Qué es un \"deterioro\" de la protección contra incendios?", opts:["Una alarma falsa", "Una condición en la que un sistema de protección contra incendios está fuera de servicio o no funciona completamente", "Una inspección mensual", "Un tipo de rociador"], a:1 },
+    { q:"Un sistema de rociadores se apaga para una reparación programada la semana pasada. Esto es un…", opts:["Deterioro de emergencia", "Deterioro planificado", "Vigilancia de incendios", "No es deterioro"], a:1 },
+    { q:"¿Quién autoriza que un sistema deteriorado vuelva al servicio?", opts:["Cualquier supervisor", "El Coordinador de Deterioros, tras verificar la restauración total", "Solo la cuadrilla de reparación", "El departamento de bomberos"], a:1 },
+    { q:"¿Dónde se coloca la etiqueta roja de \"Protección Contra Incendios Deteriorada\"?", opts:["En la válvula de control del sistema y el panel de alarma", "Solo en la puerta principal", "En cada extintor", "En ningún lado — es electrónica"], a:0 },
+    { q:"Mientras la protección está deteriorada en un área, el trabajo en caliente en esa área…", opts:["Continúa con un permiso", "Se permite después del mediodía", "No se realiza — no se emite ni sigue vigente un permiso ahí", "Solo necesita un vigilante"], a:2 },
+    { q:"¿Cuál precaución NO se requiere durante un deterioro?", opts:["Una vigilancia de incendios", "Extintores portátiles adicionales", "Limpieza reforzada", "Apagar todo el aserradero"], a:3 },
+    { q:"Descubre un hidrante dañado y una bomba que no arranca. Debe…", opts:["Repararlo usted mismo en silencio", "Esperar la próxima inspección", "Reportarlo de inmediato a su supervisor y al Coordinador de Deterioros", "Ignorarlo si su área está bien"], a:2 },
+    { q:"Cuando un sistema de rociadores está deteriorado, ¿a quién fuera del aserradero se debe notificar?", opts:["A nadie", "Al departamento de bomberos y al asegurador (PRMA)", "Solo a OSHA", "Al comprador de madera"], a:1 },
+    { q:"Antes de quitar la etiqueta de deterioro, el sistema debe estar…", opts:["Probado y confirmado operativo, luego verificado por el Coordinador de Deterioros", "Sin tocar por 24 horas", "Repintado", "Solo fotografiado"], a:0 },
+    { q:"Encuentra una etiqueta roja de deterioro en una válvula. Debe…", opts:["Quitarla si el área se ve bien", "Moverla a un mejor lugar", "Nunca quitarla ni evadirla — se quita solo con la autorización del Coordinador", "Cubrirla"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Deterioro de Protección Contra Incendios — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Fire Protection Impairment / Deterioro de Protección Contra Incendios\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente la etiqueta roja, la regla del trabajo en caliente, el reporte y el regreso al servicio — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Fire Protection Impairment Training</div>'+'<div class="ti-es">Capacitación sobre Deterioro de Protección Contra Incendios</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

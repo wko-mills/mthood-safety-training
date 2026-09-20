@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Respiratory Protection Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Respiratory Protection Training &mdash; OAR 437-002-0120 (29 CFR 1910.134)</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Respiratory Protection Program v1.0 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "RS26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {"basedOn": "Based on the Mt. Hood Forest Products Respiratory Protection Program v1.0 (OAR 437-002-0120, adopting 29 CFR 1910.134). Questions? Ask your supervisor or the safety manager.", "introH": "Welcome — Respiratory Protection at Mt. Hood Forest Products", "introP1": "This training covers respiratory protection: why respirators matter, the medical evaluation and fit test you must have before wearing a tight-fitting respirator, the facial-hair rule, how to check the seal, and how to care for your respirator. It takes about 15 minutes.", "introP2": "</p><div class='notice'><b>The one rule to remember:</b> a tight-fitting respirator only protects you if it seals to your face. That means a current medical evaluation, a fit test on your exact respirator, and a clean-shaven seal — every time.</div><p>Required before assigned respirator work and annually thereafter for all Mt. Hood Forest Products employees who use respirators.", "nameLabel": "Enter your full name to begin:", "namePh": "First and last name", "startBtn": "Start Training", "continueBtn": "Continue", "checkBtn": "Check Answer", "kcOk": "Correct — well done.", "kcBad": "Not quite — the correct answer is highlighted. Review it, then continue.", "secLabel": "Section", "ofLabel": "of", "sections": [{"h": "1. Why This Training", "body": "<p>Some jobs put dusts, mists, vapors, or fumes into the air you breathe. When we cannot remove that hazard by other means, a respirator is the last line of defense — and it only works if it is the right one, worn correctly, and sealed to your face.</p><p>Oregon OSHA adopts the federal respiratory protection standard — <b>OAR 437-002-0120</b>, which adopts <b>29 CFR 1910.134</b>. It requires Mt. Hood Forest Products to train you on respirator use before you are assigned respirator work and every year after.</p><div class='notice'>The best protection is removing the hazard — ventilation, enclosure, or substitution come first. A respirator is used when those controls are not enough, and it is never a substitute for them.</div>", "kc": {"q": "Which Oregon rule governs respiratory protection?", "opts": ["It is optional at Mt. Hood", "OAR 437-002-0120, adopting 29 CFR 1910.134", "Only federal OSHA applies, never Oregon", "There is no rule for respirators"], "a": 1}}, {"h": "2. The Three Gates Before You Wear One", "body": "<p>Before you may be assigned a task requiring a <b>tight-fitting respirator</b>, three things must be true — all three, no exceptions:</p><table class='mini'><tr><th>Gate</th><th>What it means</th></tr><tr><td><b>1. Medical evaluation</b></td><td>A licensed health care professional has cleared you to wear a respirator. Respirators strain the heart and lungs — this makes sure it is safe for you.</td></tr><tr><td><b>2. Fit test</b></td><td>You have been fit tested on the exact make, model, style, and size you will wear.</td></tr><tr><td><b>3. Training</b></td><td>This module plus hands-on training, current within 12 months.</td></tr></table><div class='danger'>If any gate is open, you do not wear the respirator. The job waits, gets reassigned, or the hazard is controlled another way. \"Wearing it carefully\" is not an option.</div>", "kc": {"q": "How many of the three gates (medical evaluation, fit test, training) must be met before you wear a tight-fitting respirator?", "opts": ["Just the fit test", "Just training", "All three", "Any one of them"], "a": 2}}, {"h": "3. A Fit Test Is Specific", "body": "<p>A fit test proves a respirator seals to <b>your</b> face. It is specific to the exact respirator:</p><ul><li>Fit tested on the same <b>make, model, style, and size</b> you will wear</li><li>Repeated <b>at least annually</b>, and again if your face changes — large weight change, dental work, scarring — that could affect the seal</li><li>Done while you are <b>clean-shaven</b> in the seal area</li></ul><div class='notice'>A fit test on a different facepiece is <b>not</b> a fit test for the one you are wearing. If you switch to a different respirator, you need a new fit test.</div>", "kc": {"q": "A fit test done on a different make and model of respirator…", "opts": ["Counts — a fit test is a fit test", "Does not count — fit testing is specific to make, model, style, and size", "Counts for 30 days", "Counts if the sizes are close"], "a": 1}}, {"h": "4. Facial Hair Breaks the Seal", "body": "<p>This is the rule people push back on the most. Know it cold:</p><div class='danger'><b>No facial hair may come between the facepiece and your face.</b> Not a beard, not sideburns crossing the seal, not a few days of stubble. Hair on the sealing surface breaks the seal and lets contaminated air bypass the filter entirely — pulling the straps tighter does not fix it.</div><p><b>Allowed:</b> a mustache or small goatee entirely inside the sealing surface. <b>Not allowed:</b> beards, stubble, or sideburns on the seal area.</p><div class='notice'>If you want to keep a beard, there is a real solution — a <b>loose-fitting powered air-purifying respirator (PAPR)</b> uses a hood or helmet, needs no face seal, and works with a beard. Ask your supervisor or the safety manager rather than working with a broken seal.</div>", "kc": {"q": "You have several days of beard growth on the sealing surface and are scheduled for respirator work. You should…", "opts": ["Tighten the straps and proceed", "Not wear the tight-fitting respirator; ask about a PAPR or reassignment", "Hold your breath through the worst of it", "Shave only the mustache area"], "a": 1}}, {"h": "5. Check the Seal Every Time — User Seal Check", "body": "<p>Every time you put a tight-fitting respirator on, do a <b>user seal check</b> before you enter the hazard area:</p><table class='mini'><tr><td><b>Positive check</b></td><td>Cover the exhalation valve and exhale gently. The facepiece should bulge slightly and hold — no air leaking around the edges.</td></tr><tr><td><b>Negative check</b></td><td>Cover the inhalation openings and inhale gently. The facepiece should collapse slightly toward your face and stay there.</td></tr></table><p>If the respirator leaks, reposition it and check again. If you cannot get a good seal, do not enter the area — get help.</p><div class='notice'>A user seal check is <b>not</b> a fit test. The seal check is a quick each-time confirmation; the fit test is the formal, once-a-year proof. You do both.</div>", "kc": {"q": "A user seal check is…", "opts": ["The same thing as a fit test", "A quick check you do each time you put the respirator on", "Only needed once a year", "Optional if you were fit tested"], "a": 1}}, {"h": "6. The Right Respirator and Cartridge", "body": "<p>Different hazards need different respirators. Wearing the wrong one — or the wrong cartridge — gives false protection.</p><ul><li>Wear the respirator <b>selected for your specific hazard</b>. A dust mask does nothing against a solvent vapor.</li><li>Use the <b>correct cartridge or filter</b>, and change it on schedule — cartridges have a service life and stop protecting once they are spent.</li><li>Particulate filters (N95, P100) are for dusts and mists; chemical cartridges are matched to specific vapors or gases.</li></ul><div class='danger'>Never rely on smell or taste to tell you a cartridge is spent. If you smell or taste the contaminant, or breathing gets harder, leave the area immediately and change the cartridge in clean air.</div>", "kc": {"q": "If you smell or taste the contaminant through your respirator, you should…", "opts": ["Keep working — the filter still has some life", "Leave the area immediately and change the cartridge in clean air", "Tighten the straps", "Hold your breath and finish the task"], "a": 1}}, {"h": "7. Care, Cleaning, and Storage", "body": "<p>A respirator only protects you if it is in good condition:</p><ul><li><b>Inspect it before each use</b> — check the facepiece, straps, valves, and cartridges for damage, cracks, or wear.</li><li><b>Clean and disinfect</b> it after use per the program, and let it dry.</li><li><b>Store it properly</b> — bagged or in a container, protected from dust, sunlight, heat, and chemicals. Not tossed in a toolbox or left on a machine.</li><li>Report a damaged respirator and get a replacement — never wear one that is cracked, has a torn strap, or a stuck valve.</li></ul><div class='notice'>Take the respirator off <b>only after you leave the contaminated area</b>, every time. Removing it inside the hazard area defeats the protection.</div>", "kc": {"q": "When should you remove your respirator?", "opts": ["Whenever it feels uncomfortable", "Only after you have left the contaminated area", "As soon as you finish the hardest part", "Anytime, as long as you put it back"], "a": 1}}, {"h": "8. Symptoms — Stop and Get Out", "body": "<p>Respirators put real strain on the heart and lungs. Some feelings mean you stop, leave the area, and get to clean air — do not push through:</p><ul><li>Shortness of breath beyond what the work explains</li><li>Chest tightness or pain</li><li>Dizziness or light-headedness</li><li>Nausea, or unusual fatigue while wearing it</li></ul><p>Then tell your supervisor. A medical clearance can be re-evaluated when your health changes — that is a normal part of the program, not a mark against you.</p><div class='danger'>If breathing gets noticeably harder, the respirator is damaged, or you feel unwell — leave the area first, then troubleshoot in clean air. Never take a tight-fitting respirator off to \"catch your breath\" inside the hazard.</div>", "kc": {"q": "You feel dizzy while wearing your respirator. You should…", "opts": ["Loosen the straps and keep going", "Stop, leave the area for clean air, and tell your supervisor", "Take it off where you are to breathe easier", "Wait to see if it passes"], "a": 1}}, {"h": "9. Voluntary Use", "body": "<p>Sometimes you may want to wear a respirator when one is not required. The rules depend on the type:</p><ul><li><b>Voluntary N95 or dust mask</b> — allowed with a low bar. You receive the information in <b>Appendix D</b> of the standard (proper use and storage). No medical evaluation or fit test needed.</li><li><b>Voluntary half-face or higher (elastomeric) respirator</b> — because these strain breathing, the <b>medical evaluation, cleaning/storage rules, and training still apply</b> even though use is voluntary. This must be authorized — ask the safety manager first.</li></ul><div class='notice'>Bringing your own half-face respirator from home to wear \"because it's mine\" is exactly the situation that still needs authorization and a medical evaluation. Ask first.</div>", "kc": {"q": "Voluntarily wearing your own half-face (elastomeric) respirator…", "opts": ["Has no requirements since it is voluntary", "Still requires medical evaluation and training, and must be authorized", "Is never allowed", "Only needs a fit test"], "a": 1}}, {"h": "10. IDLH — Never Enter, Never Rescue", "body": "<p><b>IDLH</b> means Immediately Dangerous to Life or Health — including oxygen-deficient confined spaces. Mt. Hood Forest Products <b>does not keep SCBA on site and does not perform IDLH entry.</b> Entry rescue is the fire department (Odell Fire Dept / 911).</p><div class='danger'>If IDLH conditions turn up — or a coworker goes down in a confined space — <b>nobody enters, nobody attempts rescue.</b> Not with an N95, not with a half-face, not \"just to grab him.\" A rescuer without an air supply becomes the second victim. Everyone evacuates, call 911, keep others out, and meet the fire department.</div><p>Your everyday respirator does not protect against IDLH atmospheres. Knowing the line is part of the protection.</p>", "kc": {"q": "A coworker collapses inside an oxygen-deficient confined space. You should…", "opts": ["Put on your half-face and pull them out", "Keep everyone out, call 911, and wait for the fire department", "Send in two people together", "Hold your breath and go in quickly"], "a": 1}}, {"h": "11. Records and Retraining", "body": "<p>Respirator protection is kept current through records and refreshers:</p><ul><li><b>Retraining</b> is required at least every 12 months, whenever a new respirator type or work condition makes prior training outdated, or if you cannot correctly perform a seal check.</li><li><b>Records</b> the company keeps: your medical evaluation (confidential), your fit test, and your training completion.</li><li>Report anything that affects your respirator — a fit problem, a symptom, a damaged unit, or a change in your work — to your supervisor or the safety manager.</li></ul><div class='notice'>When you are unsure whether your respirator, cartridge, or the task is right, stop and ask. Asking is always cheaper than a lungful of what the filter was supposed to catch.</div>", "kc": {"q": "How often is respirator retraining required at minimum?", "opts": ["Never, once you are trained", "Only when you change jobs", "At least every 12 months", "Every five years"], "a": 2}}, {"h": "12. Questions About This Training", "body": "<p>You can ask questions about this training and get answers during your shift.</p><div class='kc' style='border-left-color:var(--blue);'><div class='kct'>Questions about this training?</div><p style='margin:0'>Ask your <b>supervisor</b> or the <b>safety manager</b> — in person during your shift, or by the contact numbers posted on the department bulletin board. You can ask before, during, or after this module and get an answer the same day.</p></div><p>When you continue, you'll take a short 10-question quiz. You need 8 correct (80%) to pass, and you can retake it as many times as you need.</p><div class='danger'><b>In an emergency:</b> for a medical emergency or an IDLH/confined-space collapse, call <b>911</b>. Medical: Providence Hood River Memorial Hospital ER <b>(541) 386-3911</b>. Never attempt a confined-space rescue yourself.</div>"}], "quiz": [{"q": "Which rule governs respiratory protection at Mt. Hood Forest Products?", "opts": ["Respirators are optional here", "OAR 437-002-0120, adopting 29 CFR 1910.134", "Only a company policy, no regulation", "A federal rule that Oregon does not follow"], "a": 1}, {"q": "Before wearing a tight-fitting respirator, an employee must have…", "opts": ["A medical evaluation, a fit test, and training — all three current", "Only training", "Only a fit test", "A supervisor's verbal OK"], "a": 0}, {"q": "A fit test done on a different make and model of respirator…", "opts": ["Counts — a fit test is a fit test", "Counts for 30 days", "Does not count — fit testing is specific to make, model, style, and size", "Counts if the sizes are similar"], "a": 2}, {"q": "Facial hair on the sealing surface…", "opts": ["Is fine if you tighten the straps", "Is fine for short tasks", "Only matters for gases", "Breaks the seal — a beard means a PAPR or reassignment, not a tighter strap"], "a": 3}, {"q": "A user seal check is…", "opts": ["The same as a fit test", "A quick check you do each time you put the respirator on", "Needed only once a year", "Optional after a fit test"], "a": 1}, {"q": "If you smell or taste the contaminant through your respirator, you should…", "opts": ["Keep working — some life remains", "Tighten the straps", "Leave the area and change the cartridge in clean air", "Switch to breathing through your mouth"], "a": 2}, {"q": "You should remove your respirator…", "opts": ["Only after leaving the contaminated area", "Whenever it feels tight", "As soon as the worst is over", "Anytime you can put it back quickly"], "a": 0}, {"q": "You feel light-headed while wearing your respirator. You should…", "opts": ["Loosen the straps and continue", "Take it off where you are", "Ignore it — it is normal", "Stop, get to clean air, and tell your supervisor"], "a": 3}, {"q": "Voluntarily wearing your own half-face respirator…", "opts": ["Has no requirements because it is voluntary", "Still requires medical evaluation and training and must be authorized", "Is always banned", "Only needs a seal check"], "a": 1}, {"q": "A coworker collapses in an oxygen-deficient confined space. You…", "opts": ["Put on an N95 and pull them out", "Send in two people together", "Keep everyone out, call 911, and wait for the fire department", "Go in fast holding your breath"], "a": 2}], "quizH": "Final Quiz", "quizIntro": "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review the material and retake the quiz if needed.", "submitBtn": "Submit Quiz", "answerAll": "Please answer every question before submitting.", "passH": "Congratulations — You Passed!", "passSub": "Certificate of Completion", "passModule": "Respiratory Protection — Employee Training ", "scoreLabel": "Score", "dateLabel": "Date", "codeLabel": "Your completion code", "passInstr": "<b>Last step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Respiratory Protection / Protección Respiratoria\"</b> from the module list, and enter the completion code shown above. Your training is not on record until you submit the form.", "completion": "", "recordBtn": "Record My Completion", "failH": "Not Yet — Keep Going", "failMsg": "You scored below 80%. Review the material — especially the three gates (medical evaluation, fit test, training), the facial-hair rule, the user seal check, and never entering an IDLH space — and try again. There is no limit on attempts.", "reviewBtn": "Review the Material", "retakeBtn": "Retake the Quiz", "yourScore": "Your score"},
+es: {"basedOn": "Basado en el Programa de Protección Respiratoria de Mt. Hood Forest Products v1.0 (OAR 437-002-0120, que adopta 29 CFR 1910.134). ¿Preguntas? Pregunte a su supervisor o al gerente de seguridad.", "introH": "Bienvenido — Protección Respiratoria en Mt. Hood Forest Products", "introP1": "Esta capacitación cubre la protección respiratoria: por qué importan los respiradores, la evaluación médica y la prueba de ajuste que debe tener antes de usar un respirador ajustado, la regla del vello facial, cómo verificar el sello, y cómo cuidar su respirador. Toma unos 15 minutos.", "introP2": "</p><div class='notice'><b>La regla que debe recordar:</b> un respirador ajustado solo lo protege si sella contra su cara. Eso significa una evaluación médica vigente, una prueba de ajuste en su respirador exacto, y una zona de sello sin vello — cada vez.</div><p>Requerido antes del trabajo asignado con respirador y cada año para todos los empleados de Mt. Hood Forest Products que usan respiradores.", "nameLabel": "Escriba su nombre completo para comenzar:", "namePh": "Nombre y apellido", "startBtn": "Comenzar la capacitación", "continueBtn": "Continuar", "checkBtn": "Verificar respuesta", "kcOk": "Correcto — bien hecho.", "kcBad": "No exactamente — la respuesta correcta está resaltada. Revísela y continúe.", "secLabel": "Sección", "ofLabel": "de", "sections": [{"h": "1. Por qué esta capacitación", "body": "<p>Algunos trabajos ponen polvos, nieblas, vapores o humos en el aire que usted respira. Cuando no podemos eliminar ese peligro por otros medios, un respirador es la última línea de defensa — y solo funciona si es el correcto, usado correctamente, y sellado contra su cara.</p><p>Oregon OSHA adopta la norma federal de protección respiratoria — <b>OAR 437-002-0120</b>, que adopta <b>29 CFR 1910.134</b>. Exige que Mt. Hood Forest Products lo capacite en el uso de respiradores antes de asignarle trabajo con respirador y cada año.</p><div class='notice'>La mejor protección es eliminar el peligro — ventilación, encerramiento o sustitución van primero. Un respirador se usa cuando esos controles no son suficientes, y nunca los reemplaza.</div>", "kc": {"q": "¿Qué regla de Oregon rige la protección respiratoria?", "opts": ["Es opcional en Mt. Hood", "OAR 437-002-0120, que adopta 29 CFR 1910.134", "Solo aplica OSHA federal, nunca Oregon", "No hay regla para respiradores"], "a": 1}}, {"h": "2. Los tres requisitos antes de usar uno", "body": "<p>Antes de que le asignen una tarea que requiera un <b>respirador ajustado</b>, tres cosas deben ser ciertas — las tres, sin excepciones:</p><table class='mini'><tr><th>Requisito</th><th>Qué significa</th></tr><tr><td><b>1. Evaluación médica</b></td><td>Un profesional de salud con licencia lo ha autorizado a usar un respirador. Los respiradores exigen esfuerzo al corazón y los pulmones — esto asegura que sea seguro para usted.</td></tr><tr><td><b>2. Prueba de ajuste</b></td><td>Le han hecho la prueba de ajuste en la marca, modelo, estilo y talla exactos que usará.</td></tr><tr><td><b>3. Capacitación</b></td><td>Este módulo más capacitación práctica, vigente dentro de 12 meses.</td></tr></table><div class='danger'>Si falta cualquier requisito, no usa el respirador. El trabajo espera, se reasigna, o el peligro se controla de otra forma. \"Usarlo con cuidado\" no es una opción.</div>", "kc": {"q": "¿Cuántos de los tres requisitos (evaluación médica, prueba de ajuste, capacitación) deben cumplirse antes de usar un respirador ajustado?", "opts": ["Solo la prueba de ajuste", "Solo la capacitación", "Los tres", "Cualquiera de ellos"], "a": 2}}, {"h": "3. Una prueba de ajuste es específica", "body": "<p>Una prueba de ajuste demuestra que un respirador sella contra <b>su</b> cara. Es específica al respirador exacto:</p><ul><li>Prueba de ajuste en la misma <b>marca, modelo, estilo y talla</b> que usará</li><li>Repetida <b>al menos cada año</b>, y de nuevo si su cara cambia — cambio grande de peso, trabajo dental, cicatrices — que pueda afectar el sello</li><li>Hecha mientras está <b>bien afeitado</b> en la zona de sello</li></ul><div class='notice'>Una prueba de ajuste en un respirador diferente <b>no</b> es una prueba de ajuste para el que usa. Si cambia a un respirador diferente, necesita una nueva prueba de ajuste.</div>", "kc": {"q": "Una prueba de ajuste hecha en una marca y modelo diferentes de respirador…", "opts": ["Cuenta — una prueba de ajuste es una prueba de ajuste", "No cuenta — la prueba de ajuste es específica a marca, modelo, estilo y talla", "Cuenta por 30 días", "Cuenta si las tallas son parecidas"], "a": 1}}, {"h": "4. El vello facial rompe el sello", "body": "<p>Esta es la regla que la gente más discute. Conózcala bien:</p><div class='danger'><b>Ningún vello facial puede quedar entre la mascarilla y su cara.</b> Ni una barba, ni patillas que crucen el sello, ni unos días de barba incipiente. El vello en la zona de sello rompe el sello y deja que el aire contaminado evada el filtro por completo — apretar las correas no lo arregla.</div><p><b>Permitido:</b> un bigote o una perilla pequeña completamente dentro de la zona de sello. <b>No permitido:</b> barbas, barba incipiente o patillas en la zona de sello.</p><div class='notice'>Si quiere conservar la barba, hay una solución real — un <b>respirador purificador de aire motorizado (PAPR) de ajuste holgado</b> usa una capucha o casco, no necesita sello facial, y funciona con barba. Pregunte a su supervisor o al gerente de seguridad en lugar de trabajar con un sello roto.</div>", "kc": {"q": "Tiene varios días de barba en la zona de sello y está programado para trabajo con respirador. Debe…", "opts": ["Apretar las correas y proceder", "No usar el respirador ajustado; preguntar por un PAPR o una reasignación", "Aguantar la respiración en lo peor", "Afeitarse solo el bigote"], "a": 1}}, {"h": "5. Verifique el sello cada vez — Verificación de sello del usuario", "body": "<p>Cada vez que se pone un respirador ajustado, haga una <b>verificación de sello del usuario</b> antes de entrar al área de peligro:</p><table class='mini'><tr><td><b>Verificación positiva</b></td><td>Cubra la válvula de exhalación y exhale suavemente. La mascarilla debe inflarse un poco y sostenerse — sin fugas de aire por los bordes.</td></tr><tr><td><b>Verificación negativa</b></td><td>Cubra las aberturas de inhalación e inhale suavemente. La mascarilla debe colapsar un poco hacia su cara y quedarse ahí.</td></tr></table><p>Si el respirador tiene fuga, reposiciónelo y verifique de nuevo. Si no logra un buen sello, no entre al área — busque ayuda.</p><div class='notice'>Una verificación de sello del usuario <b>no</b> es una prueba de ajuste. La verificación de sello es una confirmación rápida de cada vez; la prueba de ajuste es la prueba formal anual. Hace ambas.</div>", "kc": {"q": "Una verificación de sello del usuario es…", "opts": ["Lo mismo que una prueba de ajuste", "Una verificación rápida que hace cada vez que se pone el respirador", "Solo se necesita una vez al año", "Opcional si le hicieron la prueba de ajuste"], "a": 1}}, {"h": "6. El respirador y el cartucho correctos", "body": "<p>Diferentes peligros necesitan diferentes respiradores. Usar el incorrecto — o el cartucho incorrecto — da falsa protección.</p><ul><li>Use el respirador <b>seleccionado para su peligro específico</b>. Una mascarilla para polvo no hace nada contra un vapor de solvente.</li><li>Use el <b>cartucho o filtro correcto</b>, y cámbielo según el programa — los cartuchos tienen una vida útil y dejan de proteger cuando se agotan.</li><li>Los filtros de partículas (N95, P100) son para polvos y nieblas; los cartuchos químicos se emparejan con vapores o gases específicos.</li></ul><div class='danger'>Nunca confíe en el olor o el sabor para saber si un cartucho está agotado. Si huele o saborea el contaminante, o respirar se vuelve más difícil, salga del área de inmediato y cambie el cartucho en aire limpio.</div>", "kc": {"q": "Si huele o saborea el contaminante a través de su respirador, debe…", "opts": ["Seguir trabajando — al filtro le queda vida", "Salir del área de inmediato y cambiar el cartucho en aire limpio", "Apretar las correas", "Aguantar la respiración y terminar la tarea"], "a": 1}}, {"h": "7. Cuidado, limpieza y almacenamiento", "body": "<p>Un respirador solo lo protege si está en buenas condiciones:</p><ul><li><b>Inspecciónelo antes de cada uso</b> — revise la mascarilla, correas, válvulas y cartuchos por daño, grietas o desgaste.</li><li><b>Límpielo y desinféctelo</b> después de usarlo según el programa, y déjelo secar.</li><li><b>Guárdelo correctamente</b> — en una bolsa o recipiente, protegido de polvo, sol, calor y químicos. No lo tire en una caja de herramientas ni lo deje en una máquina.</li><li>Reporte un respirador dañado y consiga un reemplazo — nunca use uno agrietado, con una correa rota o una válvula atascada.</li></ul><div class='notice'>Quítese el respirador <b>solo después de salir del área contaminada</b>, cada vez. Quitárselo dentro del área de peligro anula la protección.</div>", "kc": {"q": "¿Cuándo debe quitarse el respirador?", "opts": ["Cuando se sienta incómodo", "Solo después de salir del área contaminada", "En cuanto termine la parte más difícil", "En cualquier momento, mientras se lo vuelva a poner"], "a": 1}}, {"h": "8. Síntomas — Deténgase y salga", "body": "<p>Los respiradores exigen esfuerzo real al corazón y los pulmones. Algunas sensaciones significan que se detiene, sale del área y va a aire limpio — no las ignore:</p><ul><li>Falta de aire más allá de lo que el trabajo explica</li><li>Opresión o dolor en el pecho</li><li>Mareo o aturdimiento</li><li>Náusea, o fatiga inusual mientras lo usa</li></ul><p>Luego dígale a su supervisor. Una autorización médica puede reevaluarse cuando su salud cambia — eso es parte normal del programa, no una marca en su contra.</p><div class='danger'>Si respirar se vuelve notablemente más difícil, el respirador está dañado, o se siente mal — salga del área primero, luego resuelva en aire limpio. Nunca se quite un respirador ajustado para \"recuperar el aliento\" dentro del peligro.</div>", "kc": {"q": "Se siente mareado mientras usa su respirador. Debe…", "opts": ["Aflojar las correas y seguir", "Detenerse, salir a aire limpio y decirle a su supervisor", "Quitárselo donde está para respirar mejor", "Esperar a ver si pasa"], "a": 1}}, {"h": "9. Uso voluntario", "body": "<p>A veces puede querer usar un respirador cuando no se requiere. Las reglas dependen del tipo:</p><ul><li><b>N95 o mascarilla para polvo voluntaria</b> — permitido con un requisito bajo. Recibe la información del <b>Apéndice D</b> de la norma (uso y almacenamiento adecuados). No se necesita evaluación médica ni prueba de ajuste.</li><li><b>Respirador de media cara o superior (elastomérico) voluntario</b> — como exigen esfuerzo al respirar, la <b>evaluación médica, las reglas de limpieza/almacenamiento y la capacitación aún aplican</b> aunque el uso sea voluntario. Debe ser autorizado — pregunte al gerente de seguridad primero.</li></ul><div class='notice'>Traer su propio respirador de media cara de casa para usarlo \"porque es mío\" es exactamente la situación que aún necesita autorización y evaluación médica. Pregunte primero.</div>", "kc": {"q": "Usar voluntariamente su propio respirador de media cara (elastomérico)…", "opts": ["No tiene requisitos porque es voluntario", "Aún requiere evaluación médica y capacitación, y debe ser autorizado", "Nunca se permite", "Solo necesita una prueba de ajuste"], "a": 1}}, {"h": "10. IDLH — Nunca entre, nunca rescate", "body": "<p><b>IDLH</b> significa Inmediatamente Peligroso para la Vida o la Salud — incluyendo espacios confinados con deficiencia de oxígeno. Mt. Hood Forest Products <b>no mantiene SCBA en el sitio y no realiza entrada IDLH.</b> El rescate de entrada es del departamento de bomberos (Departamento de Bomberos de Odell / 911).</p><div class='danger'>Si aparecen condiciones IDLH — o un compañero cae en un espacio confinado — <b>nadie entra, nadie intenta rescatar.</b> Ni con un N95, ni con media cara, ni \"solo para sacarlo.\" Un rescatista sin suministro de aire se vuelve la segunda víctima. Todos evacúan, llame al 911, mantenga a otros afuera, y reciba al departamento de bomberos.</div><p>Su respirador diario no protege contra atmósferas IDLH. Conocer el límite es parte de la protección.</p>", "kc": {"q": "Un compañero cae dentro de un espacio confinado con deficiencia de oxígeno. Debe…", "opts": ["Ponerse su media cara y sacarlo", "Mantener a todos afuera, llamar al 911 y esperar al departamento de bomberos", "Enviar a dos personas juntas", "Aguantar la respiración y entrar rápido"], "a": 1}}, {"h": "11. Registros y recapacitación", "body": "<p>La protección respiratoria se mantiene vigente con registros y repasos:</p><ul><li>La <b>recapacitación</b> se requiere al menos cada 12 meses, cuando un nuevo tipo de respirador o condición de trabajo hace obsoleta la capacitación anterior, o si no puede hacer correctamente una verificación de sello.</li><li><b>Registros</b> que la compañía mantiene: su evaluación médica (confidencial), su prueba de ajuste, y su finalización de capacitación.</li><li>Reporte cualquier cosa que afecte su respirador — un problema de ajuste, un síntoma, una unidad dañada, o un cambio en su trabajo — a su supervisor o al gerente de seguridad.</li></ul><div class='notice'>Cuando no esté seguro de si su respirador, cartucho o la tarea son correctos, deténgase y pregunte. Preguntar siempre es más barato que un pulmón lleno de lo que el filtro debía atrapar.</div>", "kc": {"q": "¿Con qué frecuencia mínima se requiere la recapacitación del respirador?", "opts": ["Nunca, una vez capacitado", "Solo cuando cambia de trabajo", "Al menos cada 12 meses", "Cada cinco años"], "a": 2}}, {"h": "12. Preguntas sobre esta capacitación", "body": "<p>Puede hacer preguntas sobre esta capacitación y recibir respuestas durante su turno.</p><div class='kc' style='border-left-color:var(--blue);'><div class='kct'>¿Preguntas sobre esta capacitación?</div><p style='margin:0'>Pregunte a su <b>supervisor</b> o al <b>gerente de seguridad</b> — en persona durante su turno, o por los números de contacto publicados en el tablero del departamento. Puede preguntar antes, durante o después de este módulo y recibir respuesta el mismo día.</p></div><p>Al continuar, tomará un breve examen de 10 preguntas. Necesita 8 correctas (80%) para aprobar, y puede repetirlo cuantas veces necesite.</p><div class='danger'><b>En una emergencia:</b> para una emergencia médica o un colapso IDLH/espacio confinado, llame al <b>911</b>. Médica: Sala de Emergencias del Hospital Providence Hood River Memorial <b>(541) 386-3911</b>. Nunca intente un rescate en espacio confinado usted mismo.</div>"}], "quiz": [{"q": "¿Qué regla rige la protección respiratoria en Mt. Hood Forest Products?", "opts": ["Los respiradores son opcionales aquí", "OAR 437-002-0120, que adopta 29 CFR 1910.134", "Solo una política de la compañía, sin regulación", "Una regla federal que Oregon no sigue"], "a": 1}, {"q": "Antes de usar un respirador ajustado, un empleado debe tener…", "opts": ["Evaluación médica, prueba de ajuste y capacitación — las tres vigentes", "Solo capacitación", "Solo una prueba de ajuste", "El visto bueno verbal de un supervisor"], "a": 0}, {"q": "Una prueba de ajuste hecha en una marca y modelo diferentes…", "opts": ["Cuenta — una prueba de ajuste es una prueba de ajuste", "Cuenta por 30 días", "No cuenta — es específica a marca, modelo, estilo y talla", "Cuenta si las tallas son parecidas"], "a": 2}, {"q": "El vello facial en la zona de sello…", "opts": ["Está bien si aprieta las correas", "Está bien para tareas cortas", "Solo importa para gases", "Rompe el sello — una barba significa un PAPR o reasignación, no una correa más apretada"], "a": 3}, {"q": "Una verificación de sello del usuario es…", "opts": ["Lo mismo que una prueba de ajuste", "Una verificación rápida que hace cada vez que se pone el respirador", "Necesaria solo una vez al año", "Opcional después de una prueba de ajuste"], "a": 1}, {"q": "Si huele o saborea el contaminante a través de su respirador, debe…", "opts": ["Seguir trabajando — queda algo de vida", "Apretar las correas", "Salir del área y cambiar el cartucho en aire limpio", "Cambiar a respirar por la boca"], "a": 2}, {"q": "Debe quitarse el respirador…", "opts": ["Solo después de salir del área contaminada", "Cuando se sienta apretado", "En cuanto pase lo peor", "En cualquier momento si se lo vuelve a poner rápido"], "a": 0}, {"q": "Se siente aturdido mientras usa su respirador. Debe…", "opts": ["Aflojar las correas y continuar", "Quitárselo donde está", "Ignorarlo — es normal", "Detenerse, ir a aire limpio y decirle a su supervisor"], "a": 3}, {"q": "Usar voluntariamente su propio respirador de media cara…", "opts": ["No tiene requisitos porque es voluntario", "Aún requiere evaluación médica y capacitación y debe ser autorizado", "Siempre está prohibido", "Solo necesita una verificación de sello"], "a": 1}, {"q": "Un compañero cae en un espacio confinado con deficiencia de oxígeno. Usted…", "opts": ["Se pone un N95 y lo saca", "Envía a dos personas juntas", "Mantiene a todos afuera, llama al 911 y espera al departamento de bomberos", "Entra rápido aguantando la respiración"], "a": 2}], "quizH": "Examen final", "quizIntro": "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar el material y volver a tomar el examen si es necesario.", "submitBtn": "Enviar examen", "answerAll": "Por favor responda todas las preguntas antes de enviar.", "passH": "¡Felicidades — Aprobó!", "passSub": "Certificado de Finalización", "passModule": "Protección Respiratoria — Capacitación del Empleado ", "scoreLabel": "Puntaje", "dateLabel": "Fecha", "codeLabel": "Su código de finalización", "passInstr": "<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario. Escriba su nombre, seleccione <b>\"Respiratory Protection / Protección Respiratoria\"</b> de la lista de módulos, e ingrese el código mostrado arriba. Su capacitación no queda registrada hasta que envíe el formulario.", "completion": "", "recordBtn": "Registrar mi finalización", "failH": "Aún no — Siga adelante", "failMsg": "Obtuvo menos del 80%. Repase el material — especialmente los tres requisitos (evaluación médica, prueba de ajuste, capacitación), la regla del vello facial, la verificación de sello del usuario, y nunca entrar a un espacio IDLH — e inténtelo de nuevo. No hay límite de intentos.", "reviewBtn": "Repasar el material", "retakeBtn": "Repetir el examen", "yourScore": "Su puntaje"}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+function generateCode(){
+  var chars="BCDFGHJKMNPQRSTVWXYZ23456789", out="";
+  for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); }
+  return CODE_PREFIX+out;
+}
+function gradeQuiz(answers){
+  var correct=0;
+  for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; }
+  var pct=Math.round(correct/ANSWER_KEY.length*100);
+  return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT };
+}
+
+function setLang(l){
+  state.lang=l;
+  if(state.screen==="lang") state.screen="intro";
+  $("langBar").className="langbar";
+  $("btnEN").className = l==="en"?"active":"";
+  $("btnES").className = l==="es"?"active":"";
+  render();
+}
+function progress(){
+  if(state.screen==="lang"){ $("progBar").style.width="0%"; return; }
+  var total = T().sections.length + 2;
+  var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1;
+  $("progBar").style.width = Math.round(pos/total*100)+"%";
+}
+function renderLang(){
+  $("app").innerHTML =
+    '<div class="card splash">'+
+    '<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+
+    '<div class="ti-en">Respiratory Protection Training</div>'+
+    '<div class="ti-es">Capacitación sobre Protección Respiratoria</div>'+
+    '<div class="choose">Choose your language / Elija su idioma:</div>'+
+    '<div class="langbtns">'+
+    '<button id="langBtnEN">English</button>'+
+    '<button id="langBtnES">Español</button>'+
+    '</div></div>';
+  $("langBtnEN").addEventListener("click", function(){ setLang("en"); });
+  $("langBtnES").addEventListener("click", function(){ setLang("es"); });
+}
+function render(){
+  progress();
+  if(state.screen==="lang") renderLang();
+  else if(state.screen==="intro") renderIntro();
+  else if(state.screen==="section") renderSection();
+  else if(state.screen==="quiz") renderQuiz();
+  else if(state.screen==="pass") renderPass();
+  else if(state.screen==="fail") renderFail();
+}
+function renderIntro(){
+  var t=T();
+  $("app").innerHTML =
+    '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+
+    '<h2>'+t.nameLabel+'</h2>'+
+    '<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+
+    '<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+
+    '<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>';
+  var inp=$("nameInput"), btn=$("startBtn");
+  function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; }
+  inp.addEventListener("input", gate); gate();
+  btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} });
+}
+function renderSection(){
+  var t=T(), s=t.sections[state.section];
+  var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body;
+  var kcPassed = !!state.kcDone[state.section];
+  if(s.kc){
+    html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>';
+    for(var i=0;i<s.kc.opts.length;i++){
+      html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>';
+    }
+    html += '<div class="fb" id="kcFb"></div>';
+    if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>';
+    html += '</div>';
+  }
+  html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>';
+  $("app").innerHTML = html;
+  if(s.kc && !kcPassed){
+    $("kcCheck").addEventListener("click", function(){
+      var sel=document.querySelector('input[name="kc"]:checked');
+      if(!sel) return;
+      var v=parseInt(sel.value,10), fb=$("kcFb");
+      if(v===s.kc.a){
+        state.kcDone[state.section]=true;
+        $("kcOpt"+v).className="opt correct";
+        fb.className="fb ok"; fb.textContent=t.kcOk;
+        $("contBtn").disabled=false; $("kcCheck").disabled=true;
+      } else {
+        $("kcOpt"+v).className="opt wrong";
+        $("kcOpt"+s.kc.a).className="opt correct";
+        fb.className="fb bad"; fb.textContent=t.kcBad;
+        state.kcDone[state.section]=true;
+        $("contBtn").disabled=false; $("kcCheck").disabled=true;
+      }
+    });
+  }
+  $("contBtn").addEventListener("click", function(){
+    if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; }
+    render(); window.scrollTo(0,0);
+  });
+}
+function renderQuiz(){
+  var t=T();
+  var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>';
+  for(var i=0;i<t.quiz.length;i++){
+    var q=t.quiz[i];
+    html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>';
+    for(var j=0;j<q.opts.length;j++){
+      var checked = state.quizAnswers[i]===j ? ' checked' : '';
+      html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>';
+    }
+    html+='</div>';
+  }
+  html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>';
+  html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>';
+  $("app").innerHTML=html;
+  var radios=document.querySelectorAll('#app input[type=radio]');
+  for(var r=0;r<radios.length;r++){
+    radios[r].addEventListener("change", function(e){
+      var name=e.target.name, idx=parseInt(name.substring(1),10);
+      state.quizAnswers[idx]=parseInt(e.target.value,10);
+    });
+  }
+  $("quizSubmit").addEventListener("click", function(){
+    var answers=[];
+    for(var i=0;i<t.quiz.length;i++){
+      if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; }
+      answers.push(state.quizAnswers[i]);
+    }
+    var res=gradeQuiz(answers);
+    state.lastScore=res;
+    if(res.pass){ state.code=generateCode(); state.screen="pass"; }
+    else { state.screen="fail"; }
+    render(); window.scrollTo(0,0);
+  });
+}
+function fmtDate(){
+  var d=new Date();
+  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+}
+function renderPass(){
+  var t=T(), r=state.lastScore;
+  $("app").innerHTML =
+    '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+
+    '<div class="cert" id="certBox">'+
+      '<div>'+t.passSub+'</div>'+
+      '<div class="big" id="certName">'+esc(state.name)+'</div>'+
+      '<div>'+t.passModule+'</div>'+
+      '<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+
+      '<div>'+t.codeLabel+':</div>'+
+      '<div class="code" id="certCode">'+state.code+'</div>'+
+    '</div>'+
+    '<div class="card"><p>'+t.passInstr+'</p>'+
+    '<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>';
+}
+function renderFail(){
+  var t=T(), r=state.lastScore;
+  $("app").innerHTML =
+    '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+
+    '<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+
+    '<p>'+t.failMsg+'</p>'+
+    '<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+
+    '<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>';
+  $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); });
+  $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); });
+}
+
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Lockout/Tagout (LOTO) Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Lockout/Tagout (LOTO) Training &mdash; 29 CFR 1910.147 / OAR 437-002-0154</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Lockout/Tagout Program v2.1 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "LO26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Lockout/Tagout Program v2.1 (29 CFR 1910.147, adopted by Oregon OSHA; OAR 437-002-0154, Individual Locks). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — Controlling Hazardous Energy",
+  introP1: "Machines don't just run on electricity. They store energy — hydraulic pressure, compressed air, steam and heat, spring tension, rotating flywheels, and gravity holding a load up. When someone services a machine, any of that energy can release without warning and kill or maim. Lockout/Tagout (LOTO) is how we make a machine safe to work on: shut it down, isolate its energy, lock it, and prove it's dead before hands go in.",
+  introP2: "This training takes about 15–20 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. Why LOTO Exists", body:
+      "<p>Lockout/Tagout controls <b>hazardous energy</b> during service and maintenance — so a machine cannot start up, or release stored energy, while someone is working on it. Oregon applies the federal standard <b>29 CFR 1910.147</b>, plus an Oregon-specific individual-lock rule (<b>OAR 437-002-0154</b>).</p>"+
+      "<p>A sawmill is full of stored energy. LOTO covers every kind:</p>"+
+      "<table class='mini'><tr><th>Energy type</th><th>Examples at Mt. Hood</th></tr>"+
+      "<tr><td><b>Electrical</b></td><td>Motors, transformers, capacitors, control circuits</td></tr>"+
+      "<tr><td><b>Mechanical</b></td><td>Flywheels, gears, conveyors, drive shafts</td></tr>"+
+      "<tr><td><b>Hydraulic / Pneumatic</b></td><td>Pressurized cylinders, accumulators, compressed-air lines</td></tr>"+
+      "<tr><td><b>Thermal</b></td><td>Steam systems, boilers, heat exchangers, kilns</td></tr>"+
+      "<tr><td><b>Gravitational</b></td><td>Elevated components, suspended loads, log decks, material in hoppers</td></tr></table>"+
+      "<div class='notice'><b>Gravity counts.</b> An elevated or suspended load — a log deck, a raised component, material in a hopper — is stored energy. It has to be blocked or restrained just like a live circuit.</div>",
+      kc:{ q:"Which of these is a hazardous energy source LOTO must control?", opts:["Only electricity","Electrical, mechanical, hydraulic, pneumatic, thermal, chemical AND gravity","Only moving parts","Only steam"], a:1 } },
+    { h:"2. Who's Who in LOTO", body:
+      "<p>LOTO defines roles, and which one you are decides what you may do:</p>"+
+      "<table class='mini'><tr><th>Role</th><th>Who they are</th></tr>"+
+      "<tr><td><b>Authorized employee</b></td><td>Trained and authorized to lock/tag out equipment and perform the service or maintenance. They apply and remove locks.</td></tr>"+
+      "<tr><td><b>Affected employee</b></td><td>Operates or uses the machine, or works in the area. They do NOT apply locks — but must never try to start a locked-out machine.</td></tr>"+
+      "<tr><td><b>Other employee</b></td><td>Anyone else who may be in the area. Must know not to touch a lockout.</td></tr>"+
+      "<tr><td><b>Primary authorized employee</b></td><td>In a group lockout, the person with overall responsibility for the group.</td></tr></table>"+
+      "<p>Only an <b>authorized employee</b> locks out equipment. If you are an affected or other employee, your job is simple and absolute: <b>never operate, restart, or remove a lock from equipment that is locked or tagged out.</b></p>",
+      kc:{ q:"You operate a machine that another worker has locked out for repair. What may you do?", opts:["Restart it if you're careful","Nothing — never operate or restart locked-out equipment","Remove their lock if they left","Tag it and run it"], a:1 } },
+    { h:"3. The Six Steps of Locking Out", body:
+      "<p>Every full lockout follows the same sequence. Miss a step and the machine may still be able to hurt you.</p>"+
+      "<ol>"+
+      "<li><b>Prepare for shutdown</b> — identify every energy source and isolating device; notify affected employees</li>"+
+      "<li><b>Shut down</b> the machine using its normal stopping procedure</li>"+
+      "<li><b>Isolate</b> — operate the energy-isolating devices (breakers, disconnects, line valves, blinds) to cut the machine off from its energy</li>"+
+      "<li><b>Apply your lock (and tag)</b> — each authorized employee attaches their own personal lock to each isolating device</li>"+
+      "<li><b>Control stored energy</b> — bleed pressure, block elevated parts, discharge capacitors, stop flywheels, release spring tension, let heat cool</li>"+
+      "<li><b>Verify zero energy</b> — try the start controls to confirm it won't run (then return them to off), and test with instruments where needed</li>"+
+      "</ol>"+
+      "<div class='danger'><b>Push buttons and selector switches are NOT energy-isolating devices.</b> Pressing \"stop\" is not lockout. You must operate a real isolating device — a breaker, a disconnect, a line valve — and lock it.</div>",
+      kc:{ q:"Which is the LAST of the six lockout steps, and the one that proves it's safe?", opts:["Shut down","Apply your lock","Verify the zero-energy state","Notify affected employees"], a:2 } },
+    { h:"4. Verify Zero Energy — Try to Start It", body:
+      "<p>Step 6 is the one that saves lives, and the one people skip. After isolating, locking, and controlling stored energy, you <b>prove</b> the machine is dead:</p>"+
+      "<ul><li>Make sure <b>no one is in a hazardous area</b> of the machine</li>"+
+      "<li><b>Try the normal start controls</b> — press start, flip the switch — to confirm the machine will not operate. Then return the controls to the off/neutral position</li>"+
+      "<li>Use <b>test equipment</b> where it applies — a voltage tester on a circuit, a pressure gauge on a line</li>"+
+      "<li>Confirm <b>stored energy is controlled</b> — no residual pressure, no unblocked elevated load</li></ul>"+
+      "<p>If energy could <b>re-accumulate</b> (pressure creeping back, heat, gravity), verification continues periodically until the work is done.</p>"+
+      "<div class='notice'><b>\"Try it\" is a real step, not a figure of speech.</b> The single most common fatal mistake is assuming the machine is off. Push the button and watch it stay dead.</div>",
+      kc:{ q:"After locking out and controlling stored energy, how do you verify zero energy?", opts:["Assume it's off if the lock is on","Try the start controls to confirm it won't run, then test with instruments as needed","Wait ten minutes","Ask a coworker if it looks off"], a:1 } },
+    { h:"5. Your Lock Is Yours Alone", body:
+      "<p>The core rule of LOTO is personal: <b>only the authorized employee who applied a lock may remove it.</b> Your lock protects your life — no one else takes it off.</p>"+
+      "<p>Oregon adds a specific requirement (<b>OAR 437-002-0154, Individual Locks</b>): the person who applies a lock must have the <b>only key</b>, or be the <b>only one</b> who knows the combination. Keys are not shared. That is what makes your lock a guarantee and not just a suggestion.</p>"+
+      "<div class='danger'><b>Removing, bypassing, or tampering with another employee's lock or tag is a serious safety violation.</b> It is one of the fastest ways to kill a coworker. Never do it.</div>"+
+      "<p>There is exactly one exception — an emergency removal when the applying employee is gone (Section 6). It is done only by a designated supervisor, under a strict procedure, never casually.</p>",
+      kc:{ q:"Oregon's individual-lock rule (OAR 437-002-0154) requires that…", opts:["Everyone shares one master key","The person who applied the lock has the only key or combination","Locks are color-coded by shift","Supervisors keep all the keys"], a:1 } },
+    { h:"6. Group Lockout, Shift Change, and Emergency Removal", body:
+      "<p><b>Group lockout</b> — when a crew works on one machine, a <b>primary authorized employee</b> takes overall responsibility. Each worker puts their <b>own personal lock</b> on a group lockout device (hasp or lockbox). No one removes anyone else's lock. Each person removes their own lock only when their part of the work is done, and the primary authorized employee is the <b>last lock off</b>.</p>"+
+      "<p><b>Shift change</b> — lockout protection is handed off continuously so the equipment is never left unprotected between the outgoing and incoming authorized employees.</p>"+
+      "<p><b>Emergency removal</b> — if an authorized employee has left the site with their lock still on, only a <b>designated supervisor</b> may remove it, after making every reasonable effort to reach the employee, verifying the machine is clear and safe, and informing the employee before they return to work. This is the one and only way a lock comes off other than by the person who applied it.</p>",
+      kc:{ q:"In a group lockout, who is the last to remove their personal lock?", opts:["Whoever finishes first","The primary authorized employee","The supervisor","Any affected employee"], a:1 } },
+    { h:"7. Restoring Equipment and Temporary Re-Energizing", body:
+      "<p>When the work is done and the machine is going back into service, the steps run in order:</p>"+
+      "<ul><li>Inspect the area — <b>all tools and parts removed</b></li>"+
+      "<li><b>Guards and safety devices reinstalled</b></li>"+
+      "<li>Everyone <b>positioned clear</b> of the machine</li>"+
+      "<li><b>Notify affected employees</b> that locks are coming off and the machine will be re-energized</li>"+
+      "<li>Each authorized employee <b>removes only their own</b> lock/tag</li>"+
+      "<li>Restore isolating devices to normal and remove any blocking or restraints</li></ul>"+
+      "<p><b>Temporary re-energizing</b> for testing or positioning is a full mini-cycle: clear tools, clear people, remove locks per procedure, energize and test, then <b>de-energize and reapply full lockout</b> before more work. You never leave equipment temporarily energized and unlocked while you work on it.</p>",
+      kc:{ q:"Before removing locks to restore a machine, what must be true?", opts:["Nothing special — just remove them","Tools removed, guards reinstalled, everyone clear, affected employees notified","Only that your shift is ending","That the supervisor is off-site"], a:1 } },
+    { h:"8. Tagout, Contractors, and When in Doubt", body:
+      "<p><b>Tagout</b> — a tag is a <b>warning only</b>. It does not physically stop energy the way a lock does. Where a device can't accept a lock, a tag is used <b>with extra protective measures</b>, and everyone must know a tag must never be removed, bypassed, or ignored, and must stay legible and secure.</p>"+
+      "<p><b>Contractors</b> working on our equipment coordinate their LOTO with ours, so both crews' locks and procedures are understood and no one is exposed.</p>"+
+      "<p><b>When in doubt, lock it out.</b> The exemptions to LOTO (cord-and-plug under your sole control, truly minor routine adjustments) are narrow. If there's any question whether an activity needs full energy control — it does. Ask your supervisor.</p>"+
+      "<h2>If Something Goes Wrong</h2>"+
+      "<p>If you find a machine that should be locked out but isn't, or a lock or tag that's been tampered with — stop, keep clear, and tell your supervisor immediately. Report emergencies: <b>911</b> &middot; Providence Hood River Memorial Hospital ER <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"What is the purpose of Lockout/Tagout?", opts:["To label machines by department", "To control hazardous energy so equipment can't start or release energy during service/maintenance", "To track maintenance hours", "To lock the tool room"], a:1 },
+    { q:"Which of these is a hazardous energy source covered by LOTO?", opts:["Only electricity", "Only compressed air", "Only steam", "Gravity (an elevated or suspended load)"], a:3 },
+    { q:"You are an affected employee and a machine is locked out by someone else. You may…", opts:["Restart it if you're careful", "Remove the lock if the person left", "Do nothing — never operate or restart locked-out equipment", "Run it in manual mode"], a:2 },
+    { q:"Pressing the STOP button on a control panel counts as…", opts:["Full lockout", "Isolation", "NOT lockout — a push button is not an energy-isolating device", "Verification"], a:2 },
+    { q:"The final step of the six-step lockout, which proves the machine is safe, is…", opts:["Verify the zero-energy state (try to start it)", "Apply your lock", "Notify affected employees", "Shut down"], a:0 },
+    { q:"Oregon's individual-lock rule (OAR 437-002-0154) requires that the person applying a lock…", opts:["Shares the key with the supervisor", "Has the only key or the only combination", "Uses a numbered lock", "Logs it in a book"], a:1 },
+    { q:"Who may remove a lockout device?", opts:["Only the authorized employee who applied it (with one supervised emergency exception)", "Any coworker", "The first person on the next shift", "Anyone with a master key"], a:0 },
+    { q:"In a group lockout, the primary authorized employee is…", opts:["The newest crew member", "The last to remove their personal lock", "Not required", "The affected employee"], a:1 },
+    { q:"Before removing locks to put a machine back in service, you must…", opts:["Just remove them and go", "Confirm tools removed, guards reinstalled, everyone clear, and affected employees notified", "Wait for the next shift", "Only tell the supervisor"], a:1 },
+    { q:"You find a machine that should be locked out but isn't. You should…", opts:["Lock it out yourself without telling anyone and keep working", "Assume it's fine", "Stop, keep clear, and tell your supervisor immediately", "Start it to see if it runs"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Lockout/Tagout (LOTO) — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Lockout/Tagout (LOTO) / Bloqueo y Etiquetado\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the six steps, zero-energy verification, and the rule that only you remove your own lock — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Bloqueo y Etiquetado de Mt. Hood Forest Products v2.1 (29 CFR 1910.147, adoptado por Oregon OSHA; OAR 437-002-0154, Candados Individuales). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — Controlar la Energía Peligrosa",
+  introP1: "Las máquinas no funcionan solo con electricidad. Almacenan energía — presión hidráulica, aire comprimido, vapor y calor, tensión de resortes, volantes girando, y la gravedad sosteniendo una carga en alto. Cuando alguien da servicio a una máquina, cualquiera de esa energía puede liberarse sin aviso y matar o mutilar. El Bloqueo y Etiquetado (LOTO) es cómo hacemos segura una máquina para trabajar en ella: apagarla, aislar su energía, ponerle candado y comprobar que está muerta antes de meter las manos.",
+  introP2: "Esta capacitación toma de 15 a 20 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Por Qué Existe el LOTO", body:
+      "<p>El Bloqueo y Etiquetado controla la <b>energía peligrosa</b> durante el servicio y mantenimiento — para que una máquina no pueda arrancar, ni liberar energía almacenada, mientras alguien trabaja en ella. Oregon aplica la norma federal <b>29 CFR 1910.147</b>, más una regla de candado individual específica de Oregon (<b>OAR 437-002-0154</b>).</p>"+
+      "<p>Un aserradero está lleno de energía almacenada. El LOTO cubre todos los tipos:</p>"+
+      "<table class='mini'><tr><th>Tipo de energía</th><th>Ejemplos en Mt. Hood</th></tr>"+
+      "<tr><td><b>Eléctrica</b></td><td>Motores, transformadores, capacitores, circuitos de control</td></tr>"+
+      "<tr><td><b>Mecánica</b></td><td>Volantes, engranajes, transportadores, ejes de transmisión</td></tr>"+
+      "<tr><td><b>Hidráulica / Neumática</b></td><td>Cilindros presurizados, acumuladores, líneas de aire comprimido</td></tr>"+
+      "<tr><td><b>Térmica</b></td><td>Sistemas de vapor, calderas, intercambiadores de calor, hornos</td></tr>"+
+      "<tr><td><b>Gravitacional</b></td><td>Componentes elevados, cargas suspendidas, plataformas de trozas, material en tolvas</td></tr></table>"+
+      "<div class='notice'><b>La gravedad cuenta.</b> Una carga elevada o suspendida — una plataforma de trozas, un componente levantado, material en una tolva — es energía almacenada. Se debe bloquear o restringir igual que un circuito con corriente.</div>",
+      kc:{ q:"¿Cuál de estas es una fuente de energía peligrosa que el LOTO debe controlar?", opts:["Solo la electricidad","Eléctrica, mecánica, hidráulica, neumática, térmica, química Y gravedad","Solo las partes móviles","Solo el vapor"], a:1 } },
+    { h:"2. Quién Es Quién en el LOTO", body:
+      "<p>El LOTO define roles, y cuál es usted decide qué puede hacer:</p>"+
+      "<table class='mini'><tr><th>Rol</th><th>Quiénes son</th></tr>"+
+      "<tr><td><b>Empleado autorizado</b></td><td>Capacitado y autorizado para bloquear/etiquetar el equipo y hacer el servicio o mantenimiento. Aplica y quita candados.</td></tr>"+
+      "<tr><td><b>Empleado afectado</b></td><td>Opera o usa la máquina, o trabaja en el área. NO aplica candados — pero nunca debe intentar arrancar una máquina bloqueada.</td></tr>"+
+      "<tr><td><b>Otro empleado</b></td><td>Cualquier otra persona que pueda estar en el área. Debe saber no tocar un bloqueo.</td></tr>"+
+      "<tr><td><b>Empleado autorizado principal</b></td><td>En un bloqueo grupal, la persona con la responsabilidad general del grupo.</td></tr></table>"+
+      "<p>Solo un <b>empleado autorizado</b> bloquea el equipo. Si usted es un empleado afectado o de otro tipo, su trabajo es simple y absoluto: <b>nunca opere, reinicie ni quite un candado de un equipo que esté bloqueado o etiquetado.</b></p>",
+      kc:{ q:"Usted opera una máquina que otro trabajador bloqueó para reparación. ¿Qué puede hacer?", opts:["Reiniciarla con cuidado","Nada — nunca opere ni reinicie un equipo bloqueado","Quitar su candado si se fue","Etiquetarla y operarla"], a:1 } },
+    { h:"3. Los Seis Pasos del Bloqueo", body:
+      "<p>Todo bloqueo completo sigue la misma secuencia. Sáltese un paso y la máquina aún puede lastimarlo.</p>"+
+      "<ol>"+
+      "<li><b>Prepararse para el apagado</b> — identifique cada fuente de energía y dispositivo de aislamiento; notifique a los empleados afectados</li>"+
+      "<li><b>Apagar</b> la máquina con su procedimiento normal de parada</li>"+
+      "<li><b>Aislar</b> — opere los dispositivos de aislamiento de energía (interruptores, desconexiones, válvulas de línea, bridas ciegas) para cortar la máquina de su energía</li>"+
+      "<li><b>Aplicar su candado (y etiqueta)</b> — cada empleado autorizado coloca su propio candado personal en cada dispositivo de aislamiento</li>"+
+      "<li><b>Controlar la energía almacenada</b> — purgue presión, bloquee partes elevadas, descargue capacitores, detenga volantes, libere tensión de resortes, deje enfriar el calor</li>"+
+      "<li><b>Verificar energía cero</b> — pruebe los controles de arranque para confirmar que no funcionará (luego regréselos a apagado), y pruebe con instrumentos donde sea necesario</li>"+
+      "</ol>"+
+      "<div class='danger'><b>Los botones e interruptores selectores NO son dispositivos de aislamiento de energía.</b> Presionar \"parar\" no es bloqueo. Debe operar un dispositivo de aislamiento real — un interruptor, una desconexión, una válvula de línea — y ponerle candado.</div>",
+      kc:{ q:"¿Cuál es el ÚLTIMO de los seis pasos del bloqueo, y el que prueba que es seguro?", opts:["Apagar","Aplicar su candado","Verificar el estado de energía cero","Notificar a los empleados afectados"], a:2 } },
+    { h:"4. Verificar Energía Cero — Intente Arrancarla", body:
+      "<p>El paso 6 es el que salva vidas, y el que la gente se salta. Después de aislar, poner candado y controlar la energía almacenada, usted <b>prueba</b> que la máquina está muerta:</p>"+
+      "<ul><li>Asegúrese de que <b>nadie esté en un área peligrosa</b> de la máquina</li>"+
+      "<li><b>Pruebe los controles normales de arranque</b> — presione arrancar, mueva el interruptor — para confirmar que la máquina no funcionará. Luego regrese los controles a la posición de apagado/neutral</li>"+
+      "<li>Use <b>equipo de prueba</b> donde aplique — un probador de voltaje en un circuito, un manómetro en una línea</li>"+
+      "<li>Confirme que la <b>energía almacenada está controlada</b> — sin presión residual, sin carga elevada sin bloquear</li></ul>"+
+      "<p>Si la energía pudiera <b>re-acumularse</b> (presión que regresa, calor, gravedad), la verificación continúa periódicamente hasta que el trabajo termine.</p>"+
+      "<div class='notice'><b>\"Pruébelo\" es un paso real, no una forma de hablar.</b> El error mortal más común es suponer que la máquina está apagada. Presione el botón y véala quedarse muerta.</div>",
+      kc:{ q:"Después de bloquear y controlar la energía almacenada, ¿cómo verifica energía cero?", opts:["Suponer que está apagada si el candado está puesto","Probar los controles de arranque para confirmar que no funciona, luego probar con instrumentos según sea necesario","Esperar diez minutos","Preguntar a un compañero si parece apagada"], a:1 } },
+    { h:"5. Su Candado Es Solo Suyo", body:
+      "<p>La regla central del LOTO es personal: <b>solo el empleado autorizado que aplicó un candado puede quitarlo.</b> Su candado protege su vida — nadie más lo quita.</p>"+
+      "<p>Oregon agrega un requisito específico (<b>OAR 437-002-0154, Candados Individuales</b>): la persona que aplica un candado debe tener la <b>única llave</b>, o ser la <b>única</b> que conoce la combinación. Las llaves no se comparten. Eso es lo que hace de su candado una garantía y no solo una sugerencia.</p>"+
+      "<div class='danger'><b>Quitar, evadir o alterar el candado o la etiqueta de otro empleado es una violación grave de seguridad.</b> Es una de las formas más rápidas de matar a un compañero. Nunca lo haga.</div>"+
+      "<p>Hay exactamente una excepción — un retiro de emergencia cuando el empleado que lo aplicó no está (Sección 6). Lo hace solo un supervisor designado, bajo un procedimiento estricto, nunca de manera casual.</p>",
+      kc:{ q:"La regla de candado individual de Oregon (OAR 437-002-0154) exige que…", opts:["Todos compartan una llave maestra","La persona que aplicó el candado tenga la única llave o combinación","Los candados sean de color por turno","Los supervisores guarden todas las llaves"], a:1 } },
+    { h:"6. Bloqueo Grupal, Cambio de Turno y Retiro de Emergencia", body:
+      "<p><b>Bloqueo grupal</b> — cuando una cuadrilla trabaja en una máquina, un <b>empleado autorizado principal</b> asume la responsabilidad general. Cada trabajador pone su <b>propio candado personal</b> en un dispositivo de bloqueo grupal (porta-candados o caja). Nadie quita el candado de otro. Cada persona quita su propio candado solo cuando termina su parte, y el empleado autorizado principal es el <b>último candado en salir</b>.</p>"+
+      "<p><b>Cambio de turno</b> — la protección de bloqueo se transfiere continuamente para que el equipo nunca quede desprotegido entre el empleado autorizado saliente y el entrante.</p>"+
+      "<p><b>Retiro de emergencia</b> — si un empleado autorizado se fue del sitio con su candado aún puesto, solo un <b>supervisor designado</b> puede quitarlo, tras hacer todo esfuerzo razonable por localizar al empleado, verificar que la máquina está despejada y segura, e informar al empleado antes de que regrese al trabajo. Esta es la única manera en que un candado sale que no sea por la persona que lo aplicó.</p>",
+      kc:{ q:"En un bloqueo grupal, ¿quién es el último en quitar su candado personal?", opts:["Quien termine primero","El empleado autorizado principal","El supervisor","Cualquier empleado afectado"], a:1 } },
+    { h:"7. Restaurar el Equipo y Re-energización Temporal", body:
+      "<p>Cuando el trabajo termina y la máquina va a volver al servicio, los pasos van en orden:</p>"+
+      "<ul><li>Inspeccione el área — <b>todas las herramientas y piezas retiradas</b></li>"+
+      "<li><b>Guardas y dispositivos de seguridad reinstalados</b></li>"+
+      "<li>Todos <b>posicionados lejos</b> de la máquina</li>"+
+      "<li><b>Notifique a los empleados afectados</b> que los candados se van a quitar y la máquina se re-energizará</li>"+
+      "<li>Cada empleado autorizado <b>quita solo el suyo</b></li>"+
+      "<li>Restaure los dispositivos de aislamiento a normal y quite cualquier bloqueo o restricción</li></ul>"+
+      "<p>La <b>re-energización temporal</b> para pruebas o posicionamiento es un mini-ciclo completo: despeje herramientas, despeje personas, quite candados según el procedimiento, energice y pruebe, luego <b>des-energice y reaplique el bloqueo completo</b> antes de más trabajo. Nunca deje el equipo temporalmente energizado y sin candado mientras trabaja en él.</p>",
+      kc:{ q:"Antes de quitar candados para restaurar una máquina, ¿qué debe ser cierto?", opts:["Nada especial — solo quítelos","Herramientas retiradas, guardas reinstaladas, todos despejados, empleados afectados notificados","Solo que su turno termina","Que el supervisor esté fuera del sitio"], a:1 } },
+    { h:"8. Etiquetado, Contratistas y Cuando Hay Duda", body:
+      "<p><b>Etiquetado</b> — una etiqueta es <b>solo una advertencia</b>. No detiene físicamente la energía como lo hace un candado. Donde un dispositivo no acepta candado, se usa una etiqueta <b>con medidas de protección adicionales</b>, y todos deben saber que una etiqueta nunca se quita, evade ni ignora, y debe permanecer legible y segura.</p>"+
+      "<p><b>Los contratistas</b> que trabajan en nuestro equipo coordinan su LOTO con el nuestro, para que se entiendan los candados y procedimientos de ambas cuadrillas y nadie quede expuesto.</p>"+
+      "<p><b>Cuando hay duda, póngale candado.</b> Las excepciones al LOTO (conexión de cordón y enchufe bajo su control exclusivo, ajustes rutinarios verdaderamente menores) son estrechas. Si hay alguna duda de si una actividad necesita control total de energía — lo necesita. Pregunte a su supervisor.</p>"+
+      "<h2>Si Algo Sale Mal</h2>"+
+      "<p>Si encuentra una máquina que debería estar bloqueada y no lo está, o un candado o etiqueta que fue alterado — deténgase, manténgase alejado y avise a su supervisor de inmediato. Reporte emergencias: <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Cuál es el propósito del Bloqueo y Etiquetado?", opts:["Etiquetar máquinas por departamento", "Controlar la energía peligrosa para que el equipo no arranque ni libere energía durante el servicio/mantenimiento", "Registrar horas de mantenimiento", "Cerrar el cuarto de herramientas"], a:1 },
+    { q:"¿Cuál de estas es una fuente de energía peligrosa cubierta por el LOTO?", opts:["Solo la electricidad", "Solo el aire comprimido", "Solo el vapor", "La gravedad (una carga elevada o suspendida)"], a:3 },
+    { q:"Usted es un empleado afectado y otra persona bloqueó una máquina. Usted puede…", opts:["Reiniciarla con cuidado", "Quitar el candado si la persona se fue", "No hacer nada — nunca operar ni reiniciar un equipo bloqueado", "Operarla en modo manual"], a:2 },
+    { q:"Presionar el botón de PARAR en un panel de control cuenta como…", opts:["Bloqueo completo", "Aislamiento", "NO es bloqueo — un botón no es un dispositivo de aislamiento de energía", "Verificación"], a:2 },
+    { q:"El paso final de los seis pasos del bloqueo, que prueba que la máquina es segura, es…", opts:["Verificar el estado de energía cero (intentar arrancarla)", "Aplicar su candado", "Notificar a los empleados afectados", "Apagar"], a:0 },
+    { q:"La regla de candado individual de Oregon (OAR 437-002-0154) exige que la persona que aplica un candado…", opts:["Comparta la llave con el supervisor", "Tenga la única llave o la única combinación", "Use un candado numerado", "Lo registre en un libro"], a:1 },
+    { q:"¿Quién puede quitar un dispositivo de bloqueo?", opts:["Solo el empleado autorizado que lo aplicó (con una excepción de emergencia supervisada)", "Cualquier compañero", "La primera persona del siguiente turno", "Cualquiera con una llave maestra"], a:0 },
+    { q:"En un bloqueo grupal, el empleado autorizado principal es…", opts:["El miembro más nuevo", "El último en quitar su candado personal", "No se requiere", "El empleado afectado"], a:1 },
+    { q:"Antes de quitar candados para poner una máquina de vuelta en servicio, debe…", opts:["Solo quitarlos e irse", "Confirmar herramientas retiradas, guardas reinstaladas, todos despejados, y empleados afectados notificados", "Esperar al siguiente turno", "Solo avisar al supervisor"], a:1 },
+    { q:"Encuentra una máquina que debería estar bloqueada y no lo está. Debe…", opts:["Bloquearla usted mismo sin avisar y seguir trabajando", "Suponer que está bien", "Detenerse, mantenerse alejado y avisar a su supervisor de inmediato", "Arrancarla para ver si funciona"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Bloqueo y Etiquetado (LOTO) — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Lockout/Tagout (LOTO) / Bloqueo y Etiquetado\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente los seis pasos, la verificación de energía cero, y la regla de que solo usted quita su propio candado — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Lockout/Tagout (LOTO) Training</div>'+'<div class="ti-es">Capacitación sobre Bloqueo y Etiquetado</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

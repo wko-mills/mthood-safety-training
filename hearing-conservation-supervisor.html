@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Hearing Conservation SUPERVISOR Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --gray:#666; --light:#F2F2F2;
+          --green:#2E8B57; --amber:#E8A317; --orange:#D2691E; --red:#B22222; --maroon:#701C1C; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--light); color:#222; line-height:1.5; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; background:#fff; box-shadow:0 0 24px rgba(0,0,0,.08); }
+  header { background:var(--dark); color:#fff; padding:14px 20px; }
+  header .co { font-weight:bold; font-size:15px; letter-spacing:.5px; }
+  header .prog { font-size:12px; color:#cfe0f0; }
+  .badge { display:inline-block; background:var(--amber); color:#2b1c00; font-weight:bold; font-size:11px; letter-spacing:1px; padding:2px 8px; border-radius:999px; margin-top:5px; }
+  .bar { height:6px; background:#dce7f2; } .bar span { display:block; height:100%; background:var(--blue); width:0%; transition:width .3s; }
+  main { flex:1; padding:24px 20px 32px; }
+  h1 { color:var(--dark); font-size:24px; margin-bottom:12px; }
+  p { margin-bottom:12px; font-size:16px; }
+  ul, ol { margin:0 0 12px 22px; } li { margin-bottom:7px; font-size:16px; }
+  .eyebrow { text-transform:uppercase; letter-spacing:1.5px; font-size:11px; color:var(--gray); font-weight:bold; margin-bottom:6px; }
+  .card { background:var(--light); border-left:4px solid var(--blue); padding:12px 14px; margin:14px 0; border-radius:0 6px 6px 0; font-size:15px; }
+  .card.warn { border-left-color:var(--red); }
+  .card.do { border-left-color:var(--green); }
+  .btn { display:block; width:100%; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:15px; font-size:17px; font-weight:bold; font-family:inherit; cursor:pointer; margin-top:18px; }
+  .btn:active { background:var(--dark); } .btn:disabled { background:#b9c8d6; cursor:default; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  a.btn { text-decoration:none; text-align:center; box-sizing:border-box; }
+  input[type=text] { width:100%; padding:13px; font-size:17px; font-family:inherit; border:2px solid #c6d4e2; border-radius:8px; margin-top:6px; }
+  input[type=text]:focus { outline:none; border-color:var(--blue); }
+  label { font-weight:bold; font-size:14px; color:var(--dark); }
+  .opt { display:block; width:100%; text-align:left; background:#fff; border:2px solid #c6d4e2; border-radius:8px; padding:13px 14px; font-size:16px; font-family:inherit; margin-top:10px; cursor:pointer; }
+  .opt.sel { border-color:var(--blue); background:#eaf2fa; }
+  .opt.right { border-color:var(--green); background:#e8f5ee; }
+  .opt.wrong { border-color:var(--red); background:#fbeaea; }
+  .feedback { margin-top:12px; padding:12px 14px; border-radius:8px; font-size:15px; display:none; }
+  .feedback.good { background:#e8f5ee; border-left:4px solid var(--green); display:block; }
+  .feedback.bad { background:#fbeaea; border-left:4px solid var(--red); display:block; }
+  .qnum { font-size:12px; color:var(--gray); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:22px; text-align:center; margin-top:16px; }
+  .cert .big { font-size:22px; font-weight:bold; color:var(--dark); margin:8px 0; }
+  .cert .code { font-size:26px; letter-spacing:3px; font-weight:bold; color:var(--blue); background:var(--light); border-radius:8px; padding:10px; margin:12px 0; }
+  .score-pill { display:inline-block; background:var(--green); color:#fff; border-radius:999px; padding:6px 18px; font-weight:bold; font-size:18px; }
+  .score-pill.fail { background:var(--red); }
+  .steps { counter-reset:s; list-style:none; margin-left:0; }
+  .steps li { counter-increment:s; position:relative; padding-left:34px; margin-bottom:10px; }
+  .steps li:before { content:counter(s); position:absolute; left:0; top:1px; background:var(--blue); color:#fff; width:24px; height:24px; border-radius:50%; text-align:center; font-weight:bold; font-size:14px; line-height:24px; }
+  table.mini { border-collapse:collapse; width:100%; margin:12px 0; font-size:14px; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { padding:12px 20px; font-size:11px; color:var(--gray); text-align:center; border-top:1px solid #e4e9ef; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+    <div class="prog">Hearing Conservation Training &mdash; 29 CFR 1910.95 / OAR 437-002-0080</div>
+    <div class="badge">SUPERVISOR MODULE</div>
+  </header>
+  <div class="bar"><span id="prog"></span></div>
+  <main id="main"></main>
+  <footer>Mt. Hood Forest Products LLC · Hood River, OR · Hearing Conservation Program v2.1 · Supervisor Module v1.0 (2026)</footer>
+</div>
+<script>
+const FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+let empName = "", slideIdx = 0, quizIdx = 0, quizScore = 0;
+const slides = [{"t": "content", "eyebrow": "Section 1 of 9", "title": "The Program You Enforce", "html": "<p>Oregon adopts the federal noise standard <b>29 CFR 1910.95</b> (under <b>OAR 437-002-0080</b>), with Oregon's own audiometric-testing rule (<b>OAR 437-002-0095</b>). Two numbers drive it:</p><table class='mini'><tr><th>Level</th><th>What it triggers</th></tr><tr><td><b>85 dBA TWA8 — the action level</b></td><td>Hearing conservation program: protection made available at no cost, training, and audiometric testing.</td></tr><tr><td><b>90 dBA TWA8 — the PEL</b></td><td>Feasible engineering and administrative controls required, and hearing protection required.</td></tr></table><p>Protection is also <b>required for anyone who has had a Standard Threshold Shift</b>, regardless of their current exposure. Two extreme limits also apply: 115 dBA continuous and 140 dBC impulse — protection required and warning signs posted where reached.</p><p>Your job is to make the program real on the floor: protection worn correctly at the levels that require it, tests done, and problems escalated.</p>"}, {"t": "content", "eyebrow": "Section 2 of 9", "title": "Why This Injury Is Different", "html": "<p>Every other injury on this site can heal. Noise-induced hearing loss does not — the hair cells in the inner ear do not regenerate, and hearing aids only amplify what remains.</p><p>That changes how you enforce here. With most hazards, the cost of a lapse is a chance of injury. With noise, <b>every unprotected hour is a small permanent withdrawal</b> from an account that never gets refilled. There is no near-miss version of it.</p><p>It is also invisible and painless, which is exactly why it needs supervision. An employee can lose a meaningful part of their hearing over a few years and not notice until they cannot follow conversation at their own kitchen table.</p>"}, {"t": "check", "q": "An employee says he does not need plugs in the planer because it is \"only about 88 dBA.\" Your response:", "opts": ["He is right — protection is only required at 90", "Let it go; he is experienced", "88 dBA is above the 85 action level and in our posted protection areas — he wears it", "Ask him to keep them in his pocket"], "a": 2, "why": "88 dBA is above the 85 dBA action level, and hearing protection is required in our posted production areas. Above the 90 dBA PEL it is required by exposure; in posted areas it is required by our program."}, {"t": "content", "eyebrow": "Section 3 of 9", "title": "What You Watch For on Your Rounds", "html": "<p>Your monitoring duty is practical, not paperwork. Walking your area, these are worth catching:</p><ul><li><b>Protection actually in, the whole time.</b> Not pushed up on the head, not one plug in, not hanging around the neck, not pulled out to talk.</li><li><b>Plugs seated correctly.</b> A foam plug sitting visibly in the outer ear does almost nothing. Rolled thin, inserted deep, held while it expands.</li><li><b>Muff seals intact.</b> Hard hat straps, safety-glasses temples, long hair, and hardened cushions all break the seal.</li><li><b>The right protection for the job and the person.</b> If someone keeps taking theirs out, the answer is a different type, not a lecture.</li><li><b>Machines that sound louder than they used to.</b> A change in sound is a maintenance signal and a noise signal.</li></ul><p>The half-seated earplug is the most common failure you will see, and the easiest to fix — roll, pull, hold, reinsert, fifteen seconds.</p>"}, {"t": "check", "q": "You notice an employee with foam plugs sitting just inside the outer ear, not seated in the canal. This is:", "opts": ["Fine — the plugs are in", "A minor issue to mention at the next safety meeting", "A real loss of protection — show them roll, pull, hold and have them reinsert now", "Only a problem above 100 dBA"], "a": 2, "why": "A plug not seated in the canal loses most of its attenuation, and the employee cannot tell by feel. It is the most common protection failure and the easiest to fix on the spot."}, {"t": "content", "eyebrow": "Section 4 of 9", "title": "The Brief-Removal Problem", "html": "<p>Protection is based on the <b>whole-day dose</b>. An employee wearing plugs for eight hours at 95 dBA is protected. That same employee taking them out for <b>thirty minutes</b> in that noise loses more than half the day's protection — the unprotected half hour dominates the entire dose.</p><p>So the employee who wears protection faithfully but pulls it out every time you walk over to give instructions is <b>not</b> substantially protected — and you are the reason.</p><p><b>Change how you communicate in noise:</b> step out of the noise to talk or use hand signals; give instructions before the crew enters a loud area, not during; do not ask someone to take a plug out so they can hear you; and model it yourself — supervisors who walk the mill bare-eared teach the rule they actually mean.</p>"}, {"t": "content", "eyebrow": "Section 5 of 9", "title": "Fit Problems Are Your Problem", "html": "<p>The program offers <b>at least two distinct types</b> of hearing protector to every exposed employee. That is not a nicety — it is the recognition that protection someone finds unbearable is protection they will remove.</p><p>When an employee complains that protection hurts, itches, or will not stay in, treat it as a real problem to solve, not resistance to overcome:</p><ul><li>A different <b>type</b> — plugs to muffs or the reverse</li><li>A different <b>size</b> of pre-molded plug — canals differ a lot between people</li><li><b>Custom-molded plugs</b> for someone who cannot get a good fit otherwise</li><li>New muff cushions if the old ones have hardened</li></ul><p>Replacements are provided at no cost. Nobody should be nursing a cracked pair of muffs.</p><div class='card warn'>The failure mode to avoid: an employee tells you their plugs hurt, you tell them to wear them anyway, and from then on they wear them only when you are looking. You have converted a solvable equipment problem into a hidden exposure problem.</div>"}, {"t": "check", "q": "An employee says his earplugs hurt after a couple of hours and he keeps taking them out. The right response is:", "opts": ["Tell him to get used to it", "Write him up for not wearing protection", "Get him a different type or size — plugs, muffs, or custom-molded — at no cost", "Move him to a quieter job permanently"], "a": 2, "why": "Offering at least two distinct types exists precisely because discomfort drives removal. This is an equipment-fit problem with a straightforward solution, provided at no cost."}, {"t": "content", "eyebrow": "Section 6 of 9", "title": "Audiometric Testing and Your Crew", "html": "<p>Audiometric testing is provided at no cost, on company time, under Oregon's audiometric rule (OAR 437-002-0095). Your part is scheduling and preparation.</p><p><b>What you tell your crew before test day:</b> avoid loud noise for at least <b>14 hours</b> beforehand — including off-work noise like shooting, mowing, motorcycles, and concerts (or wear hearing protection to substitute for the quiet period). Recent noise causes a temporary threshold shift that makes hearing look worse than it is, and that false result then sits in the record for years.</p><p>Schedule tests early in the shift or before shift where you can. The <b>baseline audiogram</b> — done within 6 months of first exposure at or above the action level — is the reference every future annual test is measured against. Make sure everyone who is due actually goes.</p>"}, {"t": "content", "eyebrow": "Section 7 of 9", "title": "Standard Threshold Shift — Handle It Right", "html": "<p>A <b>Standard Threshold Shift (STS)</b> is a defined average change compared with the employee's baseline. It means their hearing has measurably changed.</p><div class='card warn'>An STS is <b>never</b> a disciplinary matter and never a job-security matter. If an employee believes a bad test can cost them their job, you will get bad tests — people press the button when they hear nothing — and that destroys the only early-warning system the program has.</div><p>What follows an STS: written notification within 21 days, refitting with protection, retraining, protection that reduces exposure below 85 dBA, re-evaluation of the area and controls, referral for further evaluation if needed. <b>Hearing protection becomes mandatory for that employee regardless of exposure level.</b></p><p>Your role: get them to the refit and retraining promptly, and treat the whole thing as routine — because it is.</p>"}, {"t": "check", "q": "An employee on your crew has a Standard Threshold Shift on his annual audiogram. What is your role?", "opts": ["Document it as a performance issue", "Reassign him out of the mill", "Get him to the refit and retraining promptly, and treat it as routine — it is not disciplinary", "Tell him to test again next year"], "a": 2, "why": "An STS is an early warning, not a fault. Treating it as routine keeps employees honest on the test, which is the only way the program catches damage early enough to matter."}, {"t": "content", "eyebrow": "Section 8 of 9", "title": "Ototoxic Chemicals, Signs, and Monitoring", "html": "<p><b>Ototoxic chemicals</b> damage hearing on their own and worsen noise damage. At a mill that means solvents (toluene, xylene, styrene in some paints, thinners, degreasers), carbon monoxide from engine exhaust in enclosed spaces, and certain metals. A crew working with solvents in a noisy area carries more risk than the decibel reading alone suggests — be firmer about protection on those jobs and keep ventilation working.</p><p><b>Warning signs</b> are required where employees may be exposed to 115 dBA or more. If new equipment or a process change makes an area noticeably louder, that is a report to the safety manager, not a judgment call for you.</p><p><b>Noise monitoring</b> carries two employee rights: employees may <b>observe</b> monitoring, and anyone measured at or above 85 dBA TWA8 must be <b>notified of their results within five working days</b>. If your crew asks to watch a survey, the answer is yes.</p>"}, {"t": "check", "q": "An employee measured at or above 85 dBA TWA8 must be notified of monitoring results within:", "opts": ["Five working days", "21 days", "30 days", "One year"], "a": 0, "why": "Employees exposed at or above the action level must be notified of their monitoring results within five working days, and they may observe the monitoring being done."}, {"t": "content", "eyebrow": "Section 9 of 9", "title": "Records, Retraining, and What to Escalate", "html": "<p><b>Training is annual</b> for every employee at or above 85 dBA TWA8, plus initial training on assignment and updated training whenever controls, protectors, or work processes change. Training records are kept at least three years; audiometric records for the duration of employment.</p><p><b>Escalate to the safety manager:</b></p><ul><li>An employee reporting ringing, muffled hearing after shift, or difficulty hearing</li><li>Any fit problem you cannot solve with a different type or size</li><li>Equipment that has gotten noticeably louder, or new equipment/process changes that could raise noise</li><li>An employee due for a hearing test who has not had one</li><li>Employees working with ototoxic chemicals in noise</li><li>Anyone with an STS who has not been refitted and retrained</li></ul><p>You cannot give hearing back. Every other injury you supervise against has a repair path; this one has only prevention. When you are unsure, ask.</p>"}, {"t": "check", "q": "How many distinct types of hearing protector must be offered to each exposed employee?", "opts": ["One is sufficient", "At least two distinct types", "Three", "Whatever is in stock"], "a": 1, "why": "At least two distinct types must be offered, precisely because a protector someone finds unbearable is one they will remove. Fit problems are solved with a different type or size at no cost."}];
+const quiz = [{"q": "Oregon's hearing conservation program is triggered at what action level?", "opts": ["70 dBA TWA8", "85 dBA TWA8", "100 dBA TWA8", "120 dBA TWA8"], "a": 1}, {"q": "Hearing protection is REQUIRED (not just available) when:", "opts": ["Only if the employee asks", "Only on the loudest day", "At or above the 90 dBA PEL, or for anyone who has had a Standard Threshold Shift", "Only above 115 dBA"], "a": 2}, {"q": "An employee takes his plugs out for 30 minutes during an 8-hour shift at 95 dBA. The effect on his day's protection is:", "opts": ["Cut by more than half", "Negligible", "Only relevant above 100 dBA", "None, if he reinserts them"], "a": 0}, {"q": "The most common protection failure you will see on rounds is:", "opts": ["Muffs and plugs worn together", "Protection worn too tightly", "Employees using their own plugs", "Foam plugs not seated in the ear canal"], "a": 3}, {"q": "An employee says his plugs hurt and he keeps removing them. You should:", "opts": ["Tell him to get used to it", "Discipline him", "Get him a different type or size at no cost", "Reassign him"], "a": 2}, {"q": "How many distinct types of hearing protector must be offered to each exposed employee?", "opts": ["One", "At least two distinct types", "Three", "Whatever is in stock"], "a": 1}, {"q": "Before an annual audiogram, employees should avoid loud noise for at least:", "opts": ["14 hours", "1 hour", "4 hours", "No restriction applies"], "a": 0}, {"q": "A Standard Threshold Shift on an employee's audiogram is:", "opts": ["A disciplinary matter", "Grounds for reassignment", "A sign the test was invalid", "An early warning — the employee is refitted, retrained, and re-evaluated, never disciplined"], "a": 3}, {"q": "An employee measured at or above 85 dBA TWA8 must be notified of monitoring results within:", "opts": ["21 days", "Five working days", "30 days", "One year"], "a": 1}, {"q": "Which Oregon rules govern hearing conservation and audiometric testing?", "opts": ["Only federal 1910.95", "A company policy only", "OAR 437-002-0080 (adopting 1910.95) and OAR 437-002-0095", "There is no Oregon rule"], "a": 2}];
+const main = document.getElementById('main');
+const progEl = document.getElementById('prog');
+const totalSteps = slides.length + quiz.length + 2;
+function setProg(n){ progEl.style.width = Math.min(100, Math.round(n/totalSteps*100)) + '%'; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function showStart(){
+  setProg(0);
+  main.innerHTML = `
+    <div class="eyebrow">Mt. Hood Forest Products LLC · Safety Department</div>
+    <h1>Hearing Conservation — Supervisor Training</h1>
+    <p>Required supervisor training under 29 CFR 1910.95 (adopted by Oregon OSHA; OAR 437-002-0080, and OAR 437-002-0095 audiometric testing) and the Mt. Hood Forest Products Hearing Conservation Program v2.1. About 15 minutes.</p>
+    <div class="card warn"><b>Complete the employee Hearing Conservation module first.</b> This module covers your additional duties as a supervisor — it does not replace the employee training, and both are required of you.</div>
+    <div class="card">Pass the 10-question quiz with <b>80% or better</b> to finish. You'll get a completion code and a button to record it.</div>
+    <label for="nm">Enter your full name to begin</label>
+    <input type="text" id="nm" autocomplete="name" placeholder="First and last name">
+    <button class="btn" id="startBtn" disabled>Start Supervisor Training</button>`;
+  const nm=document.getElementById('nm'), b=document.getElementById('startBtn');
+  nm.addEventListener('input', ()=>{ b.disabled = nm.value.trim().split(/\s+/).length < 2; });
+  b.addEventListener('click', ()=>{ empName=nm.value.trim(); slideIdx=0; showSlide(); });
+}
+function showSlide(){
+  if (slideIdx >= slides.length){ quizIdx=0; quizScore=0; showQuizIntro(); return; }
+  setProg(1+slideIdx);
+  const s = slides[slideIdx];
+  if (s.t === 'content'){
+    main.innerHTML = `<div class="eyebrow">${esc(s.eyebrow)}</div><h1>${esc(s.title)}</h1>${s.html}
+      <button class="btn" id="nextBtn">Continue</button>`;
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  } else {
+    main.innerHTML = `<div class="eyebrow">Knowledge Check</div><h1>Quick Question</h1><p><b>${esc(s.q)}</b></p>
+      <div id="opts"></div><div class="feedback" id="fb"></div>
+      <button class="btn" id="nextBtn" style="display:none">Continue</button>`;
+    const optsEl=document.getElementById('opts');
+    s.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=o;
+      b.addEventListener('click', ()=>{
+        const fb=document.getElementById('fb');
+        [...optsEl.children].forEach(c=>c.disabled=true);
+        if (i===s.a){ b.classList.add('right'); fb.className='feedback good'; fb.textContent=s.why;
+          document.getElementById('nextBtn').style.display='block'; }
+        else { b.classList.add('wrong'); fb.className='feedback bad'; fb.textContent='Not quite — take another look and try again.';
+          setTimeout(()=>{ [...optsEl.children].forEach(c=>{c.disabled=false;c.classList.remove('wrong');}); fb.className='feedback'; },1600); }
+      });
+      optsEl.appendChild(b);
+    });
+    document.getElementById('nextBtn').addEventListener('click', ()=>{ slideIdx++; showSlide(); window.scrollTo(0,0); });
+  }
+}
+function showQuizIntro(){
+  setProg(1+slides.length);
+  main.innerHTML = `<div class="eyebrow">Final Quiz</div>
+    <h1>Ready, ${esc(empName.split(' ')[0])}?</h1>
+    <p>10 questions. You need <b>8 correct (80%)</b> to pass. If you don't pass, review the material and retake it.</p>
+    <button class="btn" id="goBtn">Begin Quiz</button>
+    <button class="btn secondary" id="revBtn">Review Material First</button>`;
+  document.getElementById('goBtn').addEventListener('click', ()=>{ showQuizQ(); window.scrollTo(0,0); });
+  document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+}
+function showQuizQ(){
+  if (quizIdx >= quiz.length){ showResult(); return; }
+  setProg(1+slides.length+quizIdx);
+  const qq = quiz[quizIdx];
+  main.innerHTML = `<div class="qnum">Question ${quizIdx+1} of ${quiz.length}</div>
+    <h1 style="font-size:20px">${esc(qq.q)}</h1><div id="opts"></div>
+    <button class="btn" id="subBtn" disabled>Submit Answer</button>`;
+  const optsEl=document.getElementById('opts');
+  let sel=-1;
+  qq.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=o;
+    b.addEventListener('click', ()=>{ sel=i; [...optsEl.children].forEach(c=>c.classList.remove('sel')); b.classList.add('sel');
+      document.getElementById('subBtn').disabled=false; });
+    optsEl.appendChild(b);
+  });
+  document.getElementById('subBtn').addEventListener('click', ()=>{
+    if (sel===qq.a) quizScore++;
+    quizIdx++; showQuizQ(); window.scrollTo(0,0);
+  });
+}
+function completionCode(){
+  const d=new Date();
+  const ds=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  let h=0; const src=empName.toUpperCase()+ds+quizScore+'SUP';
+  for (let i=0;i<src.length;i++){ h=((h<<5)-h+src.charCodeAt(i))|0; }
+  const alpha="BCDFGHJKMNPQRSTVWXYZ23456789";
+  let n=Math.abs(h), out="";
+  for (let i=0;i<5;i++){ out+=alpha.charAt(n%alpha.length); n=Math.floor(n/alpha.length); }
+  return 'HR26S-' + out;
+}
+function showResult(){
+  setProg(totalSteps);
+  const pct = Math.round(quizScore/quiz.length*100);
+  const passed = pct >= 80;
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  if (passed){
+    main.innerHTML = `<div class="eyebrow">Training Complete</div><h1>Congratulations!</h1>
+      <p style="text-align:center"><span class="score-pill">Score: ${pct}%</span></p>
+      <div class="cert">
+        <div class="eyebrow">Certificate of Completion</div>
+        <div class="big">${esc(empName)}</div>
+        <p>has completed <b>Hearing Conservation SUPERVISOR Training</b><br>per 29 CFR 1910.95 / OAR 437-002-0080</p>
+        <p><b>${dateStr}</b> · Score: <b>${quizScore}/${quiz.length} (${pct}%)</b></p>
+        <div class="code">${completionCode()}</div>
+        <p style="font-size:13px;color:var(--gray)">Mt. Hood Forest Products LLC · Hood River, OR</p>
+      </div>
+      <div class="card"><b>Final step — record your completion:</b> Tap the button below to open the completion form. Select the module <b>Hearing Conservation — Supervisor / Conservación de la Audición — Supervisor</b>, enter today's date, your score, and the completion code above, then submit. Screenshot this screen for your own records. Your training is not documented until the form is submitted.</div>
+      <a class="btn" href="${FORM_URL}" target="_blank" rel="noopener">Record My Completion</a>`;
+  } else {
+    main.innerHTML = `<div class="eyebrow">Quiz Result</div><h1>Not Quite — Let's Try Again</h1>
+      <p style="text-align:center"><span class="score-pill fail">Score: ${pct}%</span></p>
+      <p>You need 80% to pass. Review the material and take the quiz again — your crew is counting on you knowing this cold.</p>
+      <button class="btn" id="revBtn">Review Material</button>
+      <button class="btn secondary" id="retryBtn">Retake Quiz Now</button>`;
+    document.getElementById('revBtn').addEventListener('click', ()=>{ slideIdx=0; showSlide(); window.scrollTo(0,0); });
+    document.getElementById('retryBtn').addEventListener('click', ()=>{ quizIdx=0; quizScore=0; showQuizQ(); window.scrollTo(0,0); });
+  }
+}
+window.APP = { slides, quiz, FORM_URL, completionCode, showStart,
+  get state(){ return { empName, slideIdx, quizIdx, quizScore }; },
+  setName(n){ empName = n; }, setScore(s){ quizScore = s; },
+  showResult, showSlide, showQuizQ, showQuizIntro };
+showStart();
+</script>
+</body>
+</html>

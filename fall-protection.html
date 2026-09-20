@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Fall Protection Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Fall Protection Training &mdash; 29 CFR 1910.28 / OAR 437-002-0020 (Div 2-D)</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Fall Protection Program v2.1 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "FL26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Fall Protection Program v2.1 (29 CFR 1910.28, adopted by Oregon OSHA under OAR 437-002-0020, Division 2-D). Questions? Contact the Environmental Compliance and Safety Lead or the Competent Person for your area.",
+  introH: "Welcome — Working Safely at Heights",
+  introP1: "Falls are one of the most common causes of serious injury and death in general industry. At Mt. Hood Forest Products, work happens above the ground — on roofs, mezzanines, platforms, log decks, sorting chains, aerial lifts, and near floor openings. This training covers when fall protection is required, the systems that protect you, and what happens if a fall occurs.",
+  introP2: "This training takes about 15–20 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. When Fall Protection Is Required", body:
+      "<p>Oregon applies the federal fall protection rule <b>29 CFR 1910.28</b> (\"Duty to have fall protection\"), adopted under <b>OAR 437-002-0020</b> in Division 2-D. The general <b>trigger height is four (4) feet</b> — but some hazards require fall protection at <b>any height</b>.</p>"+
+      "<table class='mini'><tr><th>Height / situation</th><th>Fall protection required?</th></tr>"+
+      "<tr><td><b>4 feet or more</b> to a lower level — unprotected sides, edges, open-sided platforms, walkways</td><td>Yes — the general trigger</td></tr>"+
+      "<tr><td><b>Any height</b> — over or near dangerous equipment, open pits, tanks, degreasing units</td><td>Yes, regardless of how high</td></tr>"+
+      "<tr><td><b>Aerial lifts</b> — boom lifts, scissor lifts and similar</td><td>Yes, whenever used</td></tr>"+
+      "<tr><td><b>Scaffolds</b> — supported or suspended</td><td>Yes, at 10 feet</td></tr>"+
+      "<tr><td><b>Fixed ladders</b> extending more than 24 feet</td><td>Yes — ladder safety system or equivalent</td></tr></table>"+
+      "<div class='notice'><b>Height isn't the only trigger.</b> A fall of even a few feet onto a sorting chain, a saw, or into an open pit can be fatal. Over or near dangerous equipment, fall protection is required no matter how low the drop.</div>",
+      kc:{ q:"What is the general trigger height at which fall protection is required for walking-working surfaces?", opts:["6 feet","4 feet","10 feet","There is no set height"], a:1 } },
+    { h:"2. Common Fall Hazards at the Mill", body:
+      "<p>Fall hazards fall into recognizable categories. Learn to see them:</p>"+
+      "<ul><li><b>Roof edges</b> — flat or low-sloped roofs, especially within six feet of an edge or a skylight</li>"+
+      "<li><b>Open-sided</b> floors, platforms, mezzanine edges and walkways without guardrails</li>"+
+      "<li><b>Floor openings</b> — unguarded holes, hatchways, manholes, pits and excavations</li>"+
+      "<li><b>Log decks, lumber sorting chains</b> and other elevated sawmill work areas</li>"+
+      "<li><b>Aerial lifts</b> — boom and scissor lifts</li>"+
+      "<li><b>Scaffolding</b> — during assembly, use, and disassembly</li>"+
+      "<li><b>Fixed and portable ladders</b>, and working from stilts or elevated means</li>"+
+      "<li><b>Over dangerous equipment</b> — regardless of height</li></ul>"+
+      "<p>Your area's specific fall hazards are identified in a <b>fall hazard assessment</b> for that work area. If you're asked to work somewhere with a fall hazard that hasn't been assessed, or where the protection isn't in place — stop and ask your supervisor or the Competent Person.</p>",
+      kc:{ q:"Which of these is a fall hazard that requires protection regardless of height?", opts:["A three-foot step","Working over dangerous equipment like a sorting chain or saw","A ground-level walkway","A closed, guarded floor"], a:1 } },
+    { h:"3. The Fall Protection Hierarchy", body:
+      "<p>Not all fall protection is equal. Mt. Hood Forest Products uses a <b>three-tier hierarchy</b> — always reach for the highest tier that's feasible before dropping to the next.</p>"+
+      "<div class='tier t1'><div class='tt'>Tier 1 — Elimination (best)</div>"+
+      "Remove the hazard: do the work at ground level, use remote-operated equipment, or design permanent access and built-in anchorages so no one is exposed to the fall at all.</div>"+
+      "<div class='tier t2'><div class='tt'>Tier 2 — Prevention (passive systems)</div>"+
+      "When the hazard can't be eliminated, keep people from reaching the edge: standard guardrails, hole and opening covers, complete scaffolding, aerial lifts, stairways and fixed access.</div>"+
+      "<div class='tier t3'><div class='tt'>Tier 3 — Fall arrest / active systems (last line)</div>"+
+      "Used only when elimination and prevention aren't feasible: personal fall arrest (harness, lanyard, anchorage), fall restraint (keeps you from reaching the edge), positioning devices, and warning-line-with-monitoring systems.</div>"+
+      "<div class='notice'>A guardrail that keeps everyone away from the edge protects the whole crew and never needs to be \"used correctly\" by an individual. That's why passive prevention beats personal arrest whenever it's feasible.</div>",
+      kc:{ q:"In the fall protection hierarchy, which is the MOST preferred approach?", opts:["Personal fall arrest with a harness","Eliminating the hazard (e.g., doing the work at ground level)","A warning line","A safety monitor"], a:1 } },
+    { h:"4. Guardrails and Covers", body:
+      "<p><b>Standard guardrail systems</b> are the workhorse of passive prevention. A standard guardrail has a <b>top rail, a mid rail, and posts</b>. The top rail is smooth along its whole length, the mid rail sits about halfway between the top rail and the floor, and the posts must withstand a <b>200-pound force applied in any direction</b>.</p>"+
+      "<ul><li>Guardrails are required on open-sided floors, platforms and walkways with a fall hazard of 4 feet or more</li>"+
+      "<li>A guardrail removed temporarily (to pass material, for example) must be <b>replaced immediately</b> when the task is done, and the opening protected while it's down</li></ul>"+
+      "<p><b>Hole and opening covers</b> protect floor openings. A cover must support the loads that could cross it, be <b>secured against displacement</b>, and be <b>marked</b> (\"HOLE\" or \"COVER\") so no one moves it or steps into an uncovered opening.</p>"+
+      "<div class='danger'><b>Never remove a cover or a guardrail and walk away.</b> An unmarked or unsecured cover, or a missing guardrail, is exactly how a coworker steps into an open hole.</div>",
+      kc:{ q:"A standard guardrail post must be able to withstand a force of at least…", opts:["50 pounds","200 pounds in any direction","1,000 pounds","No specific force"], a:1 } },
+    { h:"5. Personal Fall Arrest — The ABCD", body:
+      "<p>When active systems are the answer, a <b>personal fall arrest system (PFAS)</b> catches you after a fall begins. Remember the <b>ABCD</b>:</p>"+
+      "<ul><li><b>A — Anchorage:</b> the secure attachment point. It must hold the loads a fall creates. Only a <b>Qualified Person</b> approves anchorages.</li>"+
+      "<li><b>B — Body support:</b> a <b>full body harness</b> (never a body belt for fall arrest), worn snug with the D-ring centered between the shoulder blades.</li>"+
+      "<li><b>C — Connectors:</b> the lanyard, shock absorber, or self-retracting device (SRD) that links you to the anchorage.</li>"+
+      "<li><b>D — Deceleration / Descent:</b> the shock absorber that limits the arresting forces on your body, and the rescue plan for getting you down.</li></ul>"+
+      "<p><b>Fall restraint</b> is different and preferable: it's rigged so you <b>cannot reach the fall edge at all</b> — you're stopped before you can fall, not caught after.</p>"+
+      "<div class='notice'><b>Total fall distance matters.</b> Before you clip in, know how far you'd fall — free fall plus deceleration plus harness stretch plus your height — and confirm you won't hit a lower level or equipment before the system stops you.</div>",
+      kc:{ q:"For fall arrest, what body support is required?", opts:["A body belt","A full body harness","A safety vest","A tool belt"], a:1 } },
+    { h:"6. Inspect Before Every Use", body:
+      "<p>Fall protection gear only works if it's sound. <b>Inspect it before every use</b>, and take anything questionable out of service.</p>"+
+      "<ul><li><b>Harness:</b> check webbing for cuts, frays, burns, chemical damage; check D-rings and buckles for cracks, distortion, corrosion</li>"+
+      "<li><b>Lanyards / shock absorbers:</b> check for cuts, fraying, and a <b>deployed shock pack</b> — a deployed absorber means it already arrested a fall and is done</li>"+
+      "<li><b>Self-retracting devices (SRDs):</b> confirm the line pulls out and retracts freely and the brake locks up when pulled sharply</li></ul>"+
+      "<div class='danger'><b>Any equipment that has arrested a fall is removed from service permanently — no exceptions.</b> It does its job once. Same for anything with cuts, burns, corrosion, or a deployed shock pack. When in doubt, take it out.</div>"+
+      "<p>Store gear clean and dry, out of sunlight and away from chemicals and heat, per the manufacturer's instructions.</p>",
+      kc:{ q:"Your lanyard's shock pack is deployed (already expanded). What do you do?", opts:["Fold it back and keep using it","Remove it from service permanently — it has already arrested a fall","Use it for light work only","Tape it up"], a:1 } },
+    { h:"7. Suspension Trauma and the Rescue Plan", body:
+      "<p>Fall arrest saves your life — but hanging in a harness afterward is its own emergency. <b>Suspension trauma</b> (orthostatic intolerance) can set in within minutes: blood pools in the legs, and a motionless suspended worker can lose consciousness and die even though the fall was survived.</p>"+
+      "<p>So <b>a rescue plan is required before the work begins</b> — you never rig fall arrest without knowing how a fallen worker gets down promptly. Mt. Hood Forest Products uses a three-tier rescue approach:</p>"+
+      "<ul><li><b>Self-rescue</b> — the worker uses suspension relief straps to take weight off the legs and, where possible, gets themselves to safety</li>"+
+      "<li><b>Assisted rescue</b> — trained co-workers retrieve the suspended worker with pre-planned equipment</li>"+
+      "<li><b>Emergency medical services</b> — 911, when self and assisted rescue aren't enough</li></ul>"+
+      "<div class='notice'><b>Speed is everything.</b> \"We'll just call 911\" is not a rescue plan by itself — EMS may not arrive fast enough. The plan is made, and the means staged, before anyone goes up.</div>",
+      kc:{ q:"Why must a rescue plan be in place BEFORE fall-arrest work begins?", opts:["It's just paperwork","Because suspension trauma can kill a fallen worker within minutes if they hang motionless","To satisfy the insurer","Only for work above 50 feet"], a:1 } },
+    { h:"8. After a Fall, and When in Doubt", body:
+      "<p><b>If a fall happens:</b></p>"+
+      "<ul><li><b>Get the worker down fast</b> using the rescue plan; treat for suspension trauma even if they seem okay</li>"+
+      "<li><b>Call 911</b> for any fall that arrested a worker or caused injury; report to your supervisor immediately</li>"+
+      "<li><b>Remove all involved equipment from service</b> — the harness, lanyard, SRD and anchorage hardware that took the fall</li>"+
+      "<li>The incident is <b>investigated</b> so it doesn't happen again</li></ul>"+
+      "<p><b>When in doubt, don't go up.</b> If the fall protection isn't in place, the anchorage isn't approved, the gear looks wrong, or there's no rescue plan — stop and get your supervisor or the Competent Person. No task is worth an unprotected fall.</p>"+
+      "<h2>Emergency Numbers</h2>"+
+      "<p>Emergency (fall / medical): <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"What is the general trigger height for fall protection on walking-working surfaces?", opts:["6 feet", "4 feet", "10 feet", "25 feet"], a:1 },
+    { q:"Fall protection is required regardless of height when…", opts:["You work over or near dangerous equipment (a saw, sorting chain, open pit)", "It's raining", "It's after noon", "The surface is concrete"], a:0 },
+    { q:"In the fall protection hierarchy, the MOST preferred approach is…", opts:["Personal fall arrest", "Eliminating the hazard", "A warning line", "A safety monitor"], a:1 },
+    { q:"A standard guardrail post must withstand a force of at least…", opts:["50 pounds", "10 pounds", "No requirement", "200 pounds in any direction"], a:3 },
+    { q:"For fall arrest, the required body support is…", opts:["A body belt", "A positioning belt", "A full body harness", "A tool harness"], a:2 },
+    { q:"The 'A' in the ABCD of fall arrest stands for…", opts:["Alarm", "Anchorage", "Alert", "Adjustment"], a:1 },
+    { q:"Equipment that has arrested a fall should be…", opts:["Reused after inspection", "Used for training", "Removed from service permanently", "Washed and returned"], a:2 },
+    { q:"Suspension trauma is dangerous because…", opts:["It damages the harness", "A motionless suspended worker can lose consciousness and die within minutes", "It only affects tall workers", "It happens after 8 hours"], a:1 },
+    { q:"A rescue plan for fall-arrest work must be in place…", opts:["Before the work begins", "After the first fall", "Only if OSHA visits", "Within 24 hours"], a:0 },
+    { q:"You're told to work at height but the fall protection isn't in place. You should…", opts:["Do it quickly and carefully", "Use a body belt instead", "Stop and get your supervisor or the Competent Person", "Skip it and hope"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Fall Protection — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Fall Protection / Protección Contra Caídas\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the trigger heights, the hierarchy, harness/ABCD, and the rescue plan — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Protección Contra Caídas de Mt. Hood Forest Products v2.1 (29 CFR 1910.28, adoptado por Oregon OSHA bajo OAR 437-002-0020, División 2-D). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad o la Persona Competente de su área.",
+  introH: "Bienvenido — Trabajar con Seguridad en Alturas",
+  introP1: "Las caídas son una de las causas más comunes de lesiones graves y muerte en la industria general. En Mt. Hood Forest Products, se trabaja sobre el suelo — en techos, mezzanines, plataformas, plataformas de trozas, cadenas de clasificación, elevadores aéreos, y cerca de aberturas en el piso. Esta capacitación cubre cuándo se requiere protección contra caídas, los sistemas que lo protegen, y qué pasa si ocurre una caída.",
+  introP2: "Esta capacitación toma de 15 a 20 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Cuándo Se Requiere Protección Contra Caídas", body:
+      "<p>Oregon aplica la norma federal de protección contra caídas <b>29 CFR 1910.28</b> (\"Deber de tener protección contra caídas\"), adoptada bajo <b>OAR 437-002-0020</b> en la División 2-D. La <b>altura general de activación es de cuatro (4) pies</b> — pero algunos peligros requieren protección a <b>cualquier altura</b>.</p>"+
+      "<table class='mini'><tr><th>Altura / situación</th><th>¿Se requiere protección?</th></tr>"+
+      "<tr><td><b>4 pies o más</b> a un nivel inferior — lados sin protección, bordes, plataformas de lados abiertos, pasillos</td><td>Sí — la activación general</td></tr>"+
+      "<tr><td><b>Cualquier altura</b> — sobre o cerca de equipo peligroso, pozos abiertos, tanques, unidades de desengrase</td><td>Sí, sin importar la altura</td></tr>"+
+      "<tr><td><b>Elevadores aéreos</b> — de pluma, de tijera y similares</td><td>Sí, siempre que se usen</td></tr>"+
+      "<tr><td><b>Andamios</b> — apoyados o suspendidos</td><td>Sí, a 10 pies</td></tr>"+
+      "<tr><td><b>Escaleras fijas</b> de más de 24 pies</td><td>Sí — sistema de seguridad de escalera o equivalente</td></tr></table>"+
+      "<div class='notice'><b>La altura no es el único factor.</b> Una caída de solo unos pies sobre una cadena de clasificación, una sierra, o dentro de un pozo abierto puede ser mortal. Sobre o cerca de equipo peligroso, se requiere protección sin importar lo baja que sea la caída.</div>",
+      kc:{ q:"¿Cuál es la altura general de activación a la que se requiere protección contra caídas en superficies de trabajo?", opts:["6 pies","4 pies","10 pies","No hay altura establecida"], a:1 } },
+    { h:"2. Peligros de Caída Comunes en el Aserradero", body:
+      "<p>Los peligros de caída se agrupan en categorías reconocibles. Aprenda a verlos:</p>"+
+      "<ul><li><b>Bordes de techo</b> — techos planos o de poca pendiente, especialmente dentro de seis pies de un borde o un tragaluz</li>"+
+      "<li><b>Pisos de lados abiertos</b>, plataformas, bordes de mezzanine y pasillos sin barandillas</li>"+
+      "<li><b>Aberturas en el piso</b> — huecos sin protección, escotillas, registros, pozos y excavaciones</li>"+
+      "<li><b>Plataformas de trozas, cadenas de clasificación de madera</b> y otras áreas elevadas del aserradero</li>"+
+      "<li><b>Elevadores aéreos</b> — de pluma y de tijera</li>"+
+      "<li><b>Andamios</b> — durante el montaje, uso y desmontaje</li>"+
+      "<li><b>Escaleras fijas y portátiles</b>, y trabajar sobre zancos o medios elevados</li>"+
+      "<li><b>Sobre equipo peligroso</b> — sin importar la altura</li></ul>"+
+      "<p>Los peligros de caída específicos de su área se identifican en una <b>evaluación de peligros de caída</b> de esa área. Si le piden trabajar en un lugar con un peligro de caída que no ha sido evaluado, o donde la protección no está en su lugar — deténgase y pregunte a su supervisor o a la Persona Competente.</p>",
+      kc:{ q:"¿Cuál de estos es un peligro de caída que requiere protección sin importar la altura?", opts:["Un escalón de tres pies","Trabajar sobre equipo peligroso como una cadena de clasificación o una sierra","Un pasillo a nivel del suelo","Un piso cerrado y protegido"], a:1 } },
+    { h:"3. La Jerarquía de Protección Contra Caídas", body:
+      "<p>No toda protección contra caídas es igual. Mt. Hood Forest Products usa una <b>jerarquía de tres niveles</b> — siempre busque el nivel más alto que sea factible antes de bajar al siguiente.</p>"+
+      "<div class='tier t1'><div class='tt'>Nivel 1 — Eliminación (lo mejor)</div>"+
+      "Elimine el peligro: haga el trabajo a nivel del suelo, use equipo operado a distancia, o diseñe acceso permanente y anclajes incorporados para que nadie quede expuesto a la caída.</div>"+
+      "<div class='tier t2'><div class='tt'>Nivel 2 — Prevención (sistemas pasivos)</div>"+
+      "Cuando el peligro no se puede eliminar, evite que las personas lleguen al borde: barandillas estándar, cubiertas de huecos y aberturas, andamios completos, elevadores aéreos, escaleras y accesos fijos.</div>"+
+      "<div class='tier t3'><div class='tt'>Nivel 3 — Detención de caídas / sistemas activos (última línea)</div>"+
+      "Se usa solo cuando la eliminación y la prevención no son factibles: detención personal de caídas (arnés, cordón, anclaje), restricción de caídas (evita que llegue al borde), dispositivos de posicionamiento, y sistemas de línea de advertencia con monitoreo.</div>"+
+      "<div class='notice'>Una barandilla que mantiene a todos lejos del borde protege a toda la cuadrilla y nunca necesita \"usarse correctamente\" por un individuo. Por eso la prevención pasiva es mejor que la detención personal siempre que sea factible.</div>",
+      kc:{ q:"En la jerarquía de protección contra caídas, ¿cuál es el enfoque MÁS preferido?", opts:["Detención personal con arnés","Eliminar el peligro (p. ej., hacer el trabajo a nivel del suelo)","Una línea de advertencia","Un monitor de seguridad"], a:1 } },
+    { h:"4. Barandillas y Cubiertas", body:
+      "<p>Los <b>sistemas de barandilla estándar</b> son el caballo de batalla de la prevención pasiva. Una barandilla estándar tiene un <b>riel superior, un riel intermedio y postes</b>. El riel superior es liso en toda su longitud, el riel intermedio queda a la mitad entre el riel superior y el piso, y los postes deben soportar una <b>fuerza de 200 libras aplicada en cualquier dirección</b>.</p>"+
+      "<ul><li>Las barandillas se requieren en pisos, plataformas y pasillos de lados abiertos con un peligro de caída de 4 pies o más</li>"+
+      "<li>Una barandilla retirada temporalmente (para pasar material, por ejemplo) debe <b>reemplazarse de inmediato</b> al terminar la tarea, y la abertura debe protegerse mientras esté quitada</li></ul>"+
+      "<p>Las <b>cubiertas de huecos y aberturas</b> protegen las aberturas del piso. Una cubierta debe soportar las cargas que puedan cruzarla, estar <b>asegurada contra desplazamiento</b>, y estar <b>marcada</b> (\"HUECO\" o \"CUBIERTA\") para que nadie la mueva ni pise una abertura descubierta.</p>"+
+      "<div class='danger'><b>Nunca quite una cubierta o una barandilla y se aleje.</b> Una cubierta sin marcar o sin asegurar, o una barandilla faltante, es exactamente cómo un compañero pisa dentro de un hueco abierto.</div>",
+      kc:{ q:"Un poste de barandilla estándar debe soportar una fuerza de al menos…", opts:["50 libras","200 libras en cualquier dirección","1,000 libras","Sin fuerza específica"], a:1 } },
+    { h:"5. Detención Personal de Caídas — El ABCD", body:
+      "<p>Cuando los sistemas activos son la respuesta, un <b>sistema personal de detención de caídas (PFAS)</b> lo atrapa después de que empieza una caída. Recuerde el <b>ABCD</b>:</p>"+
+      "<ul><li><b>A — Anclaje:</b> el punto de sujeción seguro. Debe soportar las cargas de una caída. Solo una <b>Persona Calificada</b> aprueba los anclajes.</li>"+
+      "<li><b>B — Soporte del cuerpo:</b> un <b>arnés de cuerpo completo</b> (nunca un cinturón para detención de caídas), ajustado, con el anillo D centrado entre los omóplatos.</li>"+
+      "<li><b>C — Conectores:</b> el cordón, el amortiguador, o el dispositivo autorretráctil (SRD) que lo conecta al anclaje.</li>"+
+      "<li><b>D — Desaceleración / Descenso:</b> el amortiguador que limita las fuerzas de detención sobre su cuerpo, y el plan de rescate para bajarlo.</li></ul>"+
+      "<p>La <b>restricción de caídas</b> es diferente y preferible: se arma para que usted <b>no pueda llegar al borde de la caída</b> — lo detiene antes de que pueda caer, no lo atrapa después.</p>"+
+      "<div class='notice'><b>La distancia total de caída importa.</b> Antes de engancharse, sepa cuánto caería — caída libre más desaceleración más estiramiento del arnés más su estatura — y confirme que no golpeará un nivel inferior o equipo antes de que el sistema lo detenga.</div>",
+      kc:{ q:"Para la detención de caídas, ¿qué soporte del cuerpo se requiere?", opts:["Un cinturón","Un arnés de cuerpo completo","Un chaleco de seguridad","Un cinturón de herramientas"], a:1 } },
+    { h:"6. Inspeccione Antes de Cada Uso", body:
+      "<p>El equipo de protección contra caídas solo funciona si está en buen estado. <b>Inspecciónelo antes de cada uso</b>, y saque de servicio cualquier cosa dudosa.</p>"+
+      "<ul><li><b>Arnés:</b> revise la cinta por cortes, deshilachados, quemaduras, daño químico; revise los anillos D y hebillas por grietas, deformación, corrosión</li>"+
+      "<li><b>Cordones / amortiguadores:</b> revise por cortes, deshilachado, y un <b>amortiguador desplegado</b> — un amortiguador desplegado significa que ya detuvo una caída y está terminado</li>"+
+      "<li><b>Dispositivos autorretráctiles (SRD):</b> confirme que la línea sale y se retrae libremente y que el freno se traba al jalar bruscamente</li></ul>"+
+      "<div class='danger'><b>Cualquier equipo que haya detenido una caída se saca de servicio permanentemente — sin excepciones.</b> Hace su trabajo una vez. Lo mismo para cualquier cosa con cortes, quemaduras, corrosión, o un amortiguador desplegado. Cuando dude, sáquelo.</div>"+
+      "<p>Guarde el equipo limpio y seco, fuera de la luz solar y lejos de químicos y calor, según las instrucciones del fabricante.</p>",
+      kc:{ q:"El amortiguador de su cordón está desplegado (ya expandido). ¿Qué hace?", opts:["Doblarlo y seguir usándolo","Sacarlo de servicio permanentemente — ya detuvo una caída","Usarlo solo para trabajo ligero","Repararlo con cinta"], a:1 } },
+    { h:"7. Trauma por Suspensión y el Plan de Rescate", body:
+      "<p>La detención de caídas le salva la vida — pero quedar colgado en un arnés después es su propia emergencia. El <b>trauma por suspensión</b> (intolerancia ortostática) puede aparecer en minutos: la sangre se acumula en las piernas, y un trabajador suspendido e inmóvil puede perder el conocimiento y morir aunque haya sobrevivido a la caída.</p>"+
+      "<p>Por eso <b>se requiere un plan de rescate antes de que empiece el trabajo</b> — nunca se arma una detención de caídas sin saber cómo un trabajador caído baja rápidamente. Mt. Hood Forest Products usa un enfoque de rescate de tres niveles:</p>"+
+      "<ul><li><b>Autorrescate</b> — el trabajador usa correas de alivio de suspensión para quitar peso de las piernas y, donde sea posible, se pone a salvo</li>"+
+      "<li><b>Rescate asistido</b> — compañeros capacitados recuperan al trabajador suspendido con equipo planeado de antemano</li>"+
+      "<li><b>Servicios médicos de emergencia</b> — 911, cuando el autorrescate y el rescate asistido no son suficientes</li></ul>"+
+      "<div class='notice'><b>La rapidez lo es todo.</b> \"Solo llamamos al 911\" no es un plan de rescate por sí solo — los servicios de emergencia pueden no llegar lo suficientemente rápido. El plan se hace, y los medios se preparan, antes de que alguien suba.</div>",
+      kc:{ q:"¿Por qué debe haber un plan de rescate ANTES de que empiece el trabajo de detención de caídas?", opts:["Es solo papeleo","Porque el trauma por suspensión puede matar a un trabajador caído en minutos si queda colgado inmóvil","Para satisfacer al asegurador","Solo para trabajo sobre 50 pies"], a:1 } },
+    { h:"8. Después de una Caída, y Cuando Hay Duda", body:
+      "<p><b>Si ocurre una caída:</b></p>"+
+      "<ul><li><b>Baje al trabajador rápido</b> usando el plan de rescate; trátelo por trauma por suspensión aunque parezca estar bien</li>"+
+      "<li><b>Llame al 911</b> por cualquier caída que haya detenido a un trabajador o causado lesión; reporte a su supervisor de inmediato</li>"+
+      "<li><b>Saque de servicio todo el equipo involucrado</b> — el arnés, cordón, SRD y herrajes de anclaje que tomaron la caída</li>"+
+      "<li>El incidente se <b>investiga</b> para que no vuelva a pasar</li></ul>"+
+      "<p><b>Cuando hay duda, no suba.</b> Si la protección contra caídas no está en su lugar, el anclaje no está aprobado, el equipo se ve mal, o no hay plan de rescate — deténgase y busque a su supervisor o a la Persona Competente. Ninguna tarea vale una caída sin protección.</p>"+
+      "<h2>Números de Emergencia</h2>"+
+      "<p>Emergencia (caída / médica): <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b></p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Cuál es la altura general de activación para la protección contra caídas en superficies de trabajo?", opts:["6 pies", "4 pies", "10 pies", "25 pies"], a:1 },
+    { q:"Se requiere protección contra caídas sin importar la altura cuando…", opts:["Trabaja sobre o cerca de equipo peligroso (una sierra, cadena de clasificación, pozo abierto)", "Está lloviendo", "Es después del mediodía", "La superficie es de concreto"], a:0 },
+    { q:"En la jerarquía de protección contra caídas, el enfoque MÁS preferido es…", opts:["Detención personal de caídas", "Eliminar el peligro", "Una línea de advertencia", "Un monitor de seguridad"], a:1 },
+    { q:"Un poste de barandilla estándar debe soportar una fuerza de al menos…", opts:["50 libras", "10 libras", "Sin requisito", "200 libras en cualquier dirección"], a:3 },
+    { q:"Para la detención de caídas, el soporte del cuerpo requerido es…", opts:["Un cinturón", "Un cinturón de posicionamiento", "Un arnés de cuerpo completo", "Un arnés de herramientas"], a:2 },
+    { q:"La 'A' en el ABCD de la detención de caídas significa…", opts:["Alarma", "Anclaje", "Alerta", "Ajuste"], a:1 },
+    { q:"El equipo que ha detenido una caída debe…", opts:["Reutilizarse tras inspección", "Usarse para capacitación", "Sacarse de servicio permanentemente", "Lavarse y devolverse"], a:2 },
+    { q:"El trauma por suspensión es peligroso porque…", opts:["Daña el arnés", "Un trabajador suspendido e inmóvil puede perder el conocimiento y morir en minutos", "Solo afecta a trabajadores altos", "Ocurre después de 8 horas"], a:1 },
+    { q:"Un plan de rescate para trabajo de detención de caídas debe estar listo…", opts:["Antes de que empiece el trabajo", "Después de la primera caída", "Solo si OSHA visita", "Dentro de 24 horas"], a:0 },
+    { q:"Le dicen que trabaje en altura pero la protección contra caídas no está en su lugar. Debe…", opts:["Hacerlo rápido y con cuidado", "Usar un cinturón en su lugar", "Detenerse y buscar a su supervisor o la Persona Competente", "Saltárselo y esperar"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Protección Contra Caídas — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Fall Protection / Protección Contra Caídas\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente las alturas de activación, la jerarquía, el arnés/ABCD, y el plan de rescate — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Fall Protection Training</div>'+'<div class="ti-es">Capacitación sobre Protección Contra Caídas</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

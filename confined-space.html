@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Confined Space Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Confined Space Training &mdash; OAR 437-002-0146 (Div 2-O)</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Confined Space Program v2.2 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "CS26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Confined Space Program v2.2 (OAR 437-002-0146, Oregon's confined space rule, Division 2-O). Questions? Contact the Environmental Compliance and Safety Lead or your Entry Supervisor.",
+  introH: "Welcome — Confined Spaces Can Kill in Seconds",
+  introP1: "A confined space is one of the most dangerous places in any workplace. The air can be deadly with no warning, and more than half of the people who die in confined spaces are would-be rescuers who rushed in to help. This training teaches you to recognize a confined space, understand why you must never enter one without a permit, and know the one rule that saves lives: if someone goes down inside, do NOT go in after them.",
+  introP2: "This training takes about 15–20 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. What Makes a Space \"Confined\"", body:
+      "<p>Oregon's confined space rule (<b>OAR 437-002-0146</b>) defines a <b>confined space</b> by three criteria — a space is confined when <b>all three</b> are true:</p>"+
+      "<table class='mini'><tr><th>#</th><th>Criterion</th></tr>"+
+      "<tr><td><b>1</b></td><td>It is <b>large enough</b> for an employee to bodily enter and perform work</td></tr>"+
+      "<tr><td><b>2</b></td><td>It has <b>limited or restricted means of entry or exit</b> (a manhole, a hatch, a narrow opening)</td></tr>"+
+      "<tr><td><b>3</b></td><td>It is <b>not designed for continuous occupancy</b> (people aren't meant to work in it all day)</td></tr></table>"+
+      "<p>At a mill, that includes tanks, silos and bins, boilers, pits, vaults, hoppers, chip bins, cyclones, ductwork, sumps, and similar enclosures.</p>"+
+      "<div class='notice'><b>All three, or it's not a confined space.</b> A room you walk into and out of freely and can work in all day is not a confined space, even if it's small. The danger comes from the combination — you can get in to work, but you can't get out fast.</div>",
+      kc:{ q:"How many criteria must be true for a space to be a \"confined space\"?", opts:["Any one of them","All three (big enough to enter, limited exit, not for continuous occupancy)","Just that it's small","Only that it has bad air"], a:1 } },
+    { h:"2. Permit-Required vs. Non-Permit", body:
+      "<p>Not every confined space is equally dangerous. A confined space becomes a <b>permit-required confined space (PRCS)</b> when it has one or more serious hazards:</p>"+
+      "<ul><li>A <b>hazardous atmosphere</b> — or the potential for one</li>"+
+      "<li>A material that could <b>engulf</b> an entrant (grain, chips, sawdust, liquid, sludge)</li>"+
+      "<li>An <b>internal configuration</b> that could trap or asphyxiate — inwardly sloping walls, a floor that tapers to a smaller cross-section</li>"+
+      "<li>Any other <b>recognized serious safety or health hazard</b> (moving parts, heat, electrical)</li></ul>"+
+      "<p>Permit-required spaces at Mt. Hood Forest Products are marked with a sign: <span class='tag'>DANGER — PERMIT-REQUIRED CONFINED SPACE — DO NOT ENTER</span>. They are listed in the mill's confined space inventory.</p>"+
+      "<div class='danger'><b>Entry means any part of your body breaking the plane of the opening.</b> Leaning in to reach something, putting your head through a hatch — that is entry. There is no \"just reaching in.\"</div>",
+      kc:{ q:"What counts as \"entry\" into a permit-required confined space?", opts:["Only walking all the way in","Any part of your body breaking the plane of the opening","Only if you stay more than a minute","Only if you touch the bottom"], a:1 } },
+    { h:"3. Why the Air Is the Killer", body:
+      "<p>The most common killer in a confined space is the <b>atmosphere</b> — and you usually cannot see, smell, or feel the danger. That's why the air is tested with a <b>calibrated gas monitor before entry and continuously during entry</b>.</p>"+
+      "<table class='mini'><tr><th>Hazard</th><th>Acceptable range</th></tr>"+
+      "<tr><td><b>Oxygen</b></td><td>19.5% to 23.5% — below 19.5% is oxygen-deficient, above 23.5% is oxygen-enriched (a fire risk)</td></tr>"+
+      "<tr><td><b>Flammable gas / vapor</b></td><td>Below 10% of the lower flammable limit (LFL)</td></tr>"+
+      "<tr><td><b>Toxic contaminants</b></td><td>Below the applicable permissible exposure limit (PEL)</td></tr>"+
+      "<tr><td><b>Combustible dust</b></td><td>Not obscuring vision at 5 feet or less (an Oregon sawmill-specific hazard)</td></tr></table>"+
+      "<div class='danger'><b>Oxygen deficiency gives no warning.</b> A single breath in an oxygen-deficient space can drop you unconscious. You do not feel yourself suffocating — you simply go down. That is why testing, ventilation, and continuous monitoring are never skipped.</div>",
+      kc:{ q:"What is the acceptable oxygen range for confined space entry?", opts:["10% to 30%","19.5% to 23.5%","Above 15%","Any level if you feel fine"], a:1 } },
+    { h:"4. The Three Roles", body:
+      "<p>A permit entry runs on three roles. Each is trained, and each has a job that protects the entrant's life.</p>"+
+      "<table class='mini'><tr><th>Role</th><th>What they do</th></tr>"+
+      "<tr><td><b>Entry Supervisor</b></td><td>Signs the permit to authorize entry, knows the hazards, verifies rescue is available, and cancels the permit when the job is done or a prohibited condition appears.</td></tr>"+
+      "<tr><td><b>Attendant</b></td><td>Stationed <b>outside</b> the space the entire time. Keeps an accurate count of who is inside, continuously monitors the atmosphere, stays in communication with entrants, orders evacuation if anything goes wrong, and summons rescue. <b>Never leaves, and never enters.</b></td></tr>"+
+      "<tr><td><b>Entrant</b></td><td>The trained employee working inside. Knows the hazards, uses the required equipment, stays in contact with the attendant, and gets out immediately when told to.</td></tr></table>"+
+      "<div class='notice'><b>The attendant's job is one job.</b> An attendant does nothing that could pull attention off the entrants — no other tasks, no wandering off. Their entire purpose is to watch, monitor, and get help.</div>",
+      kc:{ q:"Where is the Attendant stationed during a confined space entry?", opts:["Inside, next to the entrant","Outside the space, the entire time","Wherever is convenient","In the office by the phone"], a:1 } },
+    { h:"5. Before Anyone Goes In", body:
+      "<p>A permit entry is prepared, not improvised. Before the Entry Supervisor signs:</p>"+
+      "<ul><li><b>Hazardous energy is locked out / tagged out</b> — the confined space and LOTO programs work together</li>"+
+      "<li>All <b>input lines are blanked, blinded, disconnected, or capped</b> so nothing hazardous can flow in</li>"+
+      "<li>The space is <b>emptied and cleaned</b> of hazardous material</li>"+
+      "<li>The space is <b>ventilated</b> — forced clean air blown <b>in</b> (not exhausted), running continuously the whole entry</li>"+
+      "<li>The <b>atmosphere is tested</b> and confirmed within acceptable limits</li>"+
+      "<li>The <b>rescue procedure</b> specific to this space is set and listed on the permit</li>"+
+      "<li>The <b>attendant is in place</b> and verifies all conditions are acceptable</li></ul>"+
+      "<div class='notice'><b>Ventilation controls the hazard — it does not eliminate it.</b> Even with blowers running, continuous atmospheric monitoring is still required for the whole entry. The air can change in seconds.</div>",
+      kc:{ q:"When a confined space is ventilated, is continuous atmospheric monitoring still required?", opts:["No, ventilation replaces monitoring","Yes — ventilation controls the hazard but the air can still change; monitoring continues","Only for the first 10 minutes","Only if the entrant asks"], a:1 } },
+    { h:"6. Rescue — And the Rule That Saves Lives", body:
+      "<p>This is the most important section. <b>More than half the people who die in confined spaces are rescuers</b> — coworkers who saw someone collapse and rushed in. They breathe the same bad air and go down too.</p>"+
+      "<div class='danger'><b>If someone goes down inside a confined space, do NOT go in after them.</b> Call 911, alert the attendant and supervisor, and keep everyone else out. Your instinct will scream at you to help — but entering without air monitoring and rescue equipment just adds a second victim.</div>"+
+      "<p>Mt. Hood Forest Products uses <b>non-entry rescue</b> first: the entrant wears a full-body harness and retrieval line so the attendant can pull them out from outside — required for vertical spaces more than <b>5 feet</b> deep, unless the line itself would create a greater hazard. When entry rescue is genuinely required, it is performed only by <b>trained emergency responders</b> (the fire department / EMS), never by untrained employees.</p>"+
+      "<p>Rescuers train and practice a rescue at least annually, and rescue personnel hold current first aid and CPR certification.</p>",
+      kc:{ q:"A coworker collapses inside a confined space. What do you do?", opts:["Rush in and pull them out","Do NOT enter — call 911, alert the attendant/supervisor, keep others out","Hold your breath and go in fast","Wait to see if they get up"], a:1 } },
+    { h:"7. Your Part as a General Employee", body:
+      "<p>Most employees are not entrants, attendants, or supervisors — but everyone has a part in confined space safety:</p>"+
+      "<ul><li><b>Recognize</b> confined spaces and obey the DANGER signs — never enter a permit-required space without training and a signed permit</li>"+
+      "<li><b>Never attempt an unauthorized rescue</b> — call 911 and keep others out</li>"+
+      "<li><b>Report</b> unmarked spaces, damaged or missing signage, open hatches, and anyone entering a space without a permit</li>"+
+      "<li><b>Stay out</b> — an open hatch or manhole is not an invitation; it's a hazard until it's under permit and attended</li></ul>"+
+      "<div class='notice'>You will never be disciplined for refusing to enter a confined space you aren't trained and permitted for, or for calling 911 instead of entering to rescue. Those are exactly the right calls.</div>",
+      kc:{ q:"You find an open, unmarked hatch into a tank. What should you do?", opts:["Climb in to check it out","Stay out, keep others away, and report it to your supervisor","Close it and say nothing","Reach in to feel for hazards"], a:1 } },
+    { h:"8. Emergencies and When in Doubt", body:
+      "<p>If there is a confined space emergency — someone collapses, an alarm sounds, the atmosphere goes bad:</p>"+
+      "<ul><li><b>Entrants get out immediately</b> when the attendant orders evacuation</li>"+
+      "<li>The <b>attendant summons rescue</b> and performs non-entry retrieval — without entering</li>"+
+      "<li><b>Call 911</b> for any confined space emergency; report to your supervisor</li>"+
+      "<li><b>No one enters</b> to rescue except trained emergency responders with proper equipment</li></ul>"+
+      "<p><b>When in doubt, stay out and call for help.</b> No task inside a confined space is worth a life — yours or a coworker's.</p>"+
+      "<h2>Emergency Numbers</h2>"+
+      "<p>Emergency (rescue / medical): <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b> &middot; Odell Fire Dept: <b>541-354-1648</b></p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"A space is a \"confined space\" when…", opts:["It is simply small", "All three criteria are met: big enough to enter, limited exit, not for continuous occupancy", "It has a door", "It is underground"], a:1 },
+    { q:"What makes a confined space \"permit-required\"?", opts:["Its color", "It is over 6 feet deep", "It is indoors", "It has a serious hazard — hazardous atmosphere, engulfment, entrapment configuration, or other recognized hazard"], a:3 },
+    { q:"\"Entry\" into a permit-required confined space occurs when…", opts:["You climb all the way in", "Any part of your body breaks the plane of the opening", "You stay more than a minute", "You touch the far wall"], a:1 },
+    { q:"The acceptable oxygen range for confined space entry is…", opts:["19.5%–23.5%", "10%–30%", "Above 15%", "Any level"], a:0 },
+    { q:"During a confined space entry, the Attendant…", opts:["Works inside with the entrant", "Takes breaks as needed", "Stays outside the entire time, monitors the atmosphere, and never enters", "Does other jobs nearby"], a:2 },
+    { q:"When a confined space is ventilated, atmospheric monitoring…", opts:["Can stop", "Must continue — ventilation controls but doesn't eliminate the hazard", "Is only needed once", "Is optional"], a:1 },
+    { q:"A coworker collapses inside a confined space. You should…", opts:["Rush in to pull them out", "Go in holding your breath", "NOT enter — call 911, alert the attendant/supervisor, keep others out", "Wait and watch"], a:2 },
+    { q:"Most people who die in confined spaces are…", opts:["New employees", "Would-be rescuers who entered to help", "Supervisors", "Contractors"], a:1 },
+    { q:"For vertical permit spaces more than 5 feet deep, non-entry rescue requires…", opts:["A full-body harness and retrieval line so the attendant can pull the entrant out", "Nothing special", "A ladder only", "A second entrant"], a:0 },
+    { q:"You find an open, unmarked hatch into a tank. You should…", opts:["Climb in to inspect it", "Close it quietly", "Stay out, keep others away, and report it", "Reach inside to check"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Confined Space Awareness — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Confined Space / Espacio Confinado\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the three criteria, the oxygen range, the attendant's role, and the rule never to enter to rescue — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Espacios Confinados de Mt. Hood Forest Products v2.2 (OAR 437-002-0146, la regla de espacios confinados de Oregon, División 2-O). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad o su Supervisor de Entrada.",
+  introH: "Bienvenido — Los Espacios Confinados Pueden Matar en Segundos",
+  introP1: "Un espacio confinado es uno de los lugares más peligrosos en cualquier lugar de trabajo. El aire puede ser mortal sin aviso, y más de la mitad de las personas que mueren en espacios confinados son rescatistas que entraron corriendo a ayudar. Esta capacitación le enseña a reconocer un espacio confinado, entender por qué nunca debe entrar sin un permiso, y saber la regla que salva vidas: si alguien cae adentro, NO entre tras él.",
+  introP2: "Esta capacitación toma de 15 a 20 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Qué Hace que un Espacio Sea \"Confinado\"", body:
+      "<p>La regla de espacios confinados de Oregon (<b>OAR 437-002-0146</b>) define un <b>espacio confinado</b> por tres criterios — un espacio es confinado cuando <b>los tres</b> son ciertos:</p>"+
+      "<table class='mini'><tr><th>#</th><th>Criterio</th></tr>"+
+      "<tr><td><b>1</b></td><td>Es <b>suficientemente grande</b> para que un empleado entre con el cuerpo y haga trabajo</td></tr>"+
+      "<tr><td><b>2</b></td><td>Tiene <b>medios de entrada o salida limitados o restringidos</b> (un registro, una escotilla, una abertura estrecha)</td></tr>"+
+      "<tr><td><b>3</b></td><td><b>No está diseñado para ocupación continua</b> (no es un lugar donde se deba trabajar todo el día)</td></tr></table>"+
+      "<p>En un aserradero, eso incluye tanques, silos y tolvas, calderas, pozos, bóvedas, tolvas de astillas, ciclones, ductos, sumideros y recintos similares.</p>"+
+      "<div class='notice'><b>Los tres, o no es un espacio confinado.</b> Un cuarto al que entra y sale libremente y donde puede trabajar todo el día no es un espacio confinado, aunque sea pequeño. El peligro viene de la combinación — puede entrar a trabajar, pero no puede salir rápido.</div>",
+      kc:{ q:"¿Cuántos criterios deben ser ciertos para que un espacio sea un \"espacio confinado\"?", opts:["Cualquiera de ellos","Los tres (suficientemente grande para entrar, salida limitada, no para ocupación continua)","Solo que sea pequeño","Solo que tenga mal aire"], a:1 } },
+    { h:"2. Requiere Permiso vs. No Requiere Permiso", body:
+      "<p>No todos los espacios confinados son igual de peligrosos. Un espacio confinado se convierte en un <b>espacio confinado que requiere permiso (PRCS)</b> cuando tiene uno o más peligros serios:</p>"+
+      "<ul><li>Una <b>atmósfera peligrosa</b> — o el potencial de una</li>"+
+      "<li>Un material que podría <b>sepultar</b> a un entrante (grano, astillas, aserrín, líquido, lodo)</li>"+
+      "<li>Una <b>configuración interna</b> que podría atrapar o asfixiar — paredes que se inclinan hacia adentro, un piso que se estrecha</li>"+
+      "<li>Cualquier otro <b>peligro serio reconocido de seguridad o salud</b> (partes móviles, calor, electricidad)</li></ul>"+
+      "<p>Los espacios que requieren permiso en Mt. Hood Forest Products están marcados con un letrero: <span class='tag'>PELIGRO — ESPACIO CONFINADO QUE REQUIERE PERMISO — NO ENTRE</span>. Están en el inventario de espacios confinados del aserradero.</p>"+
+      "<div class='danger'><b>Entrada significa cualquier parte de su cuerpo cruzando el plano de la abertura.</b> Inclinarse para alcanzar algo, meter la cabeza por una escotilla — eso es entrada. No existe \"solo meter la mano\".</div>",
+      kc:{ q:"¿Qué cuenta como \"entrada\" a un espacio confinado que requiere permiso?", opts:["Solo entrar por completo","Cualquier parte de su cuerpo cruzando el plano de la abertura","Solo si se queda más de un minuto","Solo si toca el fondo"], a:1 } },
+    { h:"3. Por Qué el Aire Es el Asesino", body:
+      "<p>El asesino más común en un espacio confinado es la <b>atmósfera</b> — y normalmente no se puede ver, oler ni sentir el peligro. Por eso el aire se prueba con un <b>monitor de gas calibrado antes de entrar y continuamente durante la entrada</b>.</p>"+
+      "<table class='mini'><tr><th>Peligro</th><th>Rango aceptable</th></tr>"+
+      "<tr><td><b>Oxígeno</b></td><td>19.5% a 23.5% — menos de 19.5% es deficiente de oxígeno, más de 23.5% es enriquecido de oxígeno (riesgo de incendio)</td></tr>"+
+      "<tr><td><b>Gas / vapor inflamable</b></td><td>Menos del 10% del límite inflamable inferior (LFL)</td></tr>"+
+      "<tr><td><b>Contaminantes tóxicos</b></td><td>Menos del límite de exposición permisible aplicable (PEL)</td></tr>"+
+      "<tr><td><b>Polvo combustible</b></td><td>Que no obstruya la visión a 5 pies o menos (un peligro específico del aserradero en Oregon)</td></tr></table>"+
+      "<div class='danger'><b>La deficiencia de oxígeno no da aviso.</b> Una sola respiración en un espacio deficiente de oxígeno puede dejarlo inconsciente. Usted no siente que se está asfixiando — simplemente cae. Por eso las pruebas, la ventilación y el monitoreo continuo nunca se omiten.</div>",
+      kc:{ q:"¿Cuál es el rango aceptable de oxígeno para entrar a un espacio confinado?", opts:["10% a 30%","19.5% a 23.5%","Más de 15%","Cualquier nivel si se siente bien"], a:1 } },
+    { h:"4. Los Tres Roles", body:
+      "<p>Una entrada con permiso funciona con tres roles. Cada uno está capacitado, y cada uno tiene un trabajo que protege la vida del entrante.</p>"+
+      "<table class='mini'><tr><th>Rol</th><th>Qué hacen</th></tr>"+
+      "<tr><td><b>Supervisor de Entrada</b></td><td>Firma el permiso para autorizar la entrada, conoce los peligros, verifica que haya rescate disponible, y cancela el permiso cuando el trabajo termina o aparece una condición prohibida.</td></tr>"+
+      "<tr><td><b>Vigilante (Attendant)</b></td><td>Estacionado <b>afuera</b> del espacio todo el tiempo. Mantiene un conteo exacto de quién está adentro, monitorea continuamente la atmósfera, se comunica con los entrantes, ordena la evacuación si algo sale mal, y llama al rescate. <b>Nunca se va, y nunca entra.</b></td></tr>"+
+      "<tr><td><b>Entrante</b></td><td>El empleado capacitado que trabaja adentro. Conoce los peligros, usa el equipo requerido, se mantiene en contacto con el vigilante, y sale de inmediato cuando se le ordena.</td></tr></table>"+
+      "<div class='notice'><b>El trabajo del vigilante es un solo trabajo.</b> Un vigilante no hace nada que pueda desviar su atención de los entrantes — ninguna otra tarea, no se aleja. Todo su propósito es vigilar, monitorear y pedir ayuda.</div>",
+      kc:{ q:"¿Dónde está estacionado el Vigilante durante una entrada a un espacio confinado?", opts:["Adentro, junto al entrante","Afuera del espacio, todo el tiempo","Donde sea conveniente","En la oficina junto al teléfono"], a:1 } },
+    { h:"5. Antes de que Alguien Entre", body:
+      "<p>Una entrada con permiso se prepara, no se improvisa. Antes de que el Supervisor de Entrada firme:</p>"+
+      "<ul><li>La <b>energía peligrosa se bloquea / etiqueta</b> — los programas de espacios confinados y de bloqueo trabajan juntos</li>"+
+      "<li>Todas las <b>líneas de entrada se tapan, ciegan, desconectan o sellan</b> para que no pueda entrar nada peligroso</li>"+
+      "<li>El espacio se <b>vacía y limpia</b> de material peligroso</li>"+
+      "<li>El espacio se <b>ventila</b> — aire limpio forzado soplado hacia <b>adentro</b> (no extraído), funcionando continuamente toda la entrada</li>"+
+      "<li>La <b>atmósfera se prueba</b> y se confirma dentro de los límites aceptables</li>"+
+      "<li>El <b>procedimiento de rescate</b> específico para este espacio se establece y se anota en el permiso</li>"+
+      "<li>El <b>vigilante está en su lugar</b> y verifica que todas las condiciones sean aceptables</li></ul>"+
+      "<div class='notice'><b>La ventilación controla el peligro — no lo elimina.</b> Aun con los sopladores funcionando, se requiere monitoreo atmosférico continuo durante toda la entrada. El aire puede cambiar en segundos.</div>",
+      kc:{ q:"Cuando un espacio confinado se ventila, ¿sigue siendo necesario el monitoreo atmosférico continuo?", opts:["No, la ventilación reemplaza el monitoreo","Sí — la ventilación controla el peligro pero el aire aún puede cambiar; el monitoreo continúa","Solo los primeros 10 minutos","Solo si el entrante lo pide"], a:1 } },
+    { h:"6. Rescate — Y la Regla que Salva Vidas", body:
+      "<p>Esta es la sección más importante. <b>Más de la mitad de las personas que mueren en espacios confinados son rescatistas</b> — compañeros que vieron a alguien colapsar y entraron corriendo. Respiran el mismo aire malo y también caen.</p>"+
+      "<div class='danger'><b>Si alguien cae adentro de un espacio confinado, NO entre tras él.</b> Llame al 911, alerte al vigilante y al supervisor, y mantenga a todos los demás afuera. Su instinto le gritará que ayude — pero entrar sin monitoreo de aire y equipo de rescate solo agrega una segunda víctima.</div>"+
+      "<p>Mt. Hood Forest Products usa <b>rescate sin entrada</b> primero: el entrante usa un arnés de cuerpo completo y una línea de recuperación para que el vigilante pueda sacarlo desde afuera — requerido para espacios verticales de más de <b>5 pies</b> de profundidad, a menos que la línea misma cree un peligro mayor. Cuando el rescate con entrada es genuinamente necesario, lo realizan solo <b>rescatistas de emergencia capacitados</b> (el departamento de bomberos / SMU), nunca empleados sin capacitación.</p>"+
+      "<p>Los rescatistas entrenan y practican un rescate al menos anualmente, y el personal de rescate tiene certificación vigente en primeros auxilios y RCP.</p>",
+      kc:{ q:"Un compañero colapsa adentro de un espacio confinado. ¿Qué hace?", opts:["Entrar corriendo y sacarlo","NO entrar — llamar al 911, alertar al vigilante/supervisor, mantener a otros afuera","Aguantar la respiración y entrar rápido","Esperar a ver si se levanta"], a:1 } },
+    { h:"7. Su Parte como Empleado General", body:
+      "<p>La mayoría de los empleados no son entrantes, vigilantes ni supervisores — pero todos tienen una parte en la seguridad de los espacios confinados:</p>"+
+      "<ul><li><b>Reconozca</b> los espacios confinados y obedezca los letreros de PELIGRO — nunca entre a un espacio que requiere permiso sin capacitación y un permiso firmado</li>"+
+      "<li><b>Nunca intente un rescate no autorizado</b> — llame al 911 y mantenga a otros afuera</li>"+
+      "<li><b>Reporte</b> espacios sin marcar, letreros dañados o faltantes, escotillas abiertas, y a cualquiera que entre a un espacio sin permiso</li>"+
+      "<li><b>Manténgase afuera</b> — una escotilla o registro abierto no es una invitación; es un peligro hasta que esté bajo permiso y con vigilante</li></ul>"+
+      "<div class='notice'>Nunca será disciplinado por negarse a entrar a un espacio confinado para el que no está capacitado ni tiene permiso, o por llamar al 911 en lugar de entrar a rescatar. Esas son exactamente las decisiones correctas.</div>",
+      kc:{ q:"Encuentra una escotilla abierta y sin marcar hacia un tanque. ¿Qué debe hacer?", opts:["Meterse a revisarla","Mantenerse afuera, mantener a otros lejos, y reportarlo a su supervisor","Cerrarla y no decir nada","Meter la mano para sentir peligros"], a:1 } },
+    { h:"8. Emergencias y Cuando Hay Duda", body:
+      "<p>Si hay una emergencia en un espacio confinado — alguien colapsa, suena una alarma, la atmósfera se pone mala:</p>"+
+      "<ul><li>Los <b>entrantes salen de inmediato</b> cuando el vigilante ordena la evacuación</li>"+
+      "<li>El <b>vigilante llama al rescate</b> y realiza la recuperación sin entrada — sin entrar</li>"+
+      "<li><b>Llame al 911</b> por cualquier emergencia en un espacio confinado; reporte a su supervisor</li>"+
+      "<li><b>Nadie entra</b> a rescatar excepto rescatistas de emergencia capacitados con el equipo adecuado</li></ul>"+
+      "<p><b>Cuando hay duda, quédese afuera y pida ayuda.</b> Ninguna tarea dentro de un espacio confinado vale una vida — la suya o la de un compañero.</p>"+
+      "<h2>Números de Emergencia</h2>"+
+      "<p>Emergencia (rescate / médica): <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b> &middot; Departamento de Bomberos de Odell: <b>541-354-1648</b></p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"Un espacio es un \"espacio confinado\" cuando…", opts:["Simplemente es pequeño", "Se cumplen los tres criterios: suficientemente grande para entrar, salida limitada, no para ocupación continua", "Tiene una puerta", "Está bajo tierra"], a:1 },
+    { q:"¿Qué hace que un espacio confinado \"requiera permiso\"?", opts:["Su color", "Tiene más de 6 pies de profundidad", "Está adentro", "Tiene un peligro serio — atmósfera peligrosa, sepultamiento, configuración de atrapamiento, u otro peligro reconocido"], a:3 },
+    { q:"La \"entrada\" a un espacio confinado que requiere permiso ocurre cuando…", opts:["Entra por completo", "Cualquier parte de su cuerpo cruza el plano de la abertura", "Se queda más de un minuto", "Toca la pared del fondo"], a:1 },
+    { q:"El rango aceptable de oxígeno para entrar a un espacio confinado es…", opts:["19.5%–23.5%", "10%–30%", "Más de 15%", "Cualquier nivel"], a:0 },
+    { q:"Durante una entrada a un espacio confinado, el Vigilante…", opts:["Trabaja adentro con el entrante", "Toma descansos según necesite", "Se queda afuera todo el tiempo, monitorea la atmósfera, y nunca entra", "Hace otros trabajos cerca"], a:2 },
+    { q:"Cuando un espacio confinado se ventila, el monitoreo atmosférico…", opts:["Puede parar", "Debe continuar — la ventilación controla pero no elimina el peligro", "Solo se necesita una vez", "Es opcional"], a:1 },
+    { q:"Un compañero colapsa adentro de un espacio confinado. Debe…", opts:["Entrar corriendo a sacarlo", "Entrar aguantando la respiración", "NO entrar — llamar al 911, alertar al vigilante/supervisor, mantener a otros afuera", "Esperar y observar"], a:2 },
+    { q:"La mayoría de las personas que mueren en espacios confinados son…", opts:["Empleados nuevos", "Rescatistas que entraron a ayudar", "Supervisores", "Contratistas"], a:1 },
+    { q:"Para espacios verticales que requieren permiso de más de 5 pies de profundidad, el rescate sin entrada requiere…", opts:["Un arnés de cuerpo completo y una línea de recuperación para que el vigilante saque al entrante", "Nada especial", "Solo una escalera", "Un segundo entrante"], a:0 },
+    { q:"Encuentra una escotilla abierta y sin marcar hacia un tanque. Debe…", opts:["Meterse a inspeccionarla", "Cerrarla en silencio", "Mantenerse afuera, mantener a otros lejos, y reportarlo", "Meter la mano para revisar"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Concientización sobre Espacios Confinados — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Confined Space / Espacio Confinado\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente los tres criterios, el rango de oxígeno, el rol del vigilante, y la regla de nunca entrar a rescatar — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Confined Space Training</div>'+'<div class="ti-es">Capacitación sobre Espacios Confinados</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

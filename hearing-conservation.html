@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Hearing Conservation Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Hearing Conservation Training &mdash; 29 CFR 1910.95 / OAR 437-002-0080</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Hearing Conservation Program v2.1 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "HR26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Hearing Conservation Program v2.1 (29 CFR 1910.95, adopted by Oregon OSHA under OAR 437-002-0080, Division 2-G; Oregon audiometric testing OAR 437-002-0095). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — Protecting Your Hearing for Life",
+  introP1: "Noise-induced hearing loss is permanent, painless, and gradual — you don't feel it happening, and by the time you notice, it's already done. A sawmill is a loud place: saws, planers, chippers, blowers, and mobile equipment can all push noise past the level where it damages hearing. This training explains how loud is too loud, when hearing protection is required, and how the hearing conservation program protects you.",
+  introP2: "This training takes about 15 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. How Noise Damages Hearing", body:
+      "<p>Inside your ear are thousands of tiny hair cells that turn sound into the signals your brain hears. Loud noise <b>kills those hair cells</b> — and they do not grow back. That's what makes noise-induced hearing loss <b>permanent</b>.</p>"+
+      "<p>It's also <b>painless and gradual</b>. You won't feel your hearing being damaged. The warning signs come later: ringing in the ears (tinnitus), trouble following conversation in a crowd, needing the TV louder than everyone else. By then the loss is already permanent.</p>"+
+      "<div class='notice'><b>The good news:</b> noise-induced hearing loss is <b>100% preventable</b>. Every bit of it comes from exposure you can control with the right protection, worn correctly, every time.</div>"+
+      "<p>Oregon applies the federal noise standard <b>29 CFR 1910.95</b> (adopted under <b>OAR 437-002-0080</b>), with Oregon's own audiometric-testing rule (<b>OAR 437-002-0095</b>).</p>",
+      kc:{ q:"Why is noise-induced hearing loss permanent?", opts:["It heals slowly over years","The ear's hair cells are killed and do not grow back","It only affects one ear","It comes back after rest"], a:1 } },
+    { h:"2. How Loud Is Too Loud — The Numbers", body:
+      "<p>Noise is measured in <b>decibels, A-weighted (dBA)</b>, averaged over an 8-hour work day (a \"time-weighted average,\" or <b>TWA8</b>). Two numbers drive the program:</p>"+
+      "<table class='mini'><tr><th>Level</th><th>What it means</th></tr>"+
+      "<tr><td><b>85 dBA TWA8 — the \"action level\"</b></td><td>The trigger for the hearing conservation program: hearing protection made available, training, and audiometric (hearing) testing.</td></tr>"+
+      "<tr><td><b>90 dBA TWA8 — the PEL</b></td><td>The permissible exposure limit. At or above this, the employer must use feasible <b>engineering and administrative controls</b> to reduce noise, and hearing protection is required.</td></tr></table>"+
+      "<p>Two extreme limits also apply: <b>115 dBA</b> for continuous noise and <b>140 dBC</b> for impulse/impact noise — hearing protection is required and warning signs posted.</p>"+
+      "<p>A rough field rule: if you have to <b>raise your voice to be understood by someone an arm's length away</b>, the noise is likely at or above the action level and you should have hearing protection on.</p>",
+      kc:{ q:"What is the noise \"action level\" that triggers the hearing conservation program?", opts:["70 dBA TWA8","85 dBA TWA8","100 dBA TWA8","120 dBA TWA8"], a:1 } },
+    { h:"3. The Shorter the Louder — Exposure Limits", body:
+      "<p>Louder noise is safe for less time. The permissible exposure <b>halves for about every 5 dBA increase</b>. That's why a few minutes near a very loud machine can matter as much as hours of moderate noise.</p>"+
+      "<table class='mini'><tr><th>Sound level (dBA)</th><th>Permissible time per day</th></tr>"+
+      "<tr><td>90</td><td>8 hours (the PEL)</td></tr>"+
+      "<tr><td>95</td><td>4 hours</td></tr>"+
+      "<tr><td>100</td><td>2 hours</td></tr>"+
+      "<tr><td>105</td><td>1 hour</td></tr>"+
+      "<tr><td>110</td><td>30 minutes</td></tr>"+
+      "<tr><td>115</td><td>15 minutes (maximum for continuous noise)</td></tr></table>"+
+      "<div class='notice'>You don't have to memorize the table. The point is simple: <b>the louder it is, the less time you can safely be in it</b> — and hearing protection is what buys back that time.</div>",
+      kc:{ q:"As noise gets louder, the amount of time you can be exposed…", opts:["Stays the same","Gets shorter","Gets longer","Doesn't matter"], a:1 } },
+    { h:"4. Noise Monitoring", body:
+      "<p>Mt. Hood Forest Products measures workplace noise so it knows where the action level and PEL are reached. Monitoring is done:</p>"+
+      "<ul><li>When observation or employee complaints suggest exposures may reach the criteria</li>"+
+      "<li>When a change in production, process, equipment, or controls could increase noise</li>"+
+      "<li>To establish baseline levels for work areas and job classifications</li></ul>"+
+      "<p>Two tools are used: <b>noise dosimeters</b> (personal monitors worn through the shift to get your 8-hour TWA) and <b>sound level meters</b> (to map noise levels across areas). If you are exposed at or above the action level, <b>you are told your monitoring results</b>, and you may observe the measurements being taken.</p>",
+      kc:{ q:"If your noise exposure is at or above the action level, what are you entitled to?", opts:["Nothing","To be notified of your monitoring results","A pay raise","A quieter job automatically"], a:1 } },
+    { h:"5. Hearing Protection — Available, and When Required", body:
+      "<p><b>At the 85 dBA action level</b>, Mt. Hood Forest Products provides hearing protectors <b>at no cost</b>, and you choose from a variety (foam plugs, pre-molded plugs, earmuffs).</p>"+
+      "<p><b>Hearing protection is required</b> (not just available) when you are exposed at or above the <b>90 dBA PEL</b>, and for <b>anyone who has had a Standard Threshold Shift</b> — a measured loss of hearing — regardless of their current exposure level.</p>"+
+      "<p>Protection only works if it <b>fits and is worn correctly, the whole time</b>. A foam plug that isn't rolled down and inserted deep enough, or a muff worn over a ball cap strap, protects far less than the label says. OSHA suggests <b>derating a protector's rated NRR by about half</b> to estimate real-world protection.</p>"+
+      "<div class='danger'><b>Hearing protection worn wrong is hearing protection that isn't working.</b> If yours is uncomfortable, doesn't seal, or you're unsure how to fit it — ask to be refitted. A plug that whistles or falls loose is doing almost nothing.</div>",
+      kc:{ q:"Hearing protection is REQUIRED (not just available) when…", opts:["Only if you ask for it","At or above the 90 dBA PEL, or for anyone who has had a Standard Threshold Shift","Only on Mondays","Only above 115 dBA"], a:1 } },
+    { h:"6. Audiometric (Hearing) Testing", body:
+      "<p>You can't feel hearing loss starting — but a hearing test can catch it early. If you're exposed at or above the action level, Mt. Hood Forest Products provides <b>free audiometric testing</b> under Oregon's audiometric rule (OAR 437-002-0095):</p>"+
+      "<ul><li><b>Baseline audiogram</b> — your reference hearing test, within <b>6 months</b> of your first exposure at or above the action level. Avoid workplace noise for <b>14 hours</b> before it (or wear hearing protection to substitute for the quiet period)</li>"+
+      "<li><b>Annual audiogram</b> — every year after, compared to your baseline to catch any change early</li></ul>"+
+      "<p>If the test shows a <b>Standard Threshold Shift (STS)</b> — a defined average loss compared to your baseline — a qualified reviewer confirms it, you're <b>notified in writing within 21 days</b>, refitted and retrained on hearing protection, given more protective devices if needed, and required to wear protection.</p>"+
+      "<div class='notice'>An STS is an early warning, not a verdict. Catching it early and tightening your protection is exactly how you keep the rest of your hearing.</div>",
+      kc:{ q:"How soon after first exposure at or above the action level must your baseline audiogram be done?", opts:["Within 6 months","Within 5 years","Only after you notice hearing loss","Never"], a:0 } },
+    { h:"7. Ototoxic Chemicals — Noise Isn't the Only Threat", body:
+      "<p>Some chemicals can damage hearing on their own, and make noise <b>more</b> damaging when you're exposed to both. These are called <b>ototoxic</b> chemicals. At a mill they can include:</p>"+
+      "<ul><li><b>Organic solvents</b> — toluene, xylene, styrene, ethylbenzene (in some paints, coatings, degreasers)</li>"+
+      "<li><b>Carbon monoxide</b> — from combustion engines, boilers, kilns</li>"+
+      "<li><b>Certain metals</b> — lead, mercury, manganese</li></ul>"+
+      "<p>If you work around both loud noise and these chemicals, the combined effect on your hearing can be greater than either alone. The program accounts for this when evaluating your protection, and the ototoxic chemicals in your area are covered under the Hazard Communication program too.</p>",
+      kc:{ q:"What are \"ototoxic\" chemicals?", opts:["Chemicals that clean your ears","Chemicals (like some solvents and carbon monoxide) that can damage hearing, especially combined with noise","Chemicals that are only a fire risk","A type of hearing protector"], a:1 } },
+    { h:"8. Your Part and Your Rights", body:
+      "<p>Protecting your hearing is a partnership. Your part:</p>"+
+      "<ul><li><b>Wear your hearing protection</b> in posted areas and whenever you're at or above the levels that require it — correctly, and the whole time</li>"+
+      "<li><b>Get your annual hearing test</b> — it's free and it's how loss is caught early</li>"+
+      "<li><b>Ask to be refitted</b> if your protection doesn't seal or is uncomfortable</li>"+
+      "<li><b>Report</b> new loud equipment or areas, and any ringing or muffled hearing you notice</li></ul>"+
+      "<p><b>Your rights:</b> hearing protectors and audiometric testing at no cost, notification of your monitoring results and any STS, and access to the written program, your noise-monitoring records, and your audiometric records.</p>"+
+      "<h2>Questions or Concerns</h2>"+
+      "<p>Contact the Environmental Compliance and Safety Lead about your exposure, your protection, or your test results. For a medical hearing concern, the company can refer you for an otological exam.</p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"Why is noise-induced hearing loss permanent?", opts:["It heals over time", "The ear's hair cells are killed and don't grow back", "It only affects older workers", "It reverses with rest"], a:1 },
+    { q:"What is the noise action level that triggers the hearing conservation program?", opts:["75 dBA TWA8", "95 dBA TWA8", "110 dBA TWA8", "85 dBA TWA8"], a:3 },
+    { q:"What is the permissible exposure limit (PEL) for an 8-hour day?", opts:["80 dBA", "90 dBA", "100 dBA", "115 dBA"], a:1 },
+    { q:"As noise gets louder, the time you can safely be exposed…", opts:["Gets shorter", "Increases", "Stays the same", "Doesn't matter with earplugs"], a:0 },
+    { q:"Hearing protection is REQUIRED (not just available) when…", opts:["Only if you request it", "Only during audiometric testing", "At or above the 90 dBA PEL, or after a Standard Threshold Shift", "Only above 140 dBC"], a:2 },
+    { q:"A rough sign that noise is at or above the action level is…", opts:["You can whisper and be heard", "You must raise your voice to be understood an arm's length away", "The room feels warm", "Lights flicker"], a:1 },
+    { q:"Your baseline audiogram must be completed…", opts:["Only after 10 years", "Only if you complain", "Within 6 months of first exposure at or above the action level", "Never"], a:2 },
+    { q:"A Standard Threshold Shift (STS) means…", opts:["You changed jobs", "A measured loss of hearing compared to your baseline", "Your earplugs expired", "A change in your work shift"], a:1 },
+    { q:"Ototoxic chemicals are dangerous because they…", opts:["Can damage hearing, especially combined with noise", "Only cause fires", "Clean the ear canal", "Improve hearing"], a:0 },
+    { q:"Hearing protection only works if…", opts:["It is expensive", "It is bright colored", "It fits and is worn correctly the whole time", "It is worn only near the loudest machine"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Hearing Conservation — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Hearing Conservation / Conservación de la Audición\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the action level and PEL, when protection is required, and audiometric testing — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Conservación de la Audición de Mt. Hood Forest Products v2.1 (29 CFR 1910.95, adoptado por Oregon OSHA bajo OAR 437-002-0080, División 2-G; prueba audiométrica de Oregon OAR 437-002-0095). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — Proteja Su Audición de por Vida",
+  introP1: "La pérdida auditiva por ruido es permanente, sin dolor y gradual — no la siente ocurrir, y para cuando la nota, ya está hecha. Un aserradero es un lugar ruidoso: sierras, cepillos, astilladoras, sopladores y equipo móvil pueden empujar el ruido más allá del nivel que daña la audición. Esta capacitación explica qué tan fuerte es demasiado, cuándo se requiere protección auditiva, y cómo el programa de conservación de la audición lo protege.",
+  introP2: "Esta capacitación toma unos 15 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Cómo el Ruido Daña la Audición", body:
+      "<p>Dentro de su oído hay miles de diminutas células ciliadas que convierten el sonido en las señales que su cerebro oye. El ruido fuerte <b>mata esas células ciliadas</b> — y no vuelven a crecer. Eso es lo que hace que la pérdida auditiva por ruido sea <b>permanente</b>.</p>"+
+      "<p>También es <b>sin dolor y gradual</b>. No sentirá que su audición se está dañando. Las señales de advertencia llegan después: zumbido en los oídos (tinnitus), dificultad para seguir una conversación entre mucha gente, necesitar la tele más fuerte que los demás. Para entonces la pérdida ya es permanente.</p>"+
+      "<div class='notice'><b>La buena noticia:</b> la pérdida auditiva por ruido es <b>100% prevenible</b>. Toda ella viene de una exposición que usted puede controlar con la protección adecuada, usada correctamente, cada vez.</div>"+
+      "<p>Oregon aplica la norma federal de ruido <b>29 CFR 1910.95</b> (adoptada bajo <b>OAR 437-002-0080</b>), con la regla de prueba audiométrica propia de Oregon (<b>OAR 437-002-0095</b>).</p>",
+      kc:{ q:"¿Por qué la pérdida auditiva por ruido es permanente?", opts:["Sana lentamente en años","Las células ciliadas del oído mueren y no vuelven a crecer","Solo afecta un oído","Regresa después de descansar"], a:1 } },
+    { h:"2. Qué Tan Fuerte Es Demasiado — Los Números", body:
+      "<p>El ruido se mide en <b>decibeles, ponderados A (dBA)</b>, promediados sobre un día de 8 horas (un \"promedio ponderado en el tiempo\", o <b>TWA8</b>). Dos números guían el programa:</p>"+
+      "<table class='mini'><tr><th>Nivel</th><th>Qué significa</th></tr>"+
+      "<tr><td><b>85 dBA TWA8 — el \"nivel de acción\"</b></td><td>El disparador del programa de conservación de la audición: protección auditiva disponible, capacitación, y prueba audiométrica (de audición).</td></tr>"+
+      "<tr><td><b>90 dBA TWA8 — el PEL</b></td><td>El límite de exposición permisible. En o por encima de esto, el empleador debe usar <b>controles de ingeniería y administrativos</b> factibles para reducir el ruido, y se requiere protección auditiva.</td></tr></table>"+
+      "<p>También aplican dos límites extremos: <b>115 dBA</b> para ruido continuo y <b>140 dBC</b> para ruido de impulso/impacto — se requiere protección auditiva y letreros de advertencia.</p>"+
+      "<p>Una regla práctica: si tiene que <b>alzar la voz para que lo entienda alguien a un brazo de distancia</b>, el ruido probablemente está en o por encima del nivel de acción y debería tener protección auditiva puesta.</p>",
+      kc:{ q:"¿Cuál es el \"nivel de acción\" del ruido que activa el programa de conservación de la audición?", opts:["70 dBA TWA8","85 dBA TWA8","100 dBA TWA8","120 dBA TWA8"], a:1 } },
+    { h:"3. Mientras Más Fuerte, Menos Tiempo — Límites de Exposición", body:
+      "<p>El ruido más fuerte es seguro por menos tiempo. La exposición permisible se <b>reduce a la mitad por cada 5 dBA de aumento aproximadamente</b>. Por eso unos minutos cerca de una máquina muy ruidosa pueden importar tanto como horas de ruido moderado.</p>"+
+      "<table class='mini'><tr><th>Nivel de sonido (dBA)</th><th>Tiempo permisible por día</th></tr>"+
+      "<tr><td>90</td><td>8 horas (el PEL)</td></tr>"+
+      "<tr><td>95</td><td>4 horas</td></tr>"+
+      "<tr><td>100</td><td>2 horas</td></tr>"+
+      "<tr><td>105</td><td>1 hora</td></tr>"+
+      "<tr><td>110</td><td>30 minutos</td></tr>"+
+      "<tr><td>115</td><td>15 minutos (máximo para ruido continuo)</td></tr></table>"+
+      "<div class='notice'>No tiene que memorizar la tabla. El punto es simple: <b>mientras más fuerte, menos tiempo puede estar en él con seguridad</b> — y la protección auditiva es lo que le devuelve ese tiempo.</div>",
+      kc:{ q:"A medida que el ruido se hace más fuerte, la cantidad de tiempo que puede estar expuesto…", opts:["Se queda igual","Se hace más corta","Se hace más larga","No importa"], a:1 } },
+    { h:"4. Monitoreo de Ruido", body:
+      "<p>Mt. Hood Forest Products mide el ruido del lugar de trabajo para saber dónde se alcanzan el nivel de acción y el PEL. El monitoreo se hace:</p>"+
+      "<ul><li>Cuando la observación o las quejas de empleados sugieren que las exposiciones pueden alcanzar los criterios</li>"+
+      "<li>Cuando un cambio en la producción, proceso, equipo o controles podría aumentar el ruido</li>"+
+      "<li>Para establecer niveles de referencia para áreas de trabajo y clasificaciones de puesto</li></ul>"+
+      "<p>Se usan dos herramientas: <b>dosímetros de ruido</b> (monitores personales usados durante el turno para obtener su TWA de 8 horas) y <b>medidores de nivel de sonido</b> (para mapear los niveles de ruido en las áreas). Si está expuesto en o por encima del nivel de acción, <b>se le informan sus resultados de monitoreo</b>, y puede observar cómo se toman las mediciones.</p>",
+      kc:{ q:"Si su exposición al ruido está en o por encima del nivel de acción, ¿a qué tiene derecho?", opts:["A nada","A que le informen sus resultados de monitoreo","A un aumento de sueldo","A un trabajo más silencioso automáticamente"], a:1 } },
+    { h:"5. Protección Auditiva — Disponible, y Cuándo Se Requiere", body:
+      "<p><b>En el nivel de acción de 85 dBA</b>, Mt. Hood Forest Products proporciona protectores auditivos <b>sin costo</b>, y usted elige entre una variedad (tapones de espuma, tapones premoldeados, orejeras).</p>"+
+      "<p><b>La protección auditiva es obligatoria</b> (no solo disponible) cuando está expuesto en o por encima del <b>PEL de 90 dBA</b>, y para <b>cualquiera que haya tenido un Cambio Estándar del Umbral</b> — una pérdida de audición medida — sin importar su nivel de exposición actual.</p>"+
+      "<p>La protección solo funciona si <b>ajusta y se usa correctamente, todo el tiempo</b>. Un tapón de espuma que no se enrolla y se inserta lo suficientemente profundo, o una orejera usada sobre la correa de una gorra, protege mucho menos de lo que dice la etiqueta. OSHA sugiere <b>reducir el NRR indicado de un protector a la mitad aproximadamente</b> para estimar la protección real.</p>"+
+      "<div class='danger'><b>La protección auditiva usada mal es protección que no funciona.</b> Si la suya es incómoda, no sella, o no está seguro de cómo ajustarla — pida que lo reajusten. Un tapón que silba o se afloja no hace casi nada.</div>",
+      kc:{ q:"La protección auditiva es OBLIGATORIA (no solo disponible) cuando…", opts:["Solo si la pide","En o por encima del PEL de 90 dBA, o para cualquiera que haya tenido un Cambio Estándar del Umbral","Solo los lunes","Solo por encima de 115 dBA"], a:1 } },
+    { h:"6. Prueba Audiométrica (de Audición)", body:
+      "<p>No puede sentir cuando empieza la pérdida auditiva — pero una prueba de audición puede detectarla temprano. Si está expuesto en o por encima del nivel de acción, Mt. Hood Forest Products proporciona <b>prueba audiométrica gratuita</b> bajo la regla audiométrica de Oregon (OAR 437-002-0095):</p>"+
+      "<ul><li><b>Audiograma de referencia</b> — su prueba de audición de referencia, dentro de <b>6 meses</b> de su primera exposición en o por encima del nivel de acción. Evite el ruido del trabajo por <b>14 horas</b> antes (o use protección auditiva para sustituir el período de silencio)</li>"+
+      "<li><b>Audiograma anual</b> — cada año después, comparado con su referencia para detectar cualquier cambio temprano</li></ul>"+
+      "<p>Si la prueba muestra un <b>Cambio Estándar del Umbral (STS)</b> — una pérdida promedio definida comparada con su referencia — un revisor calificado lo confirma, se le <b>notifica por escrito dentro de 21 días</b>, se le reajusta y recapacita en protección auditiva, se le dan dispositivos más protectores si es necesario, y se le requiere usar protección.</p>"+
+      "<div class='notice'>Un STS es una advertencia temprana, no un veredicto. Detectarlo temprano y reforzar su protección es exactamente cómo conserva el resto de su audición.</div>",
+      kc:{ q:"¿Qué tan pronto después de la primera exposición en o por encima del nivel de acción debe hacerse su audiograma de referencia?", opts:["Dentro de 6 meses","Dentro de 5 años","Solo después de notar pérdida auditiva","Nunca"], a:0 } },
+    { h:"7. Químicos Ototóxicos — El Ruido No Es la Única Amenaza", body:
+      "<p>Algunos químicos pueden dañar la audición por sí solos, y hacer el ruido <b>más</b> dañino cuando se expone a ambos. Se llaman químicos <b>ototóxicos</b>. En un aserradero pueden incluir:</p>"+
+      "<ul><li><b>Solventes orgánicos</b> — tolueno, xileno, estireno, etilbenceno (en algunas pinturas, recubrimientos, desengrasantes)</li>"+
+      "<li><b>Monóxido de carbono</b> — de motores de combustión, calderas, hornos</li>"+
+      "<li><b>Ciertos metales</b> — plomo, mercurio, manganeso</li></ul>"+
+      "<p>Si trabaja cerca de ruido fuerte y estos químicos, el efecto combinado en su audición puede ser mayor que cualquiera solo. El programa toma esto en cuenta al evaluar su protección, y los químicos ototóxicos de su área también están cubiertos bajo el programa de Comunicación de Peligros.</p>",
+      kc:{ q:"¿Qué son los químicos \"ototóxicos\"?", opts:["Químicos que limpian los oídos","Químicos (como algunos solventes y el monóxido de carbono) que pueden dañar la audición, especialmente combinados con ruido","Químicos que solo son riesgo de incendio","Un tipo de protector auditivo"], a:1 } },
+    { h:"8. Su Parte y Sus Derechos", body:
+      "<p>Proteger su audición es una colaboración. Su parte:</p>"+
+      "<ul><li><b>Use su protección auditiva</b> en las áreas señaladas y siempre que esté en o por encima de los niveles que la requieren — correctamente, y todo el tiempo</li>"+
+      "<li><b>Hágase su prueba de audición anual</b> — es gratis y es cómo se detecta la pérdida temprano</li>"+
+      "<li><b>Pida que lo reajusten</b> si su protección no sella o es incómoda</li>"+
+      "<li><b>Reporte</b> equipo o áreas ruidosas nuevas, y cualquier zumbido o audición apagada que note</li></ul>"+
+      "<p><b>Sus derechos:</b> protectores auditivos y prueba audiométrica sin costo, notificación de sus resultados de monitoreo y de cualquier STS, y acceso al programa escrito, sus registros de monitoreo de ruido, y sus registros audiométricos.</p>"+
+      "<h2>Preguntas o Inquietudes</h2>"+
+      "<p>Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad sobre su exposición, su protección, o sus resultados. Para una inquietud médica de audición, la empresa puede referirlo para un examen otológico.</p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Por qué la pérdida auditiva por ruido es permanente?", opts:["Sana con el tiempo", "Las células ciliadas del oído mueren y no vuelven a crecer", "Solo afecta a trabajadores mayores", "Se revierte con descanso"], a:1 },
+    { q:"¿Cuál es el nivel de acción del ruido que activa el programa de conservación de la audición?", opts:["75 dBA TWA8", "95 dBA TWA8", "110 dBA TWA8", "85 dBA TWA8"], a:3 },
+    { q:"¿Cuál es el límite de exposición permisible (PEL) para un día de 8 horas?", opts:["80 dBA", "90 dBA", "100 dBA", "115 dBA"], a:1 },
+    { q:"A medida que el ruido se hace más fuerte, el tiempo que puede estar expuesto con seguridad…", opts:["Se hace más corto", "Aumenta", "Se queda igual", "No importa con tapones"], a:0 },
+    { q:"La protección auditiva es OBLIGATORIA (no solo disponible) cuando…", opts:["Solo si la solicita", "Solo durante la prueba audiométrica", "En o por encima del PEL de 90 dBA, o después de un Cambio Estándar del Umbral", "Solo por encima de 140 dBC"], a:2 },
+    { q:"Una señal aproximada de que el ruido está en o por encima del nivel de acción es…", opts:["Puede susurrar y que lo escuchen", "Debe alzar la voz para que lo entiendan a un brazo de distancia", "El cuarto se siente caliente", "Las luces parpadean"], a:1 },
+    { q:"Su audiograma de referencia debe completarse…", opts:["Solo después de 10 años", "Solo si se queja", "Dentro de 6 meses de la primera exposición en o por encima del nivel de acción", "Nunca"], a:2 },
+    { q:"Un Cambio Estándar del Umbral (STS) significa…", opts:["Que cambió de trabajo", "Una pérdida de audición medida comparada con su referencia", "Que sus tapones vencieron", "Un cambio en su turno de trabajo"], a:1 },
+    { q:"Los químicos ototóxicos son peligrosos porque…", opts:["Pueden dañar la audición, especialmente combinados con ruido", "Solo causan incendios", "Limpian el canal auditivo", "Mejoran la audición"], a:0 },
+    { q:"La protección auditiva solo funciona si…", opts:["Es cara", "Es de color brillante", "Ajusta y se usa correctamente todo el tiempo", "Se usa solo cerca de la máquina más ruidosa"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Conservación de la Audición — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Hearing Conservation / Conservación de la Audición\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente el nivel de acción y el PEL, cuándo se requiere protección, y la prueba audiométrica — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="BCDFGHJKMNPQRSTVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Hearing Conservation Training</div>'+'<div class="ti-es">Capacitación sobre Conservación de la Audición</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

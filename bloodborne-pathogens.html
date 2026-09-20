@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Bloodborne Pathogens Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Bloodborne Pathogens Training &mdash; 29 CFR 1910.1030 / OAR 437-002-1030</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Bloodborne Pathogens Program v2.1 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "BP26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Bloodborne Pathogens Exposure Control Plan v2.1 (29 CFR 1910.1030, adopted by Oregon OSHA in Division 2-Z; OAR 437-002-1030). Questions? Contact the Environmental Compliance and Safety Lead.",
+  introH: "Welcome — Blood Can Carry Disease",
+  introP1: "Human blood can carry viruses that cause serious disease — Hepatitis B (HBV), Hepatitis C (HCV), and HIV. At a mill, most people never handle blood at work. But injuries happen, and the people who respond to them — first-aid providers, supervisors, and custodial staff who clean up afterward — can be exposed. This training explains how bloodborne pathogens spread, how to protect yourself, and what to do if you're exposed.",
+  introP2: "This training takes about 15 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. What Bloodborne Pathogens Are — and Who's Covered", body:
+      "<p><b>Bloodborne pathogens</b> are infectious microorganisms in human blood that can cause disease. The three that matter most:</p>"+
+      "<ul><li><b>Hepatitis B (HBV)</b> — a liver infection; there is a <b>vaccine</b></li>"+
+      "<li><b>Hepatitis C (HCV)</b> — a liver infection; no vaccine</li>"+
+      "<li><b>HIV</b> — the virus that causes AIDS; no vaccine</li></ul>"+
+      "<p>They also live in <b>other potentially infectious materials (OPIM)</b> — certain body fluids, and any material visibly contaminated with blood.</p>"+
+      "<div class='notice'><b>Who this rule covers:</b> Oregon applies the federal Bloodborne Pathogens standard (<b>29 CFR 1910.1030</b>, Division 2-Z; plus <b>OAR 437-002-1030</b>). It covers employees with <b>occupational exposure</b> — at Mt. Hood Forest Products that means <b>designated first-aid providers, supervisors who render first aid, and custodial staff</b> who clean up blood or OPIM. Everyone else takes this training for awareness: to recognize the hazard and know not to handle blood you aren't assigned and protected to handle.</div>",
+      kc:{ q:"Which three bloodborne pathogens does this training focus on?", opts:["Cold, flu, COVID","Hepatitis B, Hepatitis C, and HIV","Tetanus, rabies, measles","Only HIV"], a:1 } },
+    { h:"2. How Exposure Happens", body:
+      "<p>A bloodborne pathogen has to get <b>into your body</b> to infect you. The routes of exposure:</p>"+
+      "<ul><li><b>Through broken skin</b> — a cut, scrape, or a needle/sharp that punctures the skin (the most common route in a workplace)</li>"+
+      "<li><b>Onto mucous membranes</b> — a splash into the eyes, nose, or mouth</li>"+
+      "<li><b>Contact with non-intact skin</b> — blood on skin that already has a cut, rash, or open sore</li></ul>"+
+      "<p>Blood on <b>intact, unbroken skin</b> is not an exposure by itself — but you wash it off immediately, because you may have a cut you can't see, and the blood can reach your eyes or mouth from your hands.</p>"+
+      "<div class='danger'><b>The exposure you can't see coming is a sharp.</b> A hidden piece of broken glass, a discarded needle, a metal edge slick with blood — these puncture skin and inject a pathogen directly. Never pick up broken glass or sharps with your bare hands.</div>",
+      kc:{ q:"What is the most common way a bloodborne pathogen enters the body at work?", opts:["Breathing the same air","Through broken skin — a cut or a sharp that punctures the skin","Shaking hands","Being in the same room"], a:1 } },
+    { h:"3. Universal Precautions — Treat All Blood as Infectious", body:
+      "<p>You cannot tell by looking whether blood carries a pathogen. So the rule is simple and absolute — <b>universal precautions</b>:</p>"+
+      "<div class='notice' style='border-left-color:#C00000;background:#fdecec'><b>Treat ALL human blood and body fluids as if they are infectious.</b> Not \"if the person looks sick.\" Not \"if it's someone you know.\" Always. Every time.</div>"+
+      "<p>That means whenever you might contact blood or OPIM, you <b>put a barrier between it and you</b> — gloves at a minimum, and eye/face protection if splashing is possible — before you touch anything.</p>"+
+      "<p>Universal precautions is what makes the system work: you never have to guess or judge. If it's blood, you protect yourself.</p>",
+      kc:{ q:"Under universal precautions, which blood do you treat as infectious?", opts:["Only blood from someone who looks ill","Only your own","All human blood and body fluids, every time","Only large amounts"], a:2 } },
+    { h:"4. Protecting Yourself — PPE and Controls", body:
+      "<p>Protection comes in layers:</p>"+
+      "<ul><li><b>Personal protective equipment (PPE):</b> disposable <b>gloves</b> whenever contact with blood/OPIM is possible; <b>eye and face protection</b> if splashing or spray could occur; a gown or apron for larger cleanups. Remove PPE carefully so you don't touch the contaminated outside, and <b>wash your hands immediately</b> after.</li>"+
+      "<li><b>Engineering controls:</b> puncture-resistant, labeled <b>sharps containers</b>; handwashing stations; biohazard bags at first-aid stations.</li>"+
+      "<li><b>Work practice controls:</b> wash hands right after removing gloves; <b>never bend, recap, or hand-remove a contaminated needle</b>; pick up possibly-contaminated broken glass with a brush and dustpan, tongs, or forceps — never bare hands.</li></ul>"+
+      "<div class='notice'>PPE is provided at no cost. Gloves that are torn or the wrong size don't protect you — get the right ones. If a first-aid station is out of gloves or biohazard bags, report it.</div>",
+      kc:{ q:"How do you pick up broken glass that may be contaminated with blood?", opts:["With bare hands, carefully","With a brush and dustpan, tongs, or forceps — never bare hands","Kick it aside","Leave it and walk away"], a:1 } },
+    { h:"5. The Hepatitis B Vaccine", body:
+      "<p>Hepatitis B is the one bloodborne pathogen with a <b>safe, effective vaccine</b> — and Mt. Hood Forest Products offers it <b>free</b> to every employee with occupational exposure.</p>"+
+      "<ul><li>The vaccine is offered <b>within 10 days of assignment</b> to a job with occupational exposure, at no cost and at a reasonable time and place</li>"+
+      "<li>It's given by or under a licensed healthcare professional, on the current U.S. Public Health Service schedule</li>"+
+      "<li>If you <b>decline</b>, you sign a declination form — and you can <b>change your mind and get it later</b>, still free, at any time while you're covered</li></ul>"+
+      "<div class='notice'>Declining is your right, but the vaccine is the single best protection against the one bloodborne pathogen that's preventable that way. If you're a designated first-aid provider, it's strongly encouraged.</div>",
+      kc:{ q:"The Hepatitis B vaccine is offered to covered employees…", opts:["For a fee","Free, within 10 days of assignment to a job with occupational exposure","Only after an exposure","Only to supervisors"], a:1 } },
+    { h:"6. If You're Exposed — Act Fast", body:
+      "<p>An <b>exposure incident</b> is specific contact with blood or OPIM through broken skin, a mucous membrane (eyes/nose/mouth), or non-intact skin. If it happens:</p>"+
+      "<ol>"+
+      "<li><b>Wash immediately</b> — flush the area with soap and water; flush eyes/mucous membranes with water or saline for several minutes</li>"+
+      "<li><b>Report it to your supervisor right away</b> — before the end of the shift, and sooner is better</li>"+
+      "<li>The supervisor notifies the Environmental Compliance and Safety Lead, and you're offered a <b>confidential medical evaluation</b> at no cost</li>"+
+      "</ol>"+
+      "<p>The medical evaluation is free and confidential. The healthcare professional decides whether Hep B vaccination or other follow-up is needed, and you're told the results that concern your health. Everything else stays confidential.</p>"+
+      "<div class='danger'><b>The clock matters.</b> Post-exposure treatment works best when it starts fast. Wash, report, and get evaluated the same day — don't wait to \"see how it feels.\"</div>",
+      kc:{ q:"What is the FIRST thing to do after a blood exposure?", opts:["Finish your task first","Wash/flush the area immediately, then report it to your supervisor right away","Wait until the next shift","Nothing, if you feel fine"], a:1 } },
+    { h:"7. Labels, Waste, and Cleanup", body:
+      "<p><b>Biohazard labels and color-coding</b> warn everyone that a container holds something infectious. Learn to recognize the orange-red <b>biohazard symbol</b> — on sharps containers, biohazard bags, and regulated-waste containers. Never open, empty, or reuse a labeled biohazard container.</p>"+
+      "<p><b>Regulated waste</b> — blood-soaked material, contaminated sharps — goes only into the proper labeled containers, never in the regular trash.</p>"+
+      "<p><b>Cleaning up blood</b> is done only by trained, assigned employees with proper PPE. Contaminated surfaces are decontaminated immediately with an appropriate disinfectant (a fresh bleach solution, prepared daily and labeled). If you find spilled blood and aren't assigned to clean it, keep others away and tell your supervisor.</p>",
+      kc:{ q:"Contaminated sharps and blood-soaked material go…", opts:["In the regular trash","Only into proper labeled biohazard/regulated-waste containers","Down the drain","In the recycling"], a:1 } },
+    { h:"8. Your Part and Your Rights", body:
+      "<p><b>If you are a general employee</b> (not a first-aid provider): recognize the hazard, and if there's blood or an injury, <b>get a trained first-aid provider</b> — don't render aid involving blood unless you're assigned, trained, and protected. Keep clear of spilled blood and report it.</p>"+
+      "<p><b>If you are a designated first-aid provider, supervisor, or custodial staff</b>: use universal precautions and PPE every time, get the Hep B vaccine, know the exposure-reporting steps cold, and report every first-aid incident involving blood before the end of your shift.</p>"+
+      "<p><b>Your rights:</b> free PPE, free Hepatitis B vaccine (if covered), a free confidential medical evaluation after any exposure, and access to the written Exposure Control Plan. Your medical and exposure records are kept confidential and retained for the <b>duration of employment plus 30 years</b>.</p>"+
+      "<h2>If Someone Is Injured and Bleeding</h2>"+
+      "<p>Get a trained first-aid provider and call for help. Emergency: <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"Bloodborne pathogens are…", opts:["Airborne germs", "Infectious microorganisms in human blood that can cause disease", "A type of allergy", "Only found in hospitals"], a:1 },
+    { q:"The three bloodborne pathogens this training focuses on are…", opts:["Cold, flu, COVID", "Tetanus, rabies, malaria", "Measles, mumps, rubella", "Hepatitis B, Hepatitis C, and HIV"], a:3 },
+    { q:"The most common route of workplace exposure is…", opts:["Breathing shared air", "Through broken skin — a cut or a sharp puncture", "A handshake", "Being in the same building"], a:1 },
+    { q:"Under universal precautions, you treat…", opts:["All human blood and body fluids as infectious, every time", "Only blood from sick-looking people as infectious", "Only your own blood as infectious", "Only large spills as infectious"], a:0 },
+    { q:"You should pick up possibly-contaminated broken glass with…", opts:["Bare hands", "A magnet", "A brush and dustpan, tongs, or forceps — never bare hands", "Your gloves only, then bare hands"], a:2 },
+    { q:"The Hepatitis B vaccine is offered to covered employees…", opts:["For a fee", "Free, within 10 days of assignment to a job with occupational exposure", "Only after they're exposed", "Only if they're over 40"], a:1 },
+    { q:"The FIRST action after a blood exposure is to…", opts:["Finish the job", "Wait a day", "Wash/flush the area immediately, then report to your supervisor right away", "Do nothing if you feel fine"], a:2 },
+    { q:"Contaminated sharps and blood-soaked waste go…", opts:["In the regular trash", "Only into proper labeled biohazard/regulated-waste containers", "Down the sink", "In recycling"], a:1 },
+    { q:"If you're a general employee and someone is bleeding, you should…", opts:["Get a trained, assigned first-aid provider and keep clear of the blood", "Render first aid involving blood yourself", "Ignore it", "Clean the blood up yourself"], a:0 },
+    { q:"Bloodborne pathogen medical and exposure records are kept for…", opts:["1 year", "3 years", "The duration of employment plus 30 years", "Until the person quits"], a:2 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Bloodborne Pathogens — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Bloodborne Pathogens / Patógenos Transmitidos por la Sangre\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially universal precautions, exposure routes, the Hep B vaccine, and what to do after an exposure — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Plan de Control de Exposición a Patógenos Transmitidos por la Sangre de Mt. Hood Forest Products v2.1 (29 CFR 1910.1030, adoptado por Oregon OSHA en la División 2-Z; OAR 437-002-1030). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad.",
+  introH: "Bienvenido — La Sangre Puede Transmitir Enfermedades",
+  introP1: "La sangre humana puede transmitir virus que causan enfermedades graves — Hepatitis B (HBV), Hepatitis C (HCV) y VIH. En un aserradero, la mayoría de las personas nunca manejan sangre en el trabajo. Pero ocurren lesiones, y quienes responden a ellas — proveedores de primeros auxilios, supervisores, y personal de limpieza que limpia después — pueden exponerse. Esta capacitación explica cómo se transmiten los patógenos de la sangre, cómo protegerse, y qué hacer si se expone.",
+  introP2: "Esta capacitación toma unos 15 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Qué Son los Patógenos de la Sangre — y Quién Está Cubierto", body:
+      "<p>Los <b>patógenos transmitidos por la sangre</b> son microorganismos infecciosos en la sangre humana que pueden causar enfermedades. Los tres más importantes:</p>"+
+      "<ul><li><b>Hepatitis B (HBV)</b> — una infección del hígado; hay <b>vacuna</b></li>"+
+      "<li><b>Hepatitis C (HCV)</b> — una infección del hígado; no hay vacuna</li>"+
+      "<li><b>VIH</b> — el virus que causa el SIDA; no hay vacuna</li></ul>"+
+      "<p>También viven en <b>otros materiales potencialmente infecciosos (OPIM)</b> — ciertos fluidos corporales, y cualquier material visiblemente contaminado con sangre.</p>"+
+      "<div class='notice'><b>A quién cubre esta regla:</b> Oregon aplica la norma federal de Patógenos Transmitidos por la Sangre (<b>29 CFR 1910.1030</b>, División 2-Z; más <b>OAR 437-002-1030</b>). Cubre a los empleados con <b>exposición ocupacional</b> — en Mt. Hood Forest Products eso significa <b>proveedores designados de primeros auxilios, supervisores que dan primeros auxilios, y personal de limpieza</b> que limpia sangre u OPIM. Los demás toman esta capacitación por concientización: para reconocer el peligro y saber no manejar sangre que no están asignados ni protegidos para manejar.</div>",
+      kc:{ q:"¿En cuáles tres patógenos de la sangre se enfoca esta capacitación?", opts:["Resfriado, gripe, COVID","Hepatitis B, Hepatitis C, y VIH","Tétanos, rabia, sarampión","Solo el VIH"], a:1 } },
+    { h:"2. Cómo Ocurre la Exposición", body:
+      "<p>Un patógeno de la sangre tiene que <b>entrar a su cuerpo</b> para infectarlo. Las rutas de exposición:</p>"+
+      "<ul><li><b>Por piel rota</b> — una cortada, raspón, o una aguja/objeto punzante que perfora la piel (la ruta más común en el trabajo)</li>"+
+      "<li><b>Sobre membranas mucosas</b> — una salpicadura en los ojos, nariz o boca</li>"+
+      "<li><b>Contacto con piel no intacta</b> — sangre sobre piel que ya tiene una cortada, sarpullido o llaga abierta</li></ul>"+
+      "<p>La sangre sobre <b>piel intacta y sin romper</b> no es una exposición por sí sola — pero se la lava de inmediato, porque puede tener una cortada que no ve, y la sangre puede llegar a sus ojos o boca desde las manos.</p>"+
+      "<div class='danger'><b>La exposición que no ve venir es un objeto punzante.</b> Un pedazo escondido de vidrio roto, una aguja desechada, un borde de metal con sangre — estos perforan la piel e inyectan un patógeno directamente. Nunca recoja vidrio roto ni objetos punzantes con las manos desnudas.</div>",
+      kc:{ q:"¿Cuál es la forma más común en que un patógeno de la sangre entra al cuerpo en el trabajo?", opts:["Respirar el mismo aire","Por piel rota — una cortada o un objeto punzante que perfora la piel","Dar la mano","Estar en el mismo cuarto"], a:1 } },
+    { h:"3. Precauciones Universales — Trate Toda Sangre como Infecciosa", body:
+      "<p>No puede saber con solo mirar si la sangre lleva un patógeno. Así que la regla es simple y absoluta — <b>precauciones universales</b>:</p>"+
+      "<div class='notice' style='border-left-color:#C00000;background:#fdecec'><b>Trate TODA la sangre y fluidos corporales humanos como si fueran infecciosos.</b> No \"si la persona se ve enferma\". No \"si es alguien que conoce\". Siempre. Cada vez.</div>"+
+      "<p>Eso significa que siempre que pueda contactar sangre u OPIM, <b>ponga una barrera entre eso y usted</b> — guantes como mínimo, y protección para ojos/cara si es posible una salpicadura — antes de tocar nada.</p>"+
+      "<p>Las precauciones universales son lo que hace funcionar el sistema: nunca tiene que adivinar ni juzgar. Si es sangre, se protege.</p>",
+      kc:{ q:"Bajo las precauciones universales, ¿cuál sangre trata como infecciosa?", opts:["Solo la sangre de alguien que se ve enfermo","Solo la suya","Toda la sangre y fluidos corporales humanos, cada vez","Solo grandes cantidades"], a:2 } },
+    { h:"4. Protegerse — EPP y Controles", body:
+      "<p>La protección viene en capas:</p>"+
+      "<ul><li><b>Equipo de protección personal (EPP):</b> <b>guantes</b> desechables siempre que sea posible el contacto con sangre/OPIM; <b>protección para ojos y cara</b> si pudiera haber salpicaduras; una bata o delantal para limpiezas grandes. Quítese el EPP con cuidado para no tocar el exterior contaminado, y <b>lávese las manos de inmediato</b> después.</li>"+
+      "<li><b>Controles de ingeniería:</b> <b>recipientes para objetos punzantes</b> resistentes a perforaciones y etiquetados; estaciones de lavado de manos; bolsas de peligro biológico en las estaciones de primeros auxilios.</li>"+
+      "<li><b>Controles de práctica de trabajo:</b> lávese las manos justo después de quitarse los guantes; <b>nunca doble, tape ni quite con la mano una aguja contaminada</b>; recoja vidrio roto posiblemente contaminado con cepillo y recogedor, pinzas o tenazas — nunca con las manos desnudas.</li></ul>"+
+      "<div class='notice'>El EPP se proporciona sin costo. Los guantes rotos o de talla equivocada no lo protegen — consiga los correctos. Si una estación de primeros auxilios no tiene guantes o bolsas de peligro biológico, repórtelo.</div>",
+      kc:{ q:"¿Cómo recoge vidrio roto que puede estar contaminado con sangre?", opts:["Con las manos desnudas, con cuidado","Con cepillo y recogedor, pinzas o tenazas — nunca con las manos desnudas","Patearlo a un lado","Dejarlo y alejarse"], a:1 } },
+    { h:"5. La Vacuna contra la Hepatitis B", body:
+      "<p>La Hepatitis B es el único patógeno de la sangre con una <b>vacuna segura y efectiva</b> — y Mt. Hood Forest Products la ofrece <b>gratis</b> a todo empleado con exposición ocupacional.</p>"+
+      "<ul><li>La vacuna se ofrece <b>dentro de 10 días de la asignación</b> a un puesto con exposición ocupacional, sin costo y a una hora y lugar razonables</li>"+
+      "<li>La administra un profesional de salud con licencia o bajo su supervisión, según el calendario actual del Servicio de Salud Pública de EE. UU.</li>"+
+      "<li>Si la <b>rechaza</b>, firma un formulario de rechazo — y puede <b>cambiar de opinión y recibirla después</b>, todavía gratis, en cualquier momento mientras esté cubierto</li></ul>"+
+      "<div class='notice'>Rechazarla es su derecho, pero la vacuna es la mejor protección contra el único patógeno de la sangre que se previene así. Si es proveedor designado de primeros auxilios, se recomienda mucho.</div>",
+      kc:{ q:"La vacuna contra la Hepatitis B se ofrece a los empleados cubiertos…", opts:["Por un pago","Gratis, dentro de 10 días de la asignación a un puesto con exposición ocupacional","Solo después de una exposición","Solo a los supervisores"], a:1 } },
+    { h:"6. Si Se Expone — Actúe Rápido", body:
+      "<p>Un <b>incidente de exposición</b> es el contacto específico con sangre u OPIM por piel rota, una membrana mucosa (ojos/nariz/boca), o piel no intacta. Si ocurre:</p>"+
+      "<ol>"+
+      "<li><b>Lave de inmediato</b> — enjuague el área con agua y jabón; enjuague ojos/membranas mucosas con agua o solución salina por varios minutos</li>"+
+      "<li><b>Repórtelo a su supervisor de inmediato</b> — antes del fin del turno, y mientras más pronto mejor</li>"+
+      "<li>El supervisor avisa al Líder de Cumplimiento Ambiental y Seguridad, y se le ofrece una <b>evaluación médica confidencial</b> sin costo</li>"+
+      "</ol>"+
+      "<p>La evaluación médica es gratuita y confidencial. El profesional de salud decide si se necesita la vacuna contra la Hepatitis B u otro seguimiento, y se le informan los resultados que conciernen a su salud. Todo lo demás permanece confidencial.</p>"+
+      "<div class='danger'><b>El tiempo importa.</b> El tratamiento después de una exposición funciona mejor cuando empieza rápido. Lave, reporte y hágase evaluar el mismo día — no espere a \"ver cómo se siente\".</div>",
+      kc:{ q:"¿Qué es lo PRIMERO que se hace después de una exposición a sangre?", opts:["Terminar la tarea primero","Lavar/enjuagar el área de inmediato, luego reportarlo a su supervisor de inmediato","Esperar al siguiente turno","Nada, si se siente bien"], a:1 } },
+    { h:"7. Etiquetas, Desechos y Limpieza", body:
+      "<p>Las <b>etiquetas de peligro biológico y el código de colores</b> advierten a todos que un recipiente contiene algo infeccioso. Aprenda a reconocer el <b>símbolo de peligro biológico</b> naranja-rojo — en recipientes de objetos punzantes, bolsas de peligro biológico, y recipientes de desechos regulados. Nunca abra, vacíe ni reutilice un recipiente etiquetado de peligro biológico.</p>"+
+      "<p>Los <b>desechos regulados</b> — material empapado de sangre, objetos punzantes contaminados — van solo en los recipientes etiquetados apropiados, nunca en la basura común.</p>"+
+      "<p><b>Limpiar sangre</b> lo hacen solo empleados capacitados y asignados con el EPP adecuado. Las superficies contaminadas se descontaminan de inmediato con un desinfectante apropiado (una solución fresca de cloro, preparada diariamente y etiquetada). Si encuentra sangre derramada y no está asignado a limpiarla, mantenga a otros lejos y avise a su supervisor.</p>",
+      kc:{ q:"Los objetos punzantes contaminados y el material empapado de sangre van…", opts:["En la basura común","Solo en recipientes etiquetados apropiados de peligro biológico/desechos regulados","Por el drenaje","En el reciclaje"], a:1 } },
+    { h:"8. Su Parte y Sus Derechos", body:
+      "<p><b>Si es un empleado general</b> (no proveedor de primeros auxilios): reconozca el peligro, y si hay sangre o una lesión, <b>consiga un proveedor capacitado de primeros auxilios</b> — no dé auxilio que involucre sangre a menos que esté asignado, capacitado y protegido. Manténgase lejos de la sangre derramada y repórtela.</p>"+
+      "<p><b>Si es proveedor designado de primeros auxilios, supervisor o personal de limpieza</b>: use precauciones universales y EPP cada vez, reciba la vacuna contra la Hepatitis B, conozca bien los pasos de reporte de exposición, y reporte todo incidente de primeros auxilios que involucre sangre antes del fin de su turno.</p>"+
+      "<p><b>Sus derechos:</b> EPP gratuito, vacuna contra la Hepatitis B gratuita (si está cubierto), una evaluación médica confidencial gratuita después de cualquier exposición, y acceso al Plan de Control de Exposición escrito. Sus registros médicos y de exposición se mantienen confidenciales y se conservan por la <b>duración del empleo más 30 años</b>.</p>"+
+      "<h2>Si Alguien Está Lesionado y Sangrando</h2>"+
+      "<p>Consiga un proveedor capacitado de primeros auxilios y pida ayuda. Emergencia: <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b>.</p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"Los patógenos transmitidos por la sangre son…", opts:["Gérmenes del aire", "Microorganismos infecciosos en la sangre humana que pueden causar enfermedades", "Un tipo de alergia", "Solo se encuentran en hospitales"], a:1 },
+    { q:"Los tres patógenos de la sangre en que se enfoca esta capacitación son…", opts:["Resfriado, gripe, COVID", "Tétanos, rabia, malaria", "Sarampión, paperas, rubéola", "Hepatitis B, Hepatitis C, y VIH"], a:3 },
+    { q:"La ruta más común de exposición en el trabajo es…", opts:["Respirar aire compartido", "Por piel rota — una cortada o perforación con un objeto punzante", "Un apretón de manos", "Estar en el mismo edificio"], a:1 },
+    { q:"Bajo las precauciones universales, usted trata…", opts:["Toda la sangre y fluidos corporales humanos como infecciosos, cada vez", "Solo la sangre de personas que se ven enfermas como infecciosa", "Solo su propia sangre como infecciosa", "Solo los derrames grandes como infecciosos"], a:0 },
+    { q:"Debe recoger vidrio roto posiblemente contaminado con…", opts:["Las manos desnudas", "Un imán", "Cepillo y recogedor, pinzas o tenazas — nunca con las manos desnudas", "Solo sus guantes, luego las manos desnudas"], a:2 },
+    { q:"La vacuna contra la Hepatitis B se ofrece a los empleados cubiertos…", opts:["Por un pago", "Gratis, dentro de 10 días de la asignación a un puesto con exposición ocupacional", "Solo después de exponerse", "Solo si tienen más de 40 años"], a:1 },
+    { q:"La PRIMERA acción después de una exposición a sangre es…", opts:["Terminar el trabajo", "Esperar un día", "Lavar/enjuagar el área de inmediato, luego reportar a su supervisor de inmediato", "No hacer nada si se siente bien"], a:2 },
+    { q:"Los objetos punzantes contaminados y el desecho empapado de sangre van…", opts:["En la basura común", "Solo en recipientes etiquetados apropiados de peligro biológico/desechos regulados", "Por el fregadero", "En el reciclaje"], a:1 },
+    { q:"Si es un empleado general y alguien está sangrando, debe…", opts:["Conseguir un proveedor capacitado y asignado de primeros auxilios y mantenerse lejos de la sangre", "Dar usted mismo primeros auxilios que involucren sangre", "Ignorarlo", "Limpiar la sangre usted mismo"], a:0 },
+    { q:"Los registros médicos y de exposición de patógenos de la sangre se conservan por…", opts:["1 año", "3 años", "La duración del empleo más 30 años", "Hasta que la persona renuncie"], a:2 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Patógenos Transmitidos por la Sangre — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Bloodborne Pathogens / Patógenos Transmitidos por la Sangre\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente las precauciones universales, las rutas de exposición, la vacuna contra la Hepatitis B, y qué hacer después de una exposición — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="BCDFGHJKMNPQRSTVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Bloodborne Pathogens Training</div>'+'<div class="ti-es">Capacitación sobre Patógenos Transmitidos por la Sangre</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>

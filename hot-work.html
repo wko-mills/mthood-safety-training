@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. Hood Forest Products — Hot Work Training v1.0</title>
+<style>
+  :root { --blue:#2E75B6; --dark:#1F4E79; --light:#F2F2F2; --gray:#666666; --red:#C00000; --green:#2E7D32; --amber:#E07B00; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family: Arial, Helvetica, sans-serif; background:#f7f9fb; color:#222; line-height:1.5; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  header.bar { background:var(--dark); color:#fff; padding:14px 20px; }
+  header.bar .co { font-weight:bold; font-size:1.05em; letter-spacing:.5px; }
+  header.bar .sub { font-size:.85em; margin-top:2px; opacity:.9; }
+  .splash { text-align:center; padding:34px 22px; }
+  .splash .co { color:var(--gray); font-size:.85em; letter-spacing:2px; font-weight:bold; }
+  .splash .ti-en { color:var(--dark); font-size:1.6em; font-weight:bold; margin:10px 0 4px; }
+  .splash .ti-es { color:var(--blue); font-size:1.4em; font-weight:bold; margin-bottom:18px; }
+  .splash .choose { margin-bottom:16px; }
+  .splash .langbtns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .splash .langbtns button { font-family:Arial; background:var(--blue); color:#fff; border:none; border-radius:6px; padding:14px 0; width:240px; max-width:45%; font-size:1.05em; font-weight:bold; cursor:pointer; }
+  .langbar { text-align:right; padding:10px 16px 0; }
+  .langbar button { font-family:Arial; border:2px solid var(--blue); background:#fff; color:var(--blue); padding:6px 14px; font-weight:bold; cursor:pointer; border-radius:4px; margin-left:6px; font-size:.95em; }
+  .langbar button.active { background:var(--blue); color:#fff; }
+  .card { background:#fff; border:1px solid #d9e2ec; border-radius:8px; padding:22px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h1 { color:var(--dark); font-size:1.35em; margin-bottom:12px; }
+  h2 { color:var(--blue); font-size:1.1em; margin:16px 0 8px; }
+  p, li { margin-bottom:10px; }
+  ul { padding-left:22px; }
+  .progress { background:#e1e8f0; border-radius:6px; height:10px; overflow:hidden; margin:4px 0 14px; }
+  .progress > div { background:var(--blue); height:100%; width:0; transition:width .3s; }
+  .btn { font-family:Arial; display:inline-block; background:var(--blue); color:#fff; border:none; padding:12px 26px; font-size:1em; font-weight:bold; border-radius:6px; cursor:pointer; margin-top:14px; }
+  .btn:disabled { background:#9db8d2; cursor:not-allowed; }
+  .btn.secondary { background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  input[type=text] { font-family:Arial; width:100%; padding:12px; font-size:1em; border:2px solid #b8c7d9; border-radius:6px; margin-top:6px; }
+  input[type=text]:focus { border-color:var(--blue); outline:none; }
+  .kc { background:var(--light); border-left:4px solid var(--blue); padding:16px; border-radius:0 6px 6px 0; margin-top:16px; }
+  .kc .kct { font-weight:bold; color:var(--dark); margin-bottom:8px; }
+  .opt { display:block; background:#fff; border:2px solid #c9d6e4; border-radius:6px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+  .opt input { margin-right:10px; }
+  .opt.correct { border-color:var(--green); background:#eef7ee; }
+  .opt.wrong { border-color:var(--red); background:#fdecec; }
+  .fb { font-weight:bold; margin-top:8px; display:none; }
+  .fb.ok { color:var(--green); display:block; }
+  .fb.bad { color:var(--red); display:block; }
+  .qnum { color:var(--gray); font-size:.85em; }
+  .quizq { border-bottom:1px solid #e4eaf1; padding:14px 0; }
+  .quizq .qt { font-weight:bold; margin-bottom:6px; }
+  .cert { border:3px solid var(--dark); border-radius:10px; padding:26px; text-align:center; background:#fff; }
+  .cert .big { font-size:1.5em; color:var(--dark); font-weight:bold; margin:10px 0; }
+  .cert .code { font-size:1.6em; letter-spacing:2px; font-weight:bold; color:var(--blue); background:var(--light); display:inline-block; padding:8px 20px; border-radius:6px; margin:10px 0; }
+  .passmsg { color:var(--green); font-weight:bold; font-size:1.2em; }
+  .failmsg { color:var(--red); font-weight:bold; font-size:1.2em; }
+  .notice { background:#fff8e1; border-left:4px solid #f0a500; padding:12px; border-radius:0 6px 6px 0; margin:12px 0; font-size:.95em; }
+  .danger { background:#fdecec; border-left:4px solid var(--red); padding:12px; border-radius:0 6px 6px 0; margin:12px 0; }
+  .tag { display:inline-block; background:var(--red); color:#fff; font-weight:bold; padding:2px 10px; border-radius:4px; font-size:.9em; }
+  table.mini { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95em; }
+  table.mini th { background:var(--blue); color:#fff; padding:8px; text-align:left; }
+  table.mini td { border:1px solid #d9e2ec; padding:8px; vertical-align:top; }
+  table.mini tr:nth-child(even) td { background:var(--light); }
+  footer { text-align:center; color:var(--gray); font-size:.8em; padding:20px 0 30px; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="co">MT. HOOD FOREST PRODUCTS LLC</div>
+  <div class="sub">Hot Work Training &mdash; OAR 437-002-0280 (29 CFR 1910.252) / NFPA 51B</div>
+</header>
+<div class="langbar hidden" id="langBar">
+  <button id="btnEN" onclick="setLang('en')">English</button>
+  <button id="btnES" onclick="setLang('es')">Español</button>
+</div>
+<div class="wrap">
+  <div class="progress" id="progWrap"><div id="progBar"></div></div>
+  <div id="app"></div>
+</div>
+<footer id="ftr">Mt. Hood Forest Products LLC &middot; Hood River, OR &middot; Hot Work Program v1.0 &middot; Module v1.0 (2026)</footer>
+<script>
+"use strict";
+var FORM_URL = "https://forms.cloud.microsoft/r/weC1yEfgb7";
+var MODULE_VERSION = "v1.0";
+var CODE_PREFIX = "HW26-";
+var PASS_PCT = 80;
+
+var STR = {
+en: {
+  basedOn: "Based on the Mt. Hood Forest Products Hot Work Program v1.0 (29 CFR 1910.252, adopted in Oregon by OAR 437-002-0280; NFPA 51B). Questions? Contact the Environmental Compliance and Safety Lead or a Permit Authorizing Individual.",
+  introH: "Welcome — Preventing Fire During Hot Work",
+  introP1: "Welding, cutting, grinding and brazing throw sparks and slag that can travel far and smolder for hours. In a mill full of wood dust, chips and bark, that is a serious fire and explosion risk. This training covers how Mt. Hood Forest Products controls hot work: the permit system, the fire watch, and the precautions that keep a spark from becoming a mill fire.",
+  introP2: "This training takes about 15–20 minutes. You must score 80% or better on the final quiz to receive credit. You may retake the quiz if needed.",
+  nameLabel: "Enter your full name to begin:",
+  namePh: "First and last name",
+  startBtn: "Start Training",
+  continueBtn: "Continue",
+  checkBtn: "Check Answer",
+  kcOk: "Correct — well done.",
+  kcBad: "Not quite — the correct answer is highlighted. Review it, then continue.",
+  secLabel: "Section",
+  ofLabel: "of",
+  sections: [
+    { h:"1. What Hot Work Is", body:
+      "<p><b>Hot work</b> is any temporary operation involving open flames, or producing heat and/or sparks. At Mt. Hood Forest Products that includes:</p>"+
+      "<ul><li>Welding (arc, MIG, TIG, stick, flux-cored)</li>"+
+      "<li>Oxygen-fuel gas cutting and brazing</li>"+
+      "<li>Soldering</li>"+
+      "<li>Grinding, abrasive cutting, and chop saw operations (outside designated areas)</li>"+
+      "<li>Torch-applied heat (thawing pipes, shrink-wrapping, heat treatment)</li>"+
+      "<li>Any other spark-producing or heat-generating operation in a non-designated area</li></ul>"+
+      "<p>Why it matters here: a mill runs on combustibles — wood dust, chips, bark, lumber. A single spark or a piece of hot slag can ignite them, and sparks can travel <b>far</b> and smolder for hours before a fire breaks out.</p>",
+      kc:{ q:"Which of these is hot work when done outside a designated area?", opts:["Sweeping the floor","Grinding on a steel part","Reading a gauge","Stacking lumber"], a:1 } },
+    { h:"2. Designated Areas vs. Permit-Required Work", body:
+      "<p>Mt. Hood Forest Products has <b>four designated hot work areas</b>, specifically designed and equipped for it:</p>"+
+      "<ul><li>Letourneau Shop</li><li>Fabrication Shop</li><li>Truck Shop</li><li>Light Truck Shop</li></ul>"+
+      "<p>Hot work inside these four areas does <b>not</b> need a permit — they are built for it.</p>"+
+      "<div class='danger'><b>Everywhere else needs a Hot Work Permit.</b> Hot work performed outside the four designated areas — in production areas, the yard, the dry kilns, the boiler plant, or any other location — requires a permit before it begins. When practical, bring the work to a designated area instead of taking hot work out into the mill.</div>",
+      kc:{ q:"You need to weld a repair in the boiler plant. What is required first?", opts:["Nothing — just start","A Hot Work Permit","Only safety glasses","A designated-area sign"], a:1 } },
+    { h:"3. The Hot Work Permit and the People", body:
+      "<p>The permit system puts named people in named roles:</p>"+
+      "<table class='mini'><tr><th>Role</th><th>What they do</th></tr>"+
+      "<tr><td><b>Permit Authorizing Individual (PAI)</b></td><td>Inspects the area, verifies every precaution on the permit checklist is met, and authorizes the permit. Usually a supervisor.</td></tr>"+
+      "<tr><td><b>Hot Work Operator</b></td><td>The trained person doing the welding, cutting, or grinding.</td></tr>"+
+      "<tr><td><b>Fire Watcher</b></td><td>A trained person who watches for fire during the work and for at least 60 minutes after.</td></tr></table>"+
+      "<p>The permit is <b>completed, signed, and posted at the work site</b> before hot work begins, and returned to the PAI when the job and the fire watch are done.</p>",
+      kc:{ q:"Who inspects the area and authorizes the Hot Work Permit?", opts:["The fire watcher","The Permit Authorizing Individual (PAI)","Any coworker","The contractor's driver"], a:1 } },
+    { h:"4. Before Hot Work — Preparing the Area", body:
+      "<p>Before the permit is signed, the area is made safe. The core rule is the <b>35-foot radius</b>:</p>"+
+      "<ul><li><b>Remove all flammable and combustible materials within 35 feet</b> — sawdust, wood chips, bark, lumber, wood shavings, oily rags, and the like</li>"+
+      "<li>What cannot be moved is <b>shielded, covered, or wetted down</b></li>"+
+      "<li><b>Seal cracks, holes and openings</b> in floors, walls and ceilings where sparks or slag could travel; sweep floors of loose combustible debris</li>"+
+      "<li><b>Protect conveyors, dust-collection ducts</b> and other pathways that could carry sparks to other parts of the building</li>"+
+      "<li><b>Verify the fire protection</b> (sprinklers, alarms) covering the area is in service — if it is impaired, hot work does not proceed</li>"+
+      "<li>Position fire extinguishing equipment within immediate reach — <b>minimum one 2A:10B:C portable fire extinguisher</b></li>"+
+      "<li>Assign a fire watcher; post warning signs and the <b>red active-permit beacon</b></li></ul>",
+      kc:{ q:"How far must flammable and combustible materials be removed from the hot work?", opts:["5 feet","10 feet","35 feet","100 feet"], a:2 } },
+    { h:"5. During Hot Work — The Fire Watch", body:
+      "<p>While hot work is underway:</p>"+
+      "<ul><li>The <b>fire watcher maintains continuous observation</b> of the work area and adjacent spaces — including areas above and below, where sparks fall or fly</li>"+
+      "<li>Combustible floors are kept <b>wet or protected</b></li>"+
+      "<li>Compressed gas cylinders are <b>upright and secured</b> at all times</li>"+
+      "<li>If conditions change — wind shift, unexpected dust, a sprinkler impairment — the PAI or supervisor <b>suspends the work</b> until it's safe again</li>"+
+      "<li>At breaks, meals or shift change: electrodes out of holders, gas valves shut, torches secured</li></ul>"+
+      "<p>The fire watcher has a fire extinguisher within reach and knows how to sound the alarm and call for help.</p>",
+      kc:{ q:"During hot work, compressed gas cylinders must be…", opts:["Laid on their side","Upright and secured","Left in the truck","Stored near the arc"], a:1 } },
+    { h:"6. After Hot Work — The 60-Minute Watch", body:
+      "<p>The danger doesn't end when the torch goes off — smoldering can take time to show.</p>"+
+      "<ul><li>The <b>fire watcher stays at the site for at least 60 minutes</b> after hot work finishes (per NFPA 51B), inspecting the work area and the areas above, below and adjacent for smoke, heat or fire</li>"+
+      "<li>Fire extinguishing equipment stays accessible the whole time</li>"+
+      "<li>After the 60 minutes, the PAI decides whether <b>additional fire monitoring</b> is warranted — up to a <b>4-hour total</b> from completion in higher-hazard situations</li>"+
+      "<li>The PAI performs and signs the <b>Final Check</b> on the permit, removes the red beacon to release the area, and the completed permit is returned</li></ul>"+
+      "<div class='notice'><b>The 60-minute watch is not optional.</b> Most hot-work fires that become serious start from a spark that smoldered unseen after the work was \"done.\"</div>",
+      kc:{ q:"How long must the fire watch continue after hot work is finished?", opts:["It ends immediately","At least 60 minutes","Exactly 10 minutes","Until the next shift"], a:1 } },
+    { h:"7. Where Hot Work Is Prohibited", body:
+      "<p>Some conditions are off-limits. Hot work is <b>NOT</b> performed:</p>"+
+      "<ul><li>In or on areas where <b>fire sprinklers or their water supply are impaired</b> or out of service (see the Fire Protection Impairment Program)</li>"+
+      "<li>Where <b>explosive or flammable atmospheres</b> exist or could accumulate — including confined spaces</li>"+
+      "<li>On <b>containers or vessels that held flammables</b> unless cleaned, tested and certified gas-free</li>"+
+      "<li>On surfaces with <b>suspected lead-based paint</b> without separate controls</li>"+
+      "<li>In areas with <b>significant combustible dust accumulation</b> that has not been cleaned — a sawmill-specific concern</li></ul>"+
+      "<p><b>Hot work in a confined space</b> adds requirements: continuous atmospheric monitoring, ventilation to control fume, cylinders and machines kept outside the space, and coordination between the entry supervisor and the PAI. It is done only under the Confined Space Program as well as this one.</p>",
+      kc:{ q:"Hot work must NOT be done in an area where…", opts:["The lights are bright","Fire sprinklers are impaired or out of service","The floor is concrete","A supervisor is present"], a:1 } },
+    { h:"8. PPE and Emergencies", body:
+      "<p>Hot work PPE (per 29 CFR 1910.252(b)) includes a welding helmet with the proper shade lens, safety glasses with side shields under it, flame-resistant clothing (no synthetics that melt), leather welding gloves, a leather apron for heavy work, hearing protection when needed, and respiratory protection when ventilation is inadequate or when working on coated metals. <b>Fire watchers also wear</b> spark and radiant-energy protection — safety glasses with side shields and flame-resistant clothing.</p>"+
+      "<h2>If a Fire Starts</h2>"+
+      "<p>Use the extinguisher on a small, contained fire only if trained and safe to do so. Otherwise activate the alarm, evacuate, and call 911. Report emergencies to your supervisor; the supervisor coordinates the fire department.</p>"+
+      "<p>Emergency (fire / medical): <b>911</b> &middot; Providence Hood River Memorial Hospital ER: <b>(541) 386-3911</b> &middot; Odell Fire Dept: <b>541-354-1648</b></p>" }
+  ],
+  quizH: "Final Quiz",
+  quizIntro: "Answer all 10 questions. You need 8 correct (80%) to pass. Take your time — you can review your answers before submitting.",
+  submitBtn: "Submit Quiz",
+  answerAll: "Please answer every question before submitting.",
+  quiz: [
+    { q:"What is \"hot work\"?", opts:["Any heavy lifting", "Any temporary operation involving open flames or producing heat/sparks (welding, cutting, grinding, brazing)", "Only arc welding", "Work done in hot weather"], a:1 },
+    { q:"Which four areas at Mt. Hood are designated for hot work without a permit?", opts:["The four dry kilns", "The yard and the boiler plant", "Any shop with a fire extinguisher", "Letourneau Shop, Fabrication Shop, Truck Shop, Light Truck Shop"], a:3 },
+    { q:"Hot work outside the four designated areas requires…", opts:["Nothing extra", "A Hot Work Permit", "Only a fire watcher", "Permission from a coworker"], a:1 },
+    { q:"Who inspects the area and authorizes the Hot Work Permit?", opts:["The Permit Authorizing Individual (PAI)", "The fire watcher", "The operator alone", "The night cleaner"], a:0 },
+    { q:"How far must combustible material be removed from the hot work?", opts:["10 feet", "50 feet", "35 feet", "3 feet"], a:2 },
+    { q:"The minimum portable fire extinguisher for hot work is rated…", opts:["1A only", "2A:10B:C", "Water only", "No rating needed"], a:1 },
+    { q:"How long must the fire watch continue after hot work is finished?", opts:["No watch needed", "5 minutes", "At least 60 minutes (up to 4 hours of monitoring if warranted)", "Until lunch"], a:2 },
+    { q:"During hot work, compressed gas cylinders must be…", opts:["On their side", "Upright and secured", "Inside the confined space", "Next to the sparks"], a:1 },
+    { q:"Hot work must NOT be performed where…", opts:["Fire sprinklers are impaired or a flammable atmosphere could accumulate", "A PAI is watching", "The floor is swept", "There is good lighting"], a:0 },
+    { q:"You finish welding and want to leave right away. What must happen first?", opts:["Nothing — just go", "The 60-minute fire watch and the PAI's Final Check are completed", "Turn off the lights", "Move your truck"], a:1 }
+  ],
+  passH:"Congratulations — You Passed!",
+  passSub:"Certificate of Completion",
+  passModule:"Hot Work — Employee Training " + MODULE_VERSION,
+  scoreLabel:"Score",
+  dateLabel:"Date",
+  codeLabel:"Your completion code",
+  passInstr:"<b>Final step — record your completion:</b> tap the button below and submit the completion form. Enter your name, select <b>\"Hot Work / Trabajo en Caliente\"</b> from the module list, and enter the completion code shown above. Your training is not recorded until the form is submitted.",
+  recordBtn:"Record My Completion",
+  failH:"Not Quite — Keep Going",
+  failMsg:"You scored below 80%. Review the material — especially the permit, the 35-foot radius, the fire watch, and the 60-minute rule — and try again. There is no limit on retakes.",
+  reviewBtn:"Review the Material",
+  retakeBtn:"Retake the Quiz",
+  yourScore:"Your score"
+},
+es: {
+  basedOn: "Basado en el Programa de Trabajo en Caliente de Mt. Hood Forest Products v1.0 (29 CFR 1910.252, adoptado en Oregon por OAR 437-002-0280; NFPA 51B). ¿Preguntas? Comuníquese con el Líder de Cumplimiento Ambiental y Seguridad o una Persona Autorizadora de Permisos.",
+  introH: "Bienvenido — Prevenir Incendios Durante el Trabajo en Caliente",
+  introP1: "Soldar, cortar, esmerilar y soldar con latón lanzan chispas y escoria que pueden viajar lejos y arder sin llama durante horas. En un aserradero lleno de aserrín, astillas y corteza, ese es un riesgo serio de incendio y explosión. Esta capacitación cubre cómo Mt. Hood Forest Products controla el trabajo en caliente: el sistema de permisos, la vigilancia de incendios y las precauciones que evitan que una chispa se convierta en un incendio del aserradero.",
+  introP2: "Esta capacitación toma de 15 a 20 minutos. Debe obtener 80% o más en el examen final para recibir crédito. Puede repetir el examen si es necesario.",
+  nameLabel: "Escriba su nombre completo para comenzar:",
+  namePh: "Nombre y apellido",
+  startBtn: "Comenzar la Capacitación",
+  continueBtn: "Continuar",
+  checkBtn: "Verificar Respuesta",
+  kcOk: "Correcto — bien hecho.",
+  kcBad: "No es correcto — la respuesta correcta está resaltada. Revísela y luego continúe.",
+  secLabel: "Sección",
+  ofLabel: "de",
+  sections: [
+    { h:"1. Qué Es el Trabajo en Caliente", body:
+      "<p>El <b>trabajo en caliente</b> es cualquier operación temporal que involucra llamas abiertas, o que produce calor y/o chispas. En Mt. Hood Forest Products eso incluye:</p>"+
+      "<ul><li>Soldadura (arco, MIG, TIG, electrodo, tubular)</li>"+
+      "<li>Corte y soldadura fuerte con oxígeno-gas combustible</li>"+
+      "<li>Soldadura con estaño</li>"+
+      "<li>Esmerilado, corte abrasivo y sierras de corte (fuera de áreas designadas)</li>"+
+      "<li>Calor aplicado con soplete (descongelar tuberías, envoltura termocontraíble, tratamiento térmico)</li>"+
+      "<li>Cualquier otra operación que produzca chispas o calor en un área no designada</li></ul>"+
+      "<p>Por qué importa aquí: un aserradero funciona sobre combustibles — aserrín, astillas, corteza, madera. Una sola chispa o un pedazo de escoria caliente puede encenderlos, y las chispas pueden viajar <b>lejos</b> y arder sin llama durante horas antes de que estalle un incendio.</p>",
+      kc:{ q:"¿Cuál de estos es trabajo en caliente cuando se hace fuera de un área designada?", opts:["Barrer el piso","Esmerilar una pieza de acero","Leer un medidor","Apilar madera"], a:1 } },
+    { h:"2. Áreas Designadas vs. Trabajo Que Requiere Permiso", body:
+      "<p>Mt. Hood Forest Products tiene <b>cuatro áreas designadas para trabajo en caliente</b>, específicamente diseñadas y equipadas para ello:</p>"+
+      "<ul><li>Taller Letourneau</li><li>Taller de Fabricación</li><li>Taller de Camiones</li><li>Taller de Camiones Ligeros</li></ul>"+
+      "<p>El trabajo en caliente dentro de estas cuatro áreas <b>no</b> necesita permiso — están construidas para ello.</p>"+
+      "<div class='danger'><b>Todo lo demás necesita un Permiso de Trabajo en Caliente.</b> El trabajo en caliente fuera de las cuatro áreas designadas — en áreas de producción, el patio, los hornos de secado, la planta de calderas, o cualquier otro lugar — requiere un permiso antes de comenzar. Cuando sea práctico, lleve el trabajo a un área designada en lugar de sacar el trabajo en caliente al aserradero.</div>",
+      kc:{ q:"Necesita soldar una reparación en la planta de calderas. ¿Qué se requiere primero?", opts:["Nada — solo empiece","Un Permiso de Trabajo en Caliente","Solo gafas de seguridad","Un letrero de área designada"], a:1 } },
+    { h:"3. El Permiso de Trabajo en Caliente y las Personas", body:
+      "<p>El sistema de permisos pone a personas nombradas en roles nombrados:</p>"+
+      "<table class='mini'><tr><th>Rol</th><th>Qué hacen</th></tr>"+
+      "<tr><td><b>Persona Autorizadora de Permisos (PAI)</b></td><td>Inspecciona el área, verifica que se cumpla cada precaución de la lista del permiso, y autoriza el permiso. Normalmente un supervisor.</td></tr>"+
+      "<tr><td><b>Operador de Trabajo en Caliente</b></td><td>La persona capacitada que suelda, corta o esmerila.</td></tr>"+
+      "<tr><td><b>Vigilante de Incendios</b></td><td>Una persona capacitada que vigila el fuego durante el trabajo y por al menos 60 minutos después.</td></tr></table>"+
+      "<p>El permiso se <b>completa, firma y coloca en el sitio de trabajo</b> antes de comenzar, y se devuelve a la PAI cuando el trabajo y la vigilancia terminan.</p>",
+      kc:{ q:"¿Quién inspecciona el área y autoriza el Permiso de Trabajo en Caliente?", opts:["El vigilante de incendios","La Persona Autorizadora de Permisos (PAI)","Cualquier compañero","El chofer del contratista"], a:1 } },
+    { h:"4. Antes del Trabajo en Caliente — Preparar el Área", body:
+      "<p>Antes de firmar el permiso, se hace segura el área. La regla central es el <b>radio de 35 pies</b>:</p>"+
+      "<ul><li><b>Retire todos los materiales inflamables y combustibles dentro de 35 pies</b> — aserrín, astillas, corteza, madera, virutas, trapos con aceite, y similares</li>"+
+      "<li>Lo que no se puede mover se <b>protege, cubre o moja</b></li>"+
+      "<li><b>Selle grietas, agujeros y aberturas</b> en pisos, paredes y techos por donde puedan viajar chispas o escoria; barra el piso de residuos combustibles sueltos</li>"+
+      "<li><b>Proteja transportadores, ductos de recolección de polvo</b> y otras rutas que puedan llevar chispas a otras partes del edificio</li>"+
+      "<li><b>Verifique que la protección contra incendios</b> (rociadores, alarmas) del área esté en servicio — si está deteriorada, el trabajo en caliente no procede</li>"+
+      "<li>Coloque equipo de extinción al alcance inmediato — <b>mínimo un extintor portátil 2A:10B:C</b></li>"+
+      "<li>Asigne un vigilante de incendios; coloque letreros de advertencia y el <b>faro rojo de permiso activo</b></li></ul>",
+      kc:{ q:"¿A qué distancia se deben retirar los materiales inflamables y combustibles del trabajo en caliente?", opts:["5 pies","10 pies","35 pies","100 pies"], a:2 } },
+    { h:"5. Durante el Trabajo en Caliente — La Vigilancia", body:
+      "<p>Mientras el trabajo en caliente está en curso:</p>"+
+      "<ul><li>El <b>vigilante mantiene observación continua</b> del área de trabajo y los espacios adyacentes — incluyendo áreas arriba y abajo, donde caen o vuelan las chispas</li>"+
+      "<li>Los pisos combustibles se mantienen <b>mojados o protegidos</b></li>"+
+      "<li>Los cilindros de gas comprimido están <b>verticales y asegurados</b> en todo momento</li>"+
+      "<li>Si las condiciones cambian — viento, polvo inesperado, un deterioro de rociadores — la PAI o el supervisor <b>suspende el trabajo</b> hasta que sea seguro de nuevo</li>"+
+      "<li>En descansos, comidas o cambio de turno: electrodos fuera de los porta-electrodos, válvulas de gas cerradas, sopletes asegurados</li></ul>"+
+      "<p>El vigilante tiene un extintor al alcance y sabe cómo activar la alarma y pedir ayuda.</p>",
+      kc:{ q:"Durante el trabajo en caliente, los cilindros de gas comprimido deben estar…", opts:["Acostados de lado","Verticales y asegurados","En la camioneta","Junto al arco"], a:1 } },
+    { h:"6. Después del Trabajo en Caliente — La Vigilancia de 60 Minutos", body:
+      "<p>El peligro no termina cuando se apaga el soplete — el arder sin llama puede tardar en aparecer.</p>"+
+      "<ul><li>El <b>vigilante permanece en el sitio por al menos 60 minutos</b> después de terminar el trabajo (según NFPA 51B), inspeccionando el área y las áreas de arriba, abajo y adyacentes por humo, calor o fuego</li>"+
+      "<li>El equipo de extinción permanece accesible todo el tiempo</li>"+
+      "<li>Después de los 60 minutos, la PAI decide si se justifica <b>monitoreo adicional</b> — hasta un <b>total de 4 horas</b> desde la terminación en situaciones de mayor peligro</li>"+
+      "<li>La PAI realiza y firma la <b>Verificación Final</b> del permiso, quita el faro rojo para liberar el área, y se devuelve el permiso completo</li></ul>"+
+      "<div class='notice'><b>La vigilancia de 60 minutos no es opcional.</b> La mayoría de los incendios graves por trabajo en caliente empiezan por una chispa que ardió sin ser vista después de que el trabajo “terminó”.</div>",
+      kc:{ q:"¿Cuánto tiempo debe continuar la vigilancia de incendios después de terminar el trabajo en caliente?", opts:["Termina de inmediato","Al menos 60 minutos","Exactamente 10 minutos","Hasta el próximo turno"], a:1 } },
+    { h:"7. Dónde Está Prohibido el Trabajo en Caliente", body:
+      "<p>Algunas condiciones están prohibidas. El trabajo en caliente <b>NO</b> se realiza:</p>"+
+      "<ul><li>En áreas donde los <b>rociadores o su suministro de agua estén deteriorados</b> o fuera de servicio (vea el Programa de Deterioro de Protección Contra Incendios)</li>"+
+      "<li>Donde existan o puedan acumularse <b>atmósferas explosivas o inflamables</b> — incluyendo espacios confinados</li>"+
+      "<li>En <b>recipientes que contuvieron inflamables</b> a menos que estén limpios, probados y certificados libres de gas</li>"+
+      "<li>En superficies con <b>pintura con plomo sospechada</b> sin controles separados</li>"+
+      "<li>En áreas con <b>acumulación significativa de polvo combustible</b> que no se haya limpiado — una preocupación específica del aserradero</li></ul>"+
+      "<p><b>El trabajo en caliente en un espacio confinado</b> agrega requisitos: monitoreo atmosférico continuo, ventilación para controlar el humo, cilindros y máquinas fuera del espacio, y coordinación entre el supervisor de entrada y la PAI. Se hace solo bajo el Programa de Espacios Confinados además de este.</p>",
+      kc:{ q:"El trabajo en caliente NO se debe hacer en un área donde…", opts:["Las luces son brillantes","Los rociadores están deteriorados o fuera de servicio","El piso es de concreto","Hay un supervisor presente"], a:1 } },
+    { h:"8. EPP y Emergencias", body:
+      "<p>El EPP para trabajo en caliente (según 29 CFR 1910.252(b)) incluye una careta de soldar con el lente de sombra adecuado, gafas de seguridad con protección lateral debajo de ella, ropa resistente a las llamas (sin sintéticos que se derritan), guantes de cuero para soldar, un delantal de cuero para trabajo pesado, protección auditiva cuando se necesite, y protección respiratoria cuando la ventilación sea inadecuada o al trabajar en metales recubiertos. <b>Los vigilantes de incendios también usan</b> protección contra chispas y energía radiante — gafas de seguridad con protección lateral y ropa resistente a las llamas.</p>"+
+      "<h2>Si Empieza un Incendio</h2>"+
+      "<p>Use el extintor en un fuego pequeño y contenido solo si está capacitado y es seguro hacerlo. De lo contrario, active la alarma, evacúe y llame al 911. Reporte las emergencias a su supervisor; el supervisor coordina al departamento de bomberos.</p>"+
+      "<p>Emergencia (incendio / médica): <b>911</b> &middot; Sala de Emergencias del Hospital Providence Hood River Memorial: <b>(541) 386-3911</b> &middot; Departamento de Bomberos de Odell: <b>541-354-1648</b></p>" }
+  ],
+  quizH: "Examen Final",
+  quizIntro: "Responda las 10 preguntas. Necesita 8 correctas (80%) para aprobar. Tómese su tiempo — puede revisar sus respuestas antes de enviar.",
+  submitBtn: "Enviar Examen",
+  answerAll: "Por favor responda todas las preguntas antes de enviar.",
+  quiz: [
+    { q:"¿Qué es el \"trabajo en caliente\"?", opts:["Cualquier levantamiento pesado", "Cualquier operación temporal con llamas abiertas o que produce calor/chispas (soldar, cortar, esmerilar, soldar con latón)", "Solo soldadura de arco", "Trabajo hecho en clima caluroso"], a:1 },
+    { q:"¿Cuáles cuatro áreas en Mt. Hood están designadas para trabajo en caliente sin permiso?", opts:["Los cuatro hornos de secado", "El patio y la planta de calderas", "Cualquier taller con extintor", "Taller Letourneau, Taller de Fabricación, Taller de Camiones, Taller de Camiones Ligeros"], a:3 },
+    { q:"El trabajo en caliente fuera de las cuatro áreas designadas requiere…", opts:["Nada adicional", "Un Permiso de Trabajo en Caliente", "Solo un vigilante de incendios", "Permiso de un compañero"], a:1 },
+    { q:"¿Quién inspecciona el área y autoriza el Permiso de Trabajo en Caliente?", opts:["La Persona Autorizadora de Permisos (PAI)", "El vigilante de incendios", "El operador solo", "El limpiador nocturno"], a:0 },
+    { q:"¿A qué distancia se debe retirar el material combustible del trabajo en caliente?", opts:["10 pies", "50 pies", "35 pies", "3 pies"], a:2 },
+    { q:"El extintor portátil mínimo para trabajo en caliente tiene clasificación…", opts:["Solo 1A", "2A:10B:C", "Solo agua", "No necesita clasificación"], a:1 },
+    { q:"¿Cuánto debe continuar la vigilancia de incendios después de terminar el trabajo en caliente?", opts:["No se necesita vigilancia", "5 minutos", "Al menos 60 minutos (hasta 4 horas de monitoreo si se justifica)", "Hasta el almuerzo"], a:2 },
+    { q:"Durante el trabajo en caliente, los cilindros de gas comprimido deben estar…", opts:["De lado", "Verticales y asegurados", "Dentro del espacio confinado", "Junto a las chispas"], a:1 },
+    { q:"El trabajo en caliente NO se debe realizar donde…", opts:["Los rociadores están deteriorados o podría acumularse una atmósfera inflamable", "Una PAI está observando", "El piso está barrido", "Hay buena iluminación"], a:0 },
+    { q:"Termina de soldar y quiere irse de inmediato. ¿Qué debe pasar primero?", opts:["Nada — solo váyase", "Se completan la vigilancia de 60 minutos y la Verificación Final de la PAI", "Apagar las luces", "Mover su camioneta"], a:1 }
+  ],
+  passH:"¡Felicidades — Aprobó!",
+  passSub:"Certificado de Finalización",
+  passModule:"Trabajo en Caliente — Capacitación para Empleados " + MODULE_VERSION,
+  scoreLabel:"Puntaje",
+  dateLabel:"Fecha",
+  codeLabel:"Su código de finalización",
+  passInstr:"<b>Último paso — registre su finalización:</b> toque el botón de abajo y envíe el formulario de finalización. Escriba su nombre, seleccione <b>\"Hot Work / Trabajo en Caliente\"</b> en la lista de módulos e ingrese el código de finalización que aparece arriba. Su capacitación no queda registrada hasta que envíe el formulario.",
+  recordBtn:"Registrar Mi Finalización",
+  failH:"Todavía No — Siga Adelante",
+  failMsg:"Obtuvo menos del 80%. Revise el material — especialmente el permiso, el radio de 35 pies, la vigilancia de incendios y la regla de 60 minutos — e intente de nuevo. No hay límite de intentos.",
+  reviewBtn:"Revisar el Material",
+  retakeBtn:"Repetir el Examen",
+  yourScore:"Su puntaje"
+}
+};
+
+var ANSWER_KEY = STR.en.quiz.map(function(q){ return q.a; });
+var state = { lang:null, screen:"lang", section:0, name:"", kcDone:{}, quizAnswers:{}, lastScore:null, code:null };
+function T(){ return STR[state.lang]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+function generateCode(){ var chars="ABCDEFGHJKMNPQRSTUVWXYZ23456789", out=""; for(var i=0;i<5;i++){ out+=chars.charAt(Math.floor(Math.random()*chars.length)); } return CODE_PREFIX+out; }
+function gradeQuiz(answers){ var correct=0; for(var i=0;i<ANSWER_KEY.length;i++){ if(answers[i]===ANSWER_KEY[i]) correct++; } var pct=Math.round(correct/ANSWER_KEY.length*100); return { correct:correct, total:ANSWER_KEY.length, pct:pct, pass: pct>=PASS_PCT }; }
+function setLang(l){ state.lang=l; if(state.screen==="lang") state.screen="intro"; $("langBar").className="langbar"; $("btnEN").className = l==="en"?"active":""; $("btnES").className = l==="es"?"active":""; render(); }
+function progress(){ if(state.screen==="lang"){ $("progBar").style.width="0%"; return; } var total = T().sections.length + 2; var pos = state.screen==="intro"?0 : state.screen==="quiz"?total-1 : state.screen==="pass"||state.screen==="fail"?total : state.section+1; $("progBar").style.width = Math.round(pos/total*100)+"%"; }
+function renderLang(){ $("app").innerHTML = '<div class="card splash">'+'<div class="co">MT. HOOD FOREST PRODUCTS LLC</div>'+'<div class="ti-en">Hot Work Training</div>'+'<div class="ti-es">Capacitación sobre Trabajo en Caliente</div>'+'<div class="choose">Choose your language / Elija su idioma:</div>'+'<div class="langbtns">'+'<button id="langBtnEN">English</button>'+'<button id="langBtnES">Español</button>'+'</div></div>'; $("langBtnEN").addEventListener("click", function(){ setLang("en"); }); $("langBtnES").addEventListener("click", function(){ setLang("es"); }); }
+function render(){ progress(); if(state.screen==="lang") renderLang(); else if(state.screen==="intro") renderIntro(); else if(state.screen==="section") renderSection(); else if(state.screen==="quiz") renderQuiz(); else if(state.screen==="pass") renderPass(); else if(state.screen==="fail") renderFail(); }
+function renderIntro(){ var t=T(); $("app").innerHTML = '<div class="card"><h1>'+t.introH+'</h1><p>'+t.introP1+'</p><p>'+t.introP2+'</p>'+'<h2>'+t.nameLabel+'</h2>'+'<input type="text" id="nameInput" placeholder="'+t.namePh+'" value="'+esc(state.name)+'" autocomplete="name">'+'<br><button class="btn" id="startBtn" disabled>'+t.startBtn+'</button>'+'<p style="color:var(--gray);font-size:.85em;margin-top:16px">'+t.basedOn+'</p></div>'; var inp=$("nameInput"), btn=$("startBtn"); function gate(){ state.name=inp.value.trim(); btn.disabled = state.name.length<2; } inp.addEventListener("input", gate); gate(); btn.addEventListener("click", function(){ if(state.name.length>=2){ state.screen="section"; state.section=0; render(); window.scrollTo(0,0);} }); }
+function renderSection(){ var t=T(), s=t.sections[state.section]; var html = '<div class="card"><div class="qnum">'+t.secLabel+' '+(state.section+1)+' '+t.ofLabel+' '+t.sections.length+'</div><h1>'+s.h+'</h1>'+s.body; var kcPassed = !!state.kcDone[state.section]; if(s.kc){ html += '<div class="kc"><div class="kct">✔ '+s.kc.q+'</div>'; for(var i=0;i<s.kc.opts.length;i++){ html += '<label class="opt" id="kcOpt'+i+'"><input type="radio" name="kc" value="'+i+'"'+(kcPassed?' disabled':'')+'>'+s.kc.opts[i]+'</label>'; } html += '<div class="fb" id="kcFb"></div>'; if(!kcPassed) html += '<button class="btn secondary" id="kcCheck">'+t.checkBtn+'</button>'; html += '</div>'; } html += '<br><button class="btn" id="contBtn"'+((s.kc&&!kcPassed)?' disabled':'')+'>'+t.continueBtn+'</button></div>'; $("app").innerHTML = html; if(s.kc && !kcPassed){ $("kcCheck").addEventListener("click", function(){ var sel=document.querySelector('input[name="kc"]:checked'); if(!sel) return; var v=parseInt(sel.value,10), fb=$("kcFb"); if(v===s.kc.a){ state.kcDone[state.section]=true; $("kcOpt"+v).className="opt correct"; fb.className="fb ok"; fb.textContent=t.kcOk; $("contBtn").disabled=false; $("kcCheck").disabled=true; } else { $("kcOpt"+v).className="opt wrong"; $("kcOpt"+s.kc.a).className="opt correct"; fb.className="fb bad"; fb.textContent=t.kcBad; state.kcDone[state.section]=true; $("contBtn").disabled=false; $("kcCheck").disabled=true; } }); } $("contBtn").addEventListener("click", function(){ if(state.section < t.sections.length-1){ state.section++; } else { state.screen="quiz"; } render(); window.scrollTo(0,0); }); }
+function renderQuiz(){ var t=T(); var html='<div class="card"><h1>'+t.quizH+'</h1><p>'+t.quizIntro+'</p>'; for(var i=0;i<t.quiz.length;i++){ var q=t.quiz[i]; html+='<div class="quizq"><div class="qt">'+(i+1)+'. '+q.q+'</div>'; for(var j=0;j<q.opts.length;j++){ var checked = state.quizAnswers[i]===j ? ' checked' : ''; html+='<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"'+checked+'>'+q.opts[j]+'</label>'; } html+='</div>'; } html+='<div class="fb bad" id="quizWarn" style="display:none">'+t.answerAll+'</div>'; html+='<button class="btn" id="quizSubmit">'+t.submitBtn+'</button></div>'; $("app").innerHTML=html; var radios=document.querySelectorAll('#app input[type=radio]'); for(var r=0;r<radios.length;r++){ radios[r].addEventListener("change", function(e){ var name=e.target.name, idx=parseInt(name.substring(1),10); state.quizAnswers[idx]=parseInt(e.target.value,10); }); } $("quizSubmit").addEventListener("click", function(){ var answers=[]; for(var i=0;i<t.quiz.length;i++){ if(typeof state.quizAnswers[i]==="undefined"){ $("quizWarn").style.display="block"; return; } answers.push(state.quizAnswers[i]); } var res=gradeQuiz(answers); state.lastScore=res; if(res.pass){ state.code=generateCode(); state.screen="pass"; } else { state.screen="fail"; } render(); window.scrollTo(0,0); }); }
+function fmtDate(){ var d=new Date(); var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]; var mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]; return state.lang==="es" ? d.getDate()+" "+mes[d.getMonth()]+" "+d.getFullYear() : m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(); }
+function renderPass(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card"><p class="passmsg">'+t.passH+'</p></div>'+'<div class="cert" id="certBox">'+'<div>'+t.passSub+'</div>'+'<div class="big" id="certName">'+esc(state.name)+'</div>'+'<div>'+t.passModule+'</div>'+'<div style="margin:8px 0">'+t.scoreLabel+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b> &nbsp;·&nbsp; '+t.dateLabel+': <b id="certDate">'+fmtDate()+'</b></div>'+'<div>'+t.codeLabel+':</div>'+'<div class="code" id="certCode">'+state.code+'</div>'+'</div>'+'<div class="card"><p>'+t.passInstr+'</p>'+'<a class="btn" id="recordLink" href="'+FORM_URL+'" target="_blank" rel="noopener">'+t.recordBtn+'</a></div>'; }
+function renderFail(){ var t=T(), r=state.lastScore; $("app").innerHTML = '<div class="card" id="failBox"><p class="failmsg">'+t.failH+'</p>'+'<p>'+t.yourScore+': <b>'+r.correct+'/'+r.total+' ('+r.pct+'%)</b></p>'+'<p>'+t.failMsg+'</p>'+'<button class="btn secondary" id="reviewBtn">'+t.reviewBtn+'</button> '+'<button class="btn" id="retakeBtn">'+t.retakeBtn+'</button></div>'; $("reviewBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="section"; state.section=0; render(); window.scrollTo(0,0); }); $("retakeBtn").addEventListener("click", function(){ state.quizAnswers={}; state.screen="quiz"; render(); window.scrollTo(0,0); }); }
+window.APP = { STR:STR, state:state, gradeQuiz:gradeQuiz, generateCode:generateCode, ANSWER_KEY:ANSWER_KEY, FORM_URL:FORM_URL, PASS_PCT:PASS_PCT, MODULE_VERSION:MODULE_VERSION, CODE_PREFIX:CODE_PREFIX, setLang:setLang, render:render };
+window.setLang = setLang;
+render();
+</script>
+</body>
+</html>
